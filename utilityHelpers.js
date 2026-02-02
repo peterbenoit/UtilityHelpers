@@ -750,9 +750,11 @@ class UtilityHelpers {
 
 	// Convert an image to Base64 format, which can be useful for uploading images or
 	// saving them locally in some applications.
-
-	// TODO: why resolving as png
-	static getImageBase64(imageSrc) {
+	static getImageBase64(imageSrc, options = {}) {
+		const {
+			format = "image/png",
+			quality = 0.92
+		} = options;
 		return new Promise((resolve, reject) => {
 			const img = new Image();
 			img.crossOrigin = "Anonymous";
@@ -762,7 +764,8 @@ class UtilityHelpers {
 				canvas.height = img.height;
 				const context = canvas.getContext("2d");
 				context.drawImage(img, 0, 0);
-				resolve(canvas.toDataURL("image/png"));
+				const safeFormat = typeof format === "string" && format ? format : "image/png";
+				resolve(canvas.toDataURL(safeFormat, quality));
 			};
 			img.onerror = (error) => {
 				reject(error);
