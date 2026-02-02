@@ -152,15 +152,36 @@ class UtilityHelpers {
 
 	// Merge two objects deeply, combining nested objects.
 	static deepMerge(target, source) {
+		const isPlainObject = (value) =>
+			Object.prototype.toString.call(value) === "[object Object]";
+
+		if (Array.isArray(source)) {
+			return source.map((item) => {
+				if (Array.isArray(item)) return UtilityHelpers.deepMerge([], item);
+				if (isPlainObject(item)) return UtilityHelpers.deepMerge({}, item);
+				return item;
+			});
+		}
+
+		if (!isPlainObject(source)) {
+			return source;
+		}
+
+		const result = isPlainObject(target) ? { ...target } : {};
 		for (const key of Object.keys(source)) {
-			if (source[key] instanceof Object && key in target) {
-				Object.assign(
-					source[key],
-					UtilityHelpers.deepMerge(target[key], source[key])
-				);
+			const sourceValue = source[key];
+			const targetValue = result[key];
+
+			if (isPlainObject(sourceValue) && isPlainObject(targetValue)) {
+				result[key] = UtilityHelpers.deepMerge(targetValue, sourceValue);
+			} else if (Array.isArray(sourceValue)) {
+				result[key] = UtilityHelpers.deepMerge([], sourceValue);
+			} else {
+				result[key] = sourceValue;
 			}
 		}
-		return Object.assign(target || {}, source);
+
+		return result;
 	}
 
 	// Count the number of unique elements in an array
