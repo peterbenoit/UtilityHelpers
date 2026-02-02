@@ -920,6 +920,178 @@ class UtilityHelpers {
 
 		return { valid: true, sanitized: sanitizedInput };
 	}
+
+	// --- New Modern Helpers ---
+
+	// Math: Clamp a value between a minimum and maximum
+	static clamp(value, min, max) {
+		return Math.min(Math.max(value, min), max);
+	}
+
+	// Array: Split an array into chunks of a specific size
+	static chunk(array, size) {
+		if (!array.length) return [];
+		const chunks = [];
+		for (let i = 0; i < array.length; i += size) {
+			chunks.push(array.slice(i, i + size));
+		}
+		return chunks;
+	}
+
+	// Array: Group array items by a key or function
+	static groupBy(array, key) {
+		return array.reduce((result, item) => {
+			const groupKey = typeof key === 'function' ? key(item) : item[key];
+			(result[groupKey] = result[groupKey] || []).push(item);
+			return result;
+		}, {});
+	}
+
+	// Object: Pick specific keys from an object
+	static pick(object, keys) {
+		return keys.reduce((obj, key) => {
+			if (object && Object.prototype.hasOwnProperty.call(object, key)) {
+				obj[key] = object[key];
+			}
+			return obj;
+		}, {});
+	}
+
+	// Object: Omit specific keys from an object
+	static omit(object, keys) {
+		const result = { ...object };
+		keys.forEach(key => delete result[key]);
+		return result;
+	}
+
+	// Object: Deep equality check between two values
+	static isEqual(a, b) {
+		if (a === b) return true;
+		if (a instanceof Date && b instanceof Date) return a.getTime() === b.getTime();
+		if (!a || !b || (typeof a !== 'object' && typeof b !== 'object')) return a === b;
+		if (a.prototype !== b.prototype) return false;
+
+		const keys = Object.keys(a);
+		if (keys.length !== Object.keys(b).length) return false;
+		return keys.every(k => UtilityHelpers.isEqual(a[k], b[k]));
+	}
+
+	// Async: Sleep/Wait alias (more common name)
+	static sleep(ms) {
+		return UtilityHelpers.wait(ms);
+	}
+
+	// Async: Retry a promise-returning function with exponential backoff
+	static async retry(fn, attempts = 3, delay = 1000) {
+		try {
+			return await fn();
+		} catch (error) {
+			if (attempts <= 1) throw error;
+			await UtilityHelpers.sleep(delay);
+			return UtilityHelpers.retry(fn, attempts - 1, delay * 2);
+		}
+	}
+
+	// Function: Executed only once
+	static once(fn) {
+		let ran = false;
+		let result;
+		return function (...args) {
+			if (ran) return result;
+			ran = true;
+			result = fn.apply(this, args);
+			fn = null;
+			return result;
+		};
+	}
+
+	// Function: Pipe composition (left to right)
+	static pipe(...fns) {
+		return (x) => fns.reduce((v, f) => f(v), x);
+	}
+
+	// Function: Compose composition (right to left)
+	static compose(...fns) {
+		return (x) => fns.reduceRight((v, f) => f(v), x);
+	}
+
+	// String: Escape characters for use in RegEx
+	static escapeRegex(str) {
+		return str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+	}
+
+	// String: Convert to camelCase
+	static camelCase(str) {
+		return str.replace(/(?:^\w|[A-Z]|\b\w)/g, (word, index) => {
+			return index === 0 ? word.toLowerCase() : word.toUpperCase();
+		}).replace(/\s+/g, '').replace(/[-_]/g, '');
+	}
+
+	// String: Convert to kebab-case
+	static kebabCase(str) {
+		return str
+			.replace(/([a-z])([A-Z])/g, "$1-$2")
+			.replace(/[\s_]+/g, '-')
+			.toLowerCase();
+	}
+
+	// String: Convert to snake_case
+	static snakeCase(str) {
+		return str
+			.replace(/([a-z])([A-Z])/g, "$1_$2")
+			.replace(/[\s-]+/g, '_')
+			.toLowerCase();
+	}
+
+	// String: Truncate string with ellipsis
+	static truncate(str, length = 100) {
+		if (str.length <= length) return str;
+		return str.slice(0, length) + '...';
+	}
+
+	// String: Remove HTML tags
+	static stripHtml(str) {
+		return str.replace(/<[^>]*>?/gm, '');
+	}
+
+	// Format: Safe JSON parse
+	static parseJSON(str, fallback = null) {
+		try {
+			return JSON.parse(str);
+		} catch (e) {
+			return fallback;
+		}
+	}
+
+	// Format: Number with locale
+	static formatNumber(num, locale = 'en-US') {
+		return new Intl.NumberFormat(locale).format(num);
+	}
+
+	// Format: Currency
+	static formatCurrency(amount, currency = 'USD', locale = 'en-US') {
+		return new Intl.NumberFormat(locale, { style: 'currency', currency }).format(amount);
+	}
+
+	// Validation: Email (Simple Regex)
+	static isValidEmail(email) {
+		return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+	}
+
+	// Validation: URL
+	static isValidURL(url) {
+		try {
+			new URL(url);
+			return true;
+		} catch (e) {
+			return false;
+		}
+	}
+
+	// Files: Get file extension
+	static getFileExtension(filename) {
+		return filename.slice((filename.lastIndexOf(".") - 1 >>> 0) + 2);
+	}
 }
 
 UtilityHelpers.getImageDetails(

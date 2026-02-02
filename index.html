@@ -275,7 +275,7 @@
 								<h3 class="text-lg font-semibold mb-2 text-gray-900 font-mono">
 									<code>getContrastRatio(color1, color2)</code>
 								</h3>
-								<p class="mb-4">Calculates contrast ratio between two colors.</p>
+								<p class="mb-4">Calculates contrast ratio between two lines.</p>
 								<pre
 									class="bg-gray-50 p-4 rounded-lg border border-gray-100 text-sm font-mono overflow-x-auto text-gray-800 mt-4"><code>const ratio = UtilityHelpers.getContrastRatio('rgb(0,0,0)', 'rgb(255,255,255)');</code></pre>
 							</div>
@@ -285,6 +285,24 @@
 					<section id="arrays" class="mb-12">
 						<h2 class="text-2xl font-bold mb-6 text-gray-900 tracking-tight">Array Utilities</h2>
 						<div class="space-y-8">
+							<div
+								class="bg-white p-6 rounded-xl border border-gray-200 hover:border-gray-300 transition-colors">
+								<h3 class="text-lg font-semibold mb-2 text-gray-900 font-mono">
+									<code>chunk(array, size)</code>
+								</h3>
+								<p class="mb-4">Splits array into chunks of specific size.</p>
+								<pre
+									class="bg-gray-50 p-4 rounded-lg border border-gray-100 text-sm font-mono overflow-x-auto text-gray-800 mt-4"><code>const chunks = UtilityHelpers.chunk([1, 2, 3, 4], 2); // [[1, 2], [3, 4]]</code></pre>
+							</div>
+							<div
+								class="bg-white p-6 rounded-xl border border-gray-200 hover:border-gray-300 transition-colors">
+								<h3 class="text-lg font-semibold mb-2 text-gray-900 font-mono">
+									<code>groupBy(array, key)</code>
+								</h3>
+								<p class="mb-4">Groups array items by key or function.</p>
+								<pre
+									class="bg-gray-50 p-4 rounded-lg border border-gray-100 text-sm font-mono overflow-x-auto text-gray-800 mt-4"><code>const grouped = UtilityHelpers.groupBy(users, 'role');</code></pre>
+							</div>
 							<div
 								class="bg-white p-6 rounded-xl border border-gray-200 hover:border-gray-300 transition-colors">
 								<h3 class="text-lg font-semibold mb-2 text-gray-900 font-mono">
@@ -426,12 +444,93 @@
 								<pre
 									class="bg-gray-50 p-4 rounded-lg border border-gray-100 text-sm font-mono overflow-x-auto text-gray-800 mt-4"><code>const words = UtilityHelpers.numberToWords(123);</code></pre>
 							</div>
+							<div
+								class="bg-white p-6 rounded-xl border border-gray-200 hover:border-gray-300 transition-colors">
+								<h3 class="text-lg font-semibold mb-2 text-gray-900 font-mono">
+									<code>escapeRegex(str)</code>
+								</h3>
+								<p class="mb-4">Escapes special regex characters.</p>
+								<pre
+									class="bg-gray-50 p-4 rounded-lg border border-gray-100 text-sm font-mono overflow-x-auto text-gray-800 mt-4"><code>const safe = UtilityHelpers.escapeRegex('a.b'); // 'a\\.b'</code></pre>
+							</div>
+							<div
+								class="bg-white p-6 rounded-xl border border-gray-200 hover:border-gray-300 transition-colors">
+								<h3 class="text-lg font-semibold mb-2 text-gray-900 font-mono">
+									<code>camelCase(str)</code>
+								</h3>
+								<p class="mb-4">Converts string to camelCase.</p>
+								<pre
+									class="bg-gray-50 p-4 rounded-lg border border-gray-100 text-sm font-mono overflow-x-auto text-gray-800 mt-4"><code>const str = UtilityHelpers.camelCase('hello-world'); // 'helloWorld'</code></pre>
+							</div>
+							<div
+								class="bg-white p-6 rounded-xl border border-gray-200 hover:border-gray-300 transition-colors">
+								<h3 class="text-lg font-semibold mb-2 text-gray-900 font-mono">
+									<code>kebabCase(str)</code>
+								</h3>
+								<p class="mb-4">Converts string to kebab-case.</p>
+								<pre
+									class="bg-gray-50 p-4 rounded-lg border border-gray-100 text-sm font-mono overflow-x-auto text-gray-800 mt-4"><code>const str = UtilityHelpers.kebabCase('helloWorld'); // 'hello-world'</code></pre>
+							</div>
+							<div
+								class="bg-white p-6 rounded-xl border border-gray-200 hover:border-gray-300 transition-colors">
+								<h3 class="text-lg font-semibold mb-2 text-gray-900 font-mono">
+									<code>snakeCase(str)</code>
+								</h3>
+								<p class="mb-4">Converts string to snake_case.</p>
+								<pre
+									class="bg-gray-50 p-4 rounded-lg border border-gray-100 text-sm font-mono overflow-x-auto text-gray-800 mt-4"><code>const str = UtilityHelpers.snakeCase('helloWorld'); // 'hello_world'</code></pre>
+							</div>
+							<div
+								class="bg-white p-6 rounded-xl border border-gray-200 hover:border-gray-300 transition-colors">
+								<h3 class="text-lg font-semibold mb-2 text-gray-900 font-mono">
+									<code>truncate(str, length)</code>
+								</h3>
+								<p class="mb-4">Truncates string with ellipsis.</p>
+								<pre
+									class="bg-gray-50 p-4 rounded-lg border border-gray-100 text-sm font-mono overflow-x-auto text-gray-800 mt-4"><code>const short = UtilityHelpers.truncate('long string', 5); // 'long ...'</code></pre>
+							</div>
+							<div
+								class="bg-white p-6 rounded-xl border border-gray-200 hover:border-gray-300 transition-colors">
+								<h3 class="text-lg font-semibold mb-2 text-gray-900 font-mono">
+									<code>stripHtml(str)</code>
+								</h3>
+								<p class="mb-4">Removes HTML tags from string.</p>
+								<pre
+									class="bg-gray-50 p-4 rounded-lg border border-gray-100 text-sm font-mono overflow-x-auto text-gray-800 mt-4"><code>const text = UtilityHelpers.stripHtml('&lt;p&gt;Hello&lt;/p&gt;'); // 'Hello'</code></pre>
+							</div>
 						</div>
 					</section>
 
 					<section id="objects" class="mb-12">
 						<h2 class="text-2xl font-bold mb-6 text-gray-900 tracking-tight">Object Utilities</h2>
 						<div class="space-y-8">
+							<div
+								class="bg-white p-6 rounded-xl border border-gray-200 hover:border-gray-300 transition-colors">
+								<h3 class="text-lg font-semibold mb-2 text-gray-900 font-mono">
+									<code>pick(object, keys)</code>
+								</h3>
+								<p class="mb-4">Creates object with only selected keys.</p>
+								<pre
+									class="bg-gray-50 p-4 rounded-lg border border-gray-100 text-sm font-mono overflow-x-auto text-gray-800 mt-4"><code>const picked = UtilityHelpers.pick({a: 1, b: 2}, ['a']); // {a: 1}</code></pre>
+							</div>
+							<div
+								class="bg-white p-6 rounded-xl border border-gray-200 hover:border-gray-300 transition-colors">
+								<h3 class="text-lg font-semibold mb-2 text-gray-900 font-mono">
+									<code>omit(object, keys)</code>
+								</h3>
+								<p class="mb-4">Creates object without selected keys.</p>
+								<pre
+									class="bg-gray-50 p-4 rounded-lg border border-gray-100 text-sm font-mono overflow-x-auto text-gray-800 mt-4"><code>const omitted = UtilityHelpers.omit({a: 1, b: 2}, ['b']); // {a: 1}</code></pre>
+							</div>
+							<div
+								class="bg-white p-6 rounded-xl border border-gray-200 hover:border-gray-300 transition-colors">
+								<h3 class="text-lg font-semibold mb-2 text-gray-900 font-mono">
+									<code>isEqual(a, b)</code>
+								</h3>
+								<p class="mb-4">Performs deep equality check.</p>
+								<pre
+									class="bg-gray-50 p-4 rounded-lg border border-gray-100 text-sm font-mono overflow-x-auto text-gray-800 mt-4"><code>const equal = UtilityHelpers.isEqual({a: 1}, {a: 1}); // true</code></pre>
+							</div>
 							<div
 								class="bg-white p-6 rounded-xl border border-gray-200 hover:border-gray-300 transition-colors">
 								<h3 class="text-lg font-semibold mb-2 text-gray-900 font-mono">
@@ -570,6 +669,51 @@
 								<pre
 									class="bg-gray-50 p-4 rounded-lg border border-gray-100 text-sm font-mono overflow-x-auto text-gray-800 mt-4"><code>const distance = UtilityHelpers.levenshteinDistance('kitten', 'sitting');</code></pre>
 							</div>
+							<div
+								class="bg-white p-6 rounded-xl border border-gray-200 hover:border-gray-300 transition-colors">
+								<h3 class="text-lg font-semibold mb-2 text-gray-900 font-mono">
+									<code>clamp(value, min, max)</code>
+								</h3>
+								<p class="mb-4">Clamps a value between min and max.</p>
+								<pre
+									class="bg-gray-50 p-4 rounded-lg border border-gray-100 text-sm font-mono overflow-x-auto text-gray-800 mt-4"><code>const clamped = UtilityHelpers.clamp(10, 0, 5); // 5</code></pre>
+							</div>
+							<div
+								class="bg-white p-6 rounded-xl border border-gray-200 hover:border-gray-300 transition-colors">
+								<h3 class="text-lg font-semibold mb-2 text-gray-900 font-mono">
+									<code>parseJSON(str, fallback)</code>
+								</h3>
+								<p class="mb-4">Safely parses JSON with fallback.</p>
+								<pre
+									class="bg-gray-50 p-4 rounded-lg border border-gray-100 text-sm font-mono overflow-x-auto text-gray-800 mt-4"><code>const data = UtilityHelpers.parseJSON('bad json', {});</code></pre>
+							</div>
+							<div
+								class="bg-white p-6 rounded-xl border border-gray-200 hover:border-gray-300 transition-colors">
+								<h3 class="text-lg font-semibold mb-2 text-gray-900 font-mono">
+									<code>formatNumber(num, locale)</code>
+								</h3>
+								<p class="mb-4">Formats number with locale info.</p>
+								<pre
+									class="bg-gray-50 p-4 rounded-lg border border-gray-100 text-sm font-mono overflow-x-auto text-gray-800 mt-4"><code>const fmt = UtilityHelpers.formatNumber(1234.56); // '1,234.56'</code></pre>
+							</div>
+							<div
+								class="bg-white p-6 rounded-xl border border-gray-200 hover:border-gray-300 transition-colors">
+								<h3 class="text-lg font-semibold mb-2 text-gray-900 font-mono">
+									<code>formatCurrency(amount, currency, locale)</code>
+								</h3>
+								<p class="mb-4">Formats currency value.</p>
+								<pre
+									class="bg-gray-50 p-4 rounded-lg border border-gray-100 text-sm font-mono overflow-x-auto text-gray-800 mt-4"><code>const price = UtilityHelpers.formatCurrency(10.5); // '$10.50'</code></pre>
+							</div>
+							<div
+								class="bg-white p-6 rounded-xl border border-gray-200 hover:border-gray-300 transition-colors">
+								<h3 class="text-lg font-semibold mb-2 text-gray-900 font-mono">
+									<code>getFileExtension(filename)</code>
+								</h3>
+								<p class="mb-4">Extracts file extension.</p>
+								<pre
+									class="bg-gray-50 p-4 rounded-lg border border-gray-100 text-sm font-mono overflow-x-auto text-gray-800 mt-4"><code>const ext = UtilityHelpers.getFileExtension('image.png'); // 'png'</code></pre>
+							</div>
 						</div>
 					</section>
 
@@ -610,6 +754,48 @@
 								<p class="mb-4">Async delay.</p>
 								<pre class="bg-gray-100 p-4 rounded"><code>await UtilityHelpers.wait(1000);</code></pre>
 							</div>
+							<div
+								class="bg-white p-6 rounded-xl border border-gray-200 hover:border-gray-300 transition-colors">
+								<h3 class="text-lg font-semibold mb-2 text-gray-900 font-mono"><code>sleep(ms)</code>
+								</h3>
+								<p class="mb-4">Alias for wait.</p>
+								<pre
+									class="bg-gray-50 p-4 rounded-lg border border-gray-100 text-sm font-mono overflow-x-auto text-gray-800 mt-4"><code>await UtilityHelpers.sleep(1000);</code></pre>
+							</div>
+							<div
+								class="bg-white p-6 rounded-xl border border-gray-200 hover:border-gray-300 transition-colors">
+								<h3 class="text-lg font-semibold mb-2 text-gray-900 font-mono">
+									<code>retry(fn, attempts, delay)</code>
+								</h3>
+								<p class="mb-4">Retries async function with backoff.</p>
+								<pre
+									class="bg-gray-50 p-4 rounded-lg border border-gray-100 text-sm font-mono overflow-x-auto text-gray-800 mt-4"><code>await UtilityHelpers.retry(fetchData, 3, 1000);</code></pre>
+							</div>
+							<div
+								class="bg-white p-6 rounded-xl border border-gray-200 hover:border-gray-300 transition-colors">
+								<h3 class="text-lg font-semibold mb-2 text-gray-900 font-mono"><code>once(fn)</code>
+								</h3>
+								<p class="mb-4">Ensures function runs only once.</p>
+								<pre
+									class="bg-gray-50 p-4 rounded-lg border border-gray-100 text-sm font-mono overflow-x-auto text-gray-800 mt-4"><code>const init = UtilityHelpers.once(() => console.log('Init'));</code></pre>
+							</div>
+							<div
+								class="bg-white p-6 rounded-xl border border-gray-200 hover:border-gray-300 transition-colors">
+								<h3 class="text-lg font-semibold mb-2 text-gray-900 font-mono"><code>pipe(...fns)</code>
+								</h3>
+								<p class="mb-4">Pipes functions left-to-right.</p>
+								<pre
+									class="bg-gray-50 p-4 rounded-lg border border-gray-100 text-sm font-mono overflow-x-auto text-gray-800 mt-4"><code>const flow = UtilityHelpers.pipe(x => x + 1, x => x * 2);</code></pre>
+							</div>
+							<div
+								class="bg-white p-6 rounded-xl border border-gray-200 hover:border-gray-300 transition-colors">
+								<h3 class="text-lg font-semibold mb-2 text-gray-900 font-mono">
+									<code>compose(...fns)</code>
+								</h3>
+								<p class="mb-4">Composes functions right-to-left.</p>
+								<pre
+									class="bg-gray-50 p-4 rounded-lg border border-gray-100 text-sm font-mono overflow-x-auto text-gray-800 mt-4"><code>const flow = UtilityHelpers.compose(x => x * 2, x => x + 1);</code></pre>
+							</div>
 						</div>
 					</section>
 
@@ -617,6 +803,24 @@
 						<h2 class="text-2xl font-bold mb-6 text-gray-900 tracking-tight">Validation &amp; Sanitization
 						</h2>
 						<div class="space-y-8">
+							<div
+								class="bg-white p-6 rounded-xl border border-gray-200 hover:border-gray-300 transition-colors">
+								<h3 class="text-lg font-semibold mb-2 text-gray-900 font-mono">
+									<code>isValidEmail(email)</code>
+								</h3>
+								<p class="mb-4">Validates email format.</p>
+								<pre
+									class="bg-gray-50 p-4 rounded-lg border border-gray-100 text-sm font-mono overflow-x-auto text-gray-800 mt-4"><code>const valid = UtilityHelpers.isValidEmail('test@example.com');</code></pre>
+							</div>
+							<div
+								class="bg-white p-6 rounded-xl border border-gray-200 hover:border-gray-300 transition-colors">
+								<h3 class="text-lg font-semibold mb-2 text-gray-900 font-mono">
+									<code>isValidURL(url)</code>
+								</h3>
+								<p class="mb-4">Validates URL format.</p>
+								<pre
+									class="bg-gray-50 p-4 rounded-lg border border-gray-100 text-sm font-mono overflow-x-auto text-gray-800 mt-4"><code>const valid = UtilityHelpers.isValidURL('https://example.com');</code></pre>
+							</div>
 							<div
 								class="bg-white p-6 rounded-xl border border-gray-200 hover:border-gray-300 transition-colors">
 								<h3 class="text-lg font-semibold mb-2 text-gray-900 font-mono">
