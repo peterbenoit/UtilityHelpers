@@ -1,350 +1,775 @@
-https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css
-https://peterbenoit.com/js/badge.js
+<!DOCTYPE html>
+<html lang="en">
 
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>UtilityHelpers Documentation</title>
+	<script src="https://cdn.tailwindcss.com"></script>
+	<script>
+		tailwind.config = {
+			theme: {
+				extend: {
+					fontFamily: {
+						sans: ['Inter', 'ui-sans-serif', 'system-ui', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'Helvetica Neue', 'Arial', 'sans-serif'],
+						mono: ['ui-monospace', 'SFMono-Regular', 'Menlo', 'Monaco', 'Consolas', "Liberation Mono", "Courier New", 'monospace'],
+					},
+					colors: {
+						gray: {
+							50: '#f9fafb',
+							100: '#f3f4f6',
+							200: '#e5e7eb',
+							300: '#d1d5db',
+							400: '#9ca3af',
+							500: '#6b7280',
+							600: '#4b5563',
+							700: '#374151',
+							800: '#1f2937',
+							900: '#111827',
+						}
+					}
+				}
+			}
+		}
+	</script>
+	<link rel="stylesheet" href="https://rsms.me/inter/inter.css">
+	<script src="https://peterbenoit.com/js/badge.js"></script>
+	<style>
+		html {
+			scroll-behavior: smooth;
+		}
 
-<div class="container mx-auto px-8 py-16">
-	<h1 class="text-4xl font-bold mb-8">
-		UtilityHelpers Documentation
-	</h1>
-	<p class="mb-4">The <code>UtilityHelpers</code> class is a collection of utility functions designed to simplify
-		common tasks in JavaScript development. It serves as a versatile toolkit for handling various operations that
-		developers frequently encounter, providing solutions for tasks related to images, arrays, strings, dates, object
-		manipulation, and more. The class reduces the need to repeatedly write boilerplate code by offering ready-made,
-		reusable methods.
-	</p>
-	<p class="mb-4">For instance, it includes methods to get image details (<code>getImageDetails</code>) and calculate
-		the average color of an image, which can be useful in media-heavy applications. There are also array
-		manipulation methods like <code>shuffleArray</code>, <code>flattenArray</code>, and
-		<code>countUniqueElements</code>, which assist with data transformation and analysis.
-	</p>
-	<p class="mb-4">String operations like <code>capitalizeWords</code>, <code>pluralize</code>, and
-		<code>escapeHtml</code> help developers format and sanitize text inputs more effectively. Additionally, the
-		class offers solutions for working with dates and times, including <code>randomDateBetweenTwo</code> and
-		<code>timeStampID</code>, which simplify generating timestamps and random dates within ranges.
-	</p>
-	<p class="mb-4">Another key feature of <code>UtilityHelpers</code> is its support for performance optimization
-		through methods like <code>debounce</code> and <code>throttle</code>, which control the frequency of function
-		execution. Moreover, methods like <code>deepMerge</code> allow for complex object merging, while
-		<code>numberToWords</code> converts numeric values to readable text—handy for applications that display data in
-		a more human-friendly way.
-	</p>
-	<p class="mb-4">In short, <code>UtilityHelpers</code> provides a centralized and efficient way to manage a wide
-		variety of tasks. It enhances productivity by streamlining repetitive coding challenges, allowing developers to
-		focus on core application logic without reinventing common utility functions.
-	</p>
-	<section class="mb-8 mt-8">
-		<h2 class="text-2xl font-semibold mb-4">
-			`capitalizeWords(text)`
-		</h2>
-		<p>
-			Capitalizes the first letter of each word in a string.
-		</p>
-		<pre
-			class="bg-gray-100 p-4 mt-4"><code>const capitalized = UtilityHelpers.capitalizeWords('hello, world!');   </code></pre>
-	</section>
-	<section class="mb-8">
-		<h2 class="text-2xl font-semibold mb-4">
-			`getImageDetails(imageSrc, calculateAverageColor)`
-		</h2>
-		<p>
-			Fetches basic image details (like width, height, size, and format) from the provided image source URL.
-			Optionally calculates the average color of the image.
-		</p>
-		<pre
-			class="bg-gray-100 p-4 mt-4"><code>UtilityHelpers.getImageDetails('https://example.com/image.jpg', true)<br />  .then(details => console.log(details));</code></pre>
-	</section>
-	<section class="mb-8 mt-8">
-		<h2 class="text-2xl font-semibold mb-4">
-			`getImageOrientation(image)`
-		</h2>
-		<p>
-			Determines the orientation (landscape, portrait, square) of an image based on its dimensions.
-		</p>
-		<pre
-			class="bg-gray-100 p-4 mt-4"><code>const orientation = UtilityHelpers.getImageOrientation(image);</code></pre>
-	</section>
-	<section class="mb-8">
-		<h2 class="text-2xl font-semibold mb-4">
-			`formatBytes(bytes, decimals)`
-		</h2>
-		<p>
-			Formats a size in bytes into a human-readable string.
-		</p>
-		<pre class="bg-gray-100 p-4 mt-4"><code>const formattedSize = UtilityHelpers.formatBytes(1024);</code></pre>
-	</section>
-	<section class="mb-8">
-		<h2 class="text-2xl font-semibold mb-4">
-			`getAverageImageColor(imageSrc)`
-		</h2>
-		<p>
-			Calculates the average color of an image from its URL.
-		</p>
-		<pre
-			class="bg-gray-100 p-4 mt-4"><code>UtilityHelpers.getAverageImageColor('https://example.com/image.jpg')<br />  .then(color => console.log(color));</code></pre>
-	</section>
-	<section class="mb-8">
-		<h2 class="text-2xl font-semibold mb-4">
-			`generateUUID()`
-		</h2>
-		<p>
-			Generates a random UUID.
-		</p>
-		<pre class="bg-gray-100 p-4 mt-4"><code>const uuid = UtilityHelpers.generateUUID();</code></pre>
-	</section>
-	<section class="mb-8">
-		<h2 class="text-2xl font-semibold mb-4">
-			`shuffleArray(array)`
-		</h2>
-		<p>
-			Randomly shuffles the elements in an array.
-		</p>
-		<pre class="bg-gray-100 p-4 mt-4"><code>const shuffled = UtilityHelpers.shuffleArray([1, 2, 3, 4]);</code></pre>
-	</section>
-	<section class="mb-8">
-		<h2 class="text-2xl font-semibold mb-4">
-			`flattenArray(arr)`
-		</h2>
-		<p>
-			Flattens a nested array into a single array.
-		</p>
-		<pre
-			class="bg-gray-100 p-4 mt-4"><code>const flatArray = UtilityHelpers.flattenArray([1, [2, 3], [4]]);</code></pre>
-	</section>
-	<section class="mb-8">
-		<h2 class="text-2xl font-semibold mb-4">
-			`sumArray(arr)`
-		</h2>
-		<p>
-			Returns the sum of all values in an array.
-		</p>
-		<pre class="bg-gray-100 p-4 mt-4"><code>const sum = UtilityHelpers.sumArray([1, 2, 3]);</code></pre>
-	</section>
-	<section class="mb-8">
-		<h2 class="text-2xl font-semibold mb-4">
-			`deepMerge(target, source)`
-		</h2>
-		<p>
-			Performs a deep merge of two objects.
-		</p>
-		<pre class="bg-gray-100 p-4 mt-4"><code>const merged = UtilityHelpers.deepMerge(obj1, obj2);</code></pre>
-	</section>
-	<section class="mb-8">
-		<h2 class="text-2xl font-semibold mb-4">
-			`pluralize(word, count)`
-		</h2>
-		<p>
-			Attempts to pluralize the given word, accounting for irregular plurals.
-		</p>
-		<pre class="bg-gray-100 p-4 mt-4"><code>const plural = UtilityHelpers.pluralize('child', 2);</code></pre>
-	</section>
-	<section class="mb-8">
-		<h2 class="text-2xl font-semibold mb-4">
-			`debounce(fn, delay)`
-		</h2>
-		<p>
-			Debounces a function, ensuring it only fires after a specified delay.
-		</p>
-		<pre
-			class="bg-gray-100 p-4 mt-4"><code>const debouncedFn = UtilityHelpers.debounce(() => console.log('debounced!'), 300);</code></pre>
-	</section>
-	<section class="mb-8">
-		<h2 class="text-2xl font-semibold mb-4">
-			`textToSpeech(text)`
-		</h2>
-		<p>
-			Converts text to speech if the browser supports the SpeechSynthesis API.
-		</p>
-		<pre class="bg-gray-100 p-4 mt-4"><code>UtilityHelpers.textToSpeech('Hello, World!');</code></pre>
-		<section class="mb-8">
-			<h2 class="text-2xl font-semibold mb-4">
-				`countUniqueElements(arr)`
-			</h2>
-			<p>
-				Counts the number of unique elements in an array.
-			</p>
-			<pre
-				class="bg-gray-100 p-4 mt-4"><code>const uniqueCount = UtilityHelpers.countUniqueElements([1, 2, 2, 3, 4]);</code></pre>
-		</section>
-		<section class="mb-8">
-			<h2 class="text-2xl font-semibold mb-4">
-				`getType(value)`
-			</h2>
-			<p>
-				Identifies if the value is an array, object, or another type.
-			</p>
-			<pre class="bg-gray-100 p-4 mt-4"><code>const type = UtilityHelpers.getType([1, 2, 3]);</code></pre>
-		</section>
-		<section class="mb-8">
-			<h2 class="text-2xl font-semibold mb-4">
-				`findDuplicates(arr)`
-			</h2>
-			<p>
-				Identifies all duplicate elements in an array.
-			</p>
-			<pre
-				class="bg-gray-100 p-4 mt-4"><code>const duplicates = UtilityHelpers.findDuplicates([1, 2, 2, 3, 4]);</code></pre>
-		</section>
-		<section class="mb-8">
-			<h2 class="text-2xl font-semibold mb-4">
-				`randomDateBetweenTwo(start, end)`
-			</h2>
-			<p>
-				Generates a random date between two given dates.
-			</p>
-			<pre
-				class="bg-gray-100 p-4 mt-4"><code>const randomDate = UtilityHelpers.randomDateBetweenTwo(new Date(2000, 0, 1), new Date(2020, 11, 31));</code></pre>
-		</section>
-		<section class="mb-8">
-			<h2 class="text-2xl font-semibold mb-4">
-				`countOccurrences(arr, val)`
-			</h2>
-			<p>
-				Counts how many times a specific value appears in an array.
-			</p>
-			<pre
-				class="bg-gray-100 p-4 mt-4"><code>const occurrences = UtilityHelpers.countOccurrences([1, 2, 3, 2, 2, 4], 2);</code></pre>
-		</section>
-		<section class="mb-8">
-			<h2 class="text-2xl font-semibold mb-4">
-				`getRandomElement(arr)`
-			</h2>
-			<p>
-				Selects a random element from an array.
-			</p>
-			<pre
-				class="bg-gray-100 p-4 mt-4"><code>const randomElement = UtilityHelpers.getRandomElement([1, 2, 3, 4]);</code></pre>
-		</section>
-		<section class="mb-8">
-			<h2 class="text-2xl font-semibold mb-4">
-				`getMedian(arr)`
-			</h2>
-			<p>
-				Calculates the median value of an array.
-			</p>
-			<pre
-				class="bg-gray-100 p-4 mt-4"><code>const median = UtilityHelpers.getMedian([1, 2, 3, 4, 5]);</code></pre>
-		</section>
-		<section class="mb-8">
-			<h2 class="text-2xl font-semibold mb-4">
-				`range(start, end, step)`
-			</h2>
-			<p>
-				Creates an array containing a range of numbers between two values.
-			</p>
-			<pre class="bg-gray-100 p-4 mt-4"><code>const rangeArray = UtilityHelpers.range(1, 10, 2);</code></pre>
-		</section>
-		<section class="mb-8">
-			<h2 class="text-2xl font-semibold mb-4">
-				`getQueryParams(url)`
-			</h2>
-			<p>
-				Extracts query parameters from a URL and returns them as an object.
-			</p>
-			<pre
-				class="bg-gray-100 p-4 mt-4"><code>const params = UtilityHelpers.getQueryParams('https://example.com?name=John&age=30');</code></pre>
-		</section>
-		<section class="mb-8">
-			<h2 class="text-2xl font-semibold mb-4">
-				`isObjectEmpty(obj)`
-			</h2>
-			<p>
-				Checks if an object is empty.
-			</p>
-			<pre class="bg-gray-100 p-4 mt-4"><code>const isEmpty = UtilityHelpers.isObjectEmpty({});</code></pre>
-		</section>
-		<section class="mb-8">
-			<h2 class="text-2xl font-semibold mb-4">
-				`wait(ms)`
-			</h2>
-			<p>
-				Returns a promise that resolves after a specified delay.
-			</p>
-			<pre class="bg-gray-100 p-4 mt-4"><code>await UtilityHelpers.wait(1000);</code></pre>
-		</section>
-		<section class="mb-8">
-			<h2 class="text-2xl font-semibold mb-4">
-				`capitalizeWords(str)`
-			</h2>
-			<p>
-				Capitalizes the first letter of each word in a string.
-			</p>
-			<pre
-				class="bg-gray-100 p-4 mt-4"><code>const capitalized = UtilityHelpers.capitalizeWords('hello world');</code></pre>
-		</section>
-		<section class="mb-8">
-			<h2 class="text-2xl font-semibold mb-4">
-				`rgbToHex(r, g, b)`
-			</h2>
-			<p>
-				Converts an RGB color value to a hexadecimal string.
-			</p>
-			<pre class="bg-gray-100 p-4 mt-4"><code>const hex = UtilityHelpers.rgbToHex(120, 150, 200);</code></pre>
-		</section>
-		<section class="mb-8">
-			<h2 class="text-2xl font-semibold mb-4">
-				`limitDecimalPlaces(num, places)`
-			</h2>
-			<p>
-				Limits a number to a specific number of decimal places.
-			</p>
-			<pre
-				class="bg-gray-100 p-4 mt-4"><code>const limited = UtilityHelpers.limitDecimalPlaces(123.456789, 2);</code></pre>
-		</section>
-		<section class="mb-8">
-			<h2 class="text-2xl font-semibold mb-4">
-				`timeStampID()`
-			</h2>
-			<p>
-				Generates a unique ID based on the current timestamp.
-			</p>
-			<pre class="bg-gray-100 p-4 mt-4"><code>const id = UtilityHelpers.timeStampID();</code></pre>
-		</section>
-		<section class="mb-8">
-			<h2 class="text-2xl font-semibold mb-4">
-				`escapeHtml(str)`
-			</h2>
-			<p>
-				Escapes special HTML characters in a string.
-			</p>
-			<pre
-				class="bg-gray-100 p-4 mt-4"><code>const escaped = UtilityHelpers.escapeHtml('<div>Hello</div>');</code></pre>
-		</section>
-		<section class="mb-8">
-			<h2 class="text-2xl font-semibold mb-4">
-				`unescapeHtml(str)`
-			</h2>
-			<p>
-				Converts escaped HTML characters back to their original form.
-			</p>
-			<pre
-				class="bg-gray-100 p-4 mt-4"><code>const unescaped = UtilityHelpers.unescapeHtml('&lt;div&gt;Hello&lt;/div&gt;');</code></pre>
-		</section>
-		<section class="mb-8">
-			<h2 class="text-2xl font-semibold mb-4">
-				`randomString(length)`
-			</h2>
-			<p>
-				Generates a random alphanumeric string of the specified length.
-			</p>
-			<pre class="bg-gray-100 p-4 mt-4"><code>const randomStr = UtilityHelpers.randomString(10);</code></pre>
-		</section>
-		<section class="mb-8">
-			<h2 class="text-2xl font-semibold mb-4">
-				`numberToWords(num)`
-			</h2>
-			<p>
-				Converts a numerical value into its English word equivalent.
-			</p>
-			<pre class="bg-gray-100 p-4 mt-4"><code>const words = UtilityHelpers.numberToWords(12345);</code></pre>
-		</section>
-		<section class="mb-8">
-			<h2 class="text-2xl font-semibold mb-4">
-				`isNumber(value)`
-			</h2>
-			<p>
-				Checks if a value is a number.
-			</p>
-			<pre class="bg-gray-100 p-4 mt-4"><code>const isNumber = UtilityHelpers.isNumber(123);</code></pre>
-		</section>
-	</section>
-</div>
+		body {
+			font-family: 'Inter', sans-serif;
+		}
+
+		#doc-nav {
+			max-height: calc(100vh - 6rem);
+			overflow: auto;
+		}
+
+		.doc-link {
+			transition: all .2s ease;
+		}
+
+		/* Active nav styling: Pines UI style */
+		#doc-nav a[aria-current="true"] {
+			color: #111827;
+			/* gray-900 */
+			background-color: #f3f4f6;
+			/* gray-100 */
+			font-weight: 500;
+		}
+	</style>
+</head>
+
+<body class="bg-white text-gray-500 antialiased">
+	<div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+		<div class="flex">
+			<aside class="hidden md:block fixed left-0 top-0 h-screen w-64 border-r border-gray-100 bg-white">
+				<div class="h-full overflow-y-auto px-4 py-6">
+					<div class="mb-8 px-2 flex items-center gap-2">
+						<div
+							class="h-6 w-6 rounded bg-gray-900 text-white flex items-center justify-center font-bold text-xs">
+							U</div>
+						<span class="font-bold text-gray-900 text-lg tracking-tight">UtilityHelpers</span>
+					</div>
+					<nav aria-label="Documentation">
+						<h3 class="px-2 text-xs font-semibold text-gray-400 uppercase tracking-wider mb-2">Getting
+							Started</h3>
+						<ul id="doc-nav" class="space-y-1">
+							<li><a href="#images"
+									class="doc-link block px-2 py-1.5 text-sm font-medium text-gray-600 hover:text-gray-900 hover:bg-gray-50 rounded-md">Image
+									Utilities</a></li>
+							<li><a href="#arrays"
+									class="doc-link block px-2 py-1.5 text-sm font-medium text-gray-600 hover:text-gray-900 hover:bg-gray-50 rounded-md">Array
+									Utilities</a></li>
+							<li><a href="#strings"
+									class="doc-link block px-2 py-1.5 text-sm font-medium text-gray-600 hover:text-gray-900 hover:bg-gray-50 rounded-md">String
+									Utilities</a></li>
+							<li><a href="#objects"
+									class="doc-link block px-2 py-1.5 text-sm font-medium text-gray-600 hover:text-gray-900 hover:bg-gray-50 rounded-md">Object
+									Utilities</a></li>
+							<li><a href="#dates"
+									class="doc-link block px-2 py-1.5 text-sm font-medium text-gray-600 hover:text-gray-900 hover:bg-gray-50 rounded-md">Date
+									& Time</a></li>
+							<li><a href="#utilities"
+									class="doc-link block px-2 py-1.5 text-sm font-medium text-gray-600 hover:text-gray-900 hover:bg-gray-50 rounded-md">General
+									Utilities</a></li>
+							<li><a href="#performance"
+									class="doc-link block px-2 py-1.5 text-sm font-medium text-gray-600 hover:text-gray-900 hover:bg-gray-50 rounded-md">Performance</a>
+							</li>
+							<li><a href="#validation"
+									class="doc-link block px-2 py-1.5 text-sm font-medium text-gray-600 hover:text-gray-900 hover:bg-gray-50 rounded-md">Validation</a>
+							</li>
+							<li><a href="#dom"
+									class="doc-link block px-2 py-1.5 text-sm font-medium text-gray-600 hover:text-gray-900 hover:bg-gray-50 rounded-md">DOM
+									& UI</a></li>
+						</ul>
+					</nav>
+				</div>
+			</aside>
+
+			<main class="flex-1 md:pl-72 py-10 w-full max-w-5xl">
+				<header class="mb-10 pb-10 border-b border-gray-100">
+					<div class="flex items-center justify-between">
+						<div>
+							<h1 class="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl mb-4">UtilityHelpers
+								Documentation</h1>
+							<p class="text-lg text-gray-500 leading-relaxed max-w-3xl">
+								A comprehensive collection of utility functions designed to simplify common tasks in
+								JavaScript development.
+								Includes robust methods for image processing, array manipulation, string operations, and
+								more.
+							</p>
+						</div>
+					</div>
+					<div class="md:hidden mt-4">
+						<button id="nav-toggle" aria-expanded="false"
+							class="flex items-center gap-2 px-3 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50">
+							<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+								<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+									d="M4 6h16M4 12h16M4 18h16"></path>
+							</svg>
+							Menu
+						</button>
+						<div id="mobile-nav"
+							class="mt-2 hidden bg-white border border-gray-100 rounded-lg shadow-lg p-4 absolute z-50 w-[calc(100%-2rem)]">
+							<nav aria-label="Mobile documentation nav">
+								<ul class="space-y-1 text-sm">
+									<li><a href="#images"
+											class="block px-3 py-2 rounded-md hover:bg-gray-50 text-gray-700 font-medium">Image
+											Utilities</a></li>
+									<li><a href="#arrays"
+											class="block px-3 py-2 rounded-md hover:bg-gray-50 text-gray-700 font-medium">Array
+											Utilities</a></li>
+									<li><a href="#strings"
+											class="block px-3 py-2 rounded-md hover:bg-gray-50 text-gray-700 font-medium">String
+											Utilities</a></li>
+									<li><a href="#objects"
+											class="block px-3 py-2 rounded-md hover:bg-gray-50 text-gray-700 font-medium">Object
+											Utilities</a></li>
+									<li><a href="#dates"
+											class="block px-3 py-2 rounded-md hover:bg-gray-50 text-gray-700 font-medium">Date
+											& Time</a></li>
+									<li><a href="#utilities"
+											class="block px-3 py-2 rounded-md hover:bg-gray-50 text-gray-700 font-medium">General
+											Utilities</a></li>
+									<li><a href="#performance"
+											class="block px-3 py-2 rounded-md hover:bg-gray-50 text-gray-700 font-medium">Performance</a>
+									</li>
+									<li><a href="#validation"
+											class="block px-3 py-2 rounded-md hover:bg-gray-50 text-gray-700 font-medium">Validation</a>
+									</li>
+									<li><a href="#dom"
+											class="block px-3 py-2 rounded-md hover:bg-gray-50 text-gray-700 font-medium">DOM
+											& UI</a></li>
+								</ul>
+							</nav>
+						</div>
+					</div>
+				</header>
+				<script>
+					// Mobile nav toggle + scroll-sync for desktop nav (improved accessibility)
+					document.addEventListener('DOMContentLoaded', function () {
+						const toggle = document.getElementById('nav-toggle');
+						const mobile = document.getElementById('mobile-nav');
+						toggle?.addEventListener('click', () => { const shown = !mobile.classList.contains('hidden'); mobile.classList.toggle('hidden'); toggle.setAttribute('aria-expanded', String(!shown)); });
+						const navLinks = document.querySelectorAll('#doc-nav a');
+						const sections = Array.from(navLinks).map(a => document.querySelector(a.getAttribute('href'))).filter(Boolean);
+						if (navLinks.length === 0 || sections.length === 0) return;
+						const observer = new IntersectionObserver((entries) => {
+							entries.forEach(entry => {
+								if (entry.isIntersecting) {
+									const id = entry.target.id;
+									navLinks.forEach(a => {
+										const isActive = (a.getAttribute('href') === '#' + id);
+										// Pines style active state
+										a.classList.toggle('text-gray-900', isActive);
+										a.classList.toggle('bg-gray-100', isActive);
+										a.classList.toggle('font-medium', isActive);
+										// Remove default/inactive classes if needed, or just rely on base classes
+										a.classList.toggle('text-gray-600', !isActive);
+
+										if (isActive) a.setAttribute('aria-current', 'true'); else a.removeAttribute('aria-current');
+									});
+									const active = document.querySelector('#doc-nav a[aria-current="true"]');
+									if (active) active.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+								}
+							});
+						}, { root: null, rootMargin: '-25% 0px -50% 0px', threshold: 0 });
+						sections.forEach(s => observer.observe(s));
+					});
+				</script>
+				<div class="max-w-2xl mx-auto">
+					<section id="images" class="mb-12">
+						<h2 class="text-2xl font-bold mb-6 text-gray-900 tracking-tight">Image Utilities</h2>
+						<div class="space-y-8">
+							<div
+								class="bg-white p-6 rounded-xl border border-gray-200 hover:border-gray-300 transition-colors">
+								<h3 class="text-lg font-semibold mb-2 text-gray-900 font-mono">
+									<code>getImageDetails(imageSrc, calculateAverageColor)</code>
+								</h3>
+								<p class="mb-4">Fetches basic image details like width, height, size, and format.
+									Optionally
+									calculates average color.</p>
+								<pre
+									class="bg-gray-50 p-4 rounded-lg border border-gray-100 text-sm font-mono overflow-x-auto text-gray-800 mt-4"><code>UtilityHelpers.getImageDetails('https://example.com/image.jpg', true).then(details => console.log(details));</code></pre>
+							</div>
+							<div
+								class="bg-white p-6 rounded-xl border border-gray-200 hover:border-gray-300 transition-colors">
+								<h3 class="text-lg font-semibold mb-2 text-gray-900 font-mono">
+									<code>getImageOrientation(image)</code>
+								</h3>
+								<p class="mb-4">Determines image orientation: landscape, portrait, or square.</p>
+								<pre
+									class="bg-gray-50 p-4 rounded-lg border border-gray-100 text-sm font-mono overflow-x-auto text-gray-800 mt-4"><code>const orientation = UtilityHelpers.getImageOrientation(img);</code></pre>
+							</div>
+							<div
+								class="bg-white p-6 rounded-xl border border-gray-200 hover:border-gray-300 transition-colors">
+								<h3 class="text-lg font-semibold mb-2 text-gray-900 font-mono">
+									<code>formatBytes(bytes, decimals)</code>
+								</h3>
+								<p class="mb-4">Formats bytes into human-readable format (e.g., KB, MB).</p>
+								<pre
+									class="bg-gray-50 p-4 rounded-lg border border-gray-100 text-sm font-mono overflow-x-auto text-gray-800 mt-4"><code>const size = UtilityHelpers.formatBytes(1024); // '1 KB'</code></pre>
+							</div>
+							<div
+								class="bg-white p-6 rounded-xl border border-gray-200 hover:border-gray-300 transition-colors">
+								<h3 class="text-lg font-semibold mb-2 text-gray-900 font-mono">
+									<code>getImageFormat(mimeType)</code>
+								</h3>
+								<p class="mb-4">Returns user-friendly format name from MIME type.</p>
+								<pre
+									class="bg-gray-50 p-4 rounded-lg border border-gray-100 text-sm font-mono overflow-x-auto text-gray-800 mt-4"><code>const format = UtilityHelpers.getImageFormat('image/jpeg'); // 'JPEG'</code></pre>
+							</div>
+							<div
+								class="bg-white p-6 rounded-xl border border-gray-200 hover:border-gray-300 transition-colors">
+								<h3 class="text-lg font-semibold mb-2 text-gray-900 font-mono">
+									<code>getAverageImageColor(imageSrc)</code>
+								</h3>
+								<p class="mb-4">Calculates average color of an image.</p>
+								<pre
+									class="bg-gray-50 p-4 rounded-lg border border-gray-100 text-sm font-mono overflow-x-auto text-gray-800 mt-4"><code>UtilityHelpers.getAverageImageColor('https://example.com/image.jpg').then(color => console.log(color));</code></pre>
+							</div>
+							<div
+								class="bg-white p-6 rounded-xl border border-gray-200 hover:border-gray-300 transition-colors">
+								<h3 class="text-lg font-semibold mb-2 text-gray-900 font-mono">
+									<code>getImageBase64(imageSrc, options)</code>
+								</h3>
+								<p class="mb-4">Converts image to Base64 string with optional format and quality.</p>
+								<pre
+									class="bg-gray-50 p-4 rounded-lg border border-gray-100 text-sm font-mono overflow-x-auto text-gray-800 mt-4"><code>UtilityHelpers.getImageBase64('https://example.com/image.jpg', { format: 'image/jpeg', quality: 0.8 }).then(base64 => console.log(base64));</code></pre>
+							</div>
+							<div
+								class="bg-white p-6 rounded-xl border border-gray-200 hover:border-gray-300 transition-colors">
+								<h3 class="text-lg font-semibold mb-2 text-gray-900 font-mono">
+									<code>getLuminance(color)</code>
+								</h3>
+								<p class="mb-4">Calculates luminance of a color for contrast checks.</p>
+								<pre
+									class="bg-gray-50 p-4 rounded-lg border border-gray-100 text-sm font-mono overflow-x-auto text-gray-800 mt-4"><code>const luminance = UtilityHelpers.getLuminance('rgb(255,255,255)');</code></pre>
+							</div>
+							<div
+								class="bg-white p-6 rounded-xl border border-gray-200 hover:border-gray-300 transition-colors">
+								<h3 class="text-lg font-semibold mb-2 text-gray-900 font-mono">
+									<code>getContrastRatio(color1, color2)</code>
+								</h3>
+								<p class="mb-4">Calculates contrast ratio between two colors.</p>
+								<pre
+									class="bg-gray-50 p-4 rounded-lg border border-gray-100 text-sm font-mono overflow-x-auto text-gray-800 mt-4"><code>const ratio = UtilityHelpers.getContrastRatio('rgb(0,0,0)', 'rgb(255,255,255)');</code></pre>
+							</div>
+						</div>
+					</section>
+
+					<section id="arrays" class="mb-12">
+						<h2 class="text-2xl font-bold mb-6 text-gray-900 tracking-tight">Array Utilities</h2>
+						<div class="space-y-8">
+							<div
+								class="bg-white p-6 rounded-xl border border-gray-200 hover:border-gray-300 transition-colors">
+								<h3 class="text-lg font-semibold mb-2 text-gray-900 font-mono">
+									<code>shuffleArray(array)</code>
+								</h3>
+								<p class="mb-4">Randomly shuffles array elements.</p>
+								<pre
+									class="bg-gray-50 p-4 rounded-lg border border-gray-100 text-sm font-mono overflow-x-auto text-gray-800 mt-4"><code>const shuffled = UtilityHelpers.shuffleArray([1, 2, 3, 4]);</code></pre>
+							</div>
+							<div
+								class="bg-white p-6 rounded-xl border border-gray-200 hover:border-gray-300 transition-colors">
+								<h3 class="text-lg font-semibold mb-2 text-gray-900 font-mono">
+									<code>flattenArray(arr)</code>
+								</h3>
+								<p class="mb-4">Flattens nested arrays into a single array.</p>
+								<pre
+									class="bg-gray-50 p-4 rounded-lg border border-gray-100 text-sm font-mono overflow-x-auto text-gray-800 mt-4"><code>const flat = UtilityHelpers.flattenArray([1, [2, 3], [4]]);</code></pre>
+							</div>
+							<div
+								class="bg-white p-6 rounded-xl border border-gray-200 hover:border-gray-300 transition-colors">
+								<h3 class="text-lg font-semibold mb-2 text-gray-900 font-mono">
+									<code>sumArray(arr)</code>
+								</h3>
+								<p class="mb-4">Sums all numeric values in an array.</p>
+								<pre
+									class="bg-gray-50 p-4 rounded-lg border border-gray-100 text-sm font-mono overflow-x-auto text-gray-800 mt-4"><code>const sum = UtilityHelpers.sumArray([1, 2, 3]);</code></pre>
+							</div>
+							<div
+								class="bg-white p-6 rounded-xl border border-gray-200 hover:border-gray-300 transition-colors">
+								<h3 class="text-lg font-semibold mb-2 text-gray-900 font-mono">
+									<code>countUniqueElements(arr)</code>
+								</h3>
+								<p class="mb-4">Counts unique elements in an array.</p>
+								<pre
+									class="bg-gray-50 p-4 rounded-lg border border-gray-100 text-sm font-mono overflow-x-auto text-gray-800 mt-4"><code>const count = UtilityHelpers.countUniqueElements([1, 2, 2, 3]);</code></pre>
+							</div>
+							<div
+								class="bg-white p-6 rounded-xl border border-gray-200 hover:border-gray-300 transition-colors">
+								<h3 class="text-lg font-semibold mb-2 text-gray-900 font-mono">
+									<code>findDuplicates(arr)</code>
+								</h3>
+								<p class="mb-4">Returns array of duplicate elements.</p>
+								<pre
+									class="bg-gray-50 p-4 rounded-lg border border-gray-100 text-sm font-mono overflow-x-auto text-gray-800 mt-4"><code>const duplicates = UtilityHelpers.findDuplicates([1, 2, 2, 3]);</code></pre>
+							</div>
+							<div
+								class="bg-white p-6 rounded-xl border border-gray-200 hover:border-gray-300 transition-colors">
+								<h3 class="text-lg font-semibold mb-2 text-gray-900 font-mono">
+									<code>countOccurrences(arr, val)</code>
+								</h3>
+								<p class="mb-4">Counts occurrences of a value in an array.</p>
+								<pre
+									class="bg-gray-50 p-4 rounded-lg border border-gray-100 text-sm font-mono overflow-x-auto text-gray-800 mt-4"><code>const count = UtilityHelpers.countOccurrences([1, 2, 2, 3], 2);</code></pre>
+							</div>
+							<div
+								class="bg-white p-6 rounded-xl border border-gray-200 hover:border-gray-300 transition-colors">
+								<h3 class="text-lg font-semibold mb-2 text-gray-900 font-mono">
+									<code>getRandomElement(arr)</code>
+								</h3>
+								<p class="mb-4">Selects a random element from an array.</p>
+								<pre
+									class="bg-gray-50 p-4 rounded-lg border border-gray-100 text-sm font-mono overflow-x-auto text-gray-800 mt-4"><code>const random = UtilityHelpers.getRandomElement([1, 2, 3]);</code></pre>
+							</div>
+							<div
+								class="bg-white p-6 rounded-xl border border-gray-200 hover:border-gray-300 transition-colors">
+								<h3 class="text-lg font-semibold mb-2 text-gray-900 font-mono">
+									<code>getMedian(arr)</code>
+								</h3>
+								<p class="mb-4">Calculates median of numeric array.</p>
+								<pre
+									class="bg-gray-50 p-4 rounded-lg border border-gray-100 text-sm font-mono overflow-x-auto text-gray-800 mt-4"><code>const median = UtilityHelpers.getMedian([1, 2, 3, 4, 5]);</code></pre>
+							</div>
+							<div
+								class="bg-white p-6 rounded-xl border border-gray-200 hover:border-gray-300 transition-colors">
+								<h3 class="text-lg font-semibold mb-2 text-gray-900 font-mono">
+									<code>range(start, end, step)</code>
+								</h3>
+								<p class="mb-4">Creates array of numbers in range.</p>
+								<pre
+									class="bg-gray-50 p-4 rounded-lg border border-gray-100 text-sm font-mono overflow-x-auto text-gray-800 mt-4"><code>const range = UtilityHelpers.range(1, 10, 2);</code></pre>
+							</div>
+						</div>
+					</section>
+
+					<section id="strings" class="mb-12">
+						<h2 class="text-2xl font-bold mb-6 text-gray-900 tracking-tight">String Utilities</h2>
+						<div class="space-y-8">
+							<div
+								class="bg-white p-6 rounded-xl border border-gray-200 hover:border-gray-300 transition-colors">
+								<h3 class="text-lg font-semibold mb-2 text-gray-900 font-mono">
+									<code>capitalizeWords(str)</code>
+								</h3>
+								<p class="mb-4">Capitalizes first letter of each word.</p>
+								<pre
+									class="bg-gray-50 p-4 rounded-lg border border-gray-100 text-sm font-mono overflow-x-auto text-gray-800 mt-4"><code>const capitalized = UtilityHelpers.capitalizeWords('hello world');</code></pre>
+							</div>
+							<div
+								class="bg-white p-6 rounded-xl border border-gray-200 hover:border-gray-300 transition-colors">
+								<h3 class="text-lg font-semibold mb-2 text-gray-900 font-mono">
+									<code>pluralize(word, count)</code>
+								</h3>
+								<p class="mb-4">Pluralizes word based on count, handling irregulars.</p>
+								<pre
+									class="bg-gray-50 p-4 rounded-lg border border-gray-100 text-sm font-mono overflow-x-auto text-gray-800 mt-4"><code>const plural = UtilityHelpers.pluralize('child', 2);</code></pre>
+							</div>
+							<div
+								class="bg-white p-6 rounded-xl border border-gray-200 hover:border-gray-300 transition-colors">
+								<h3 class="text-lg font-semibold mb-2 text-gray-900 font-mono">
+									<code>escapeHtml(str)</code>
+								</h3>
+								<p class="mb-4">Escapes HTML special characters.</p>
+								<pre
+									class="bg-gray-50 p-4 rounded-lg border border-gray-100 text-sm font-mono overflow-x-auto text-gray-800 mt-4"><code>const escaped = UtilityHelpers.escapeHtml('<div>Hello</div>');</code></pre>
+							</div>
+							<div
+								class="bg-white p-6 rounded-xl border border-gray-200 hover:border-gray-300 transition-colors">
+								<h3 class="text-lg font-semibold mb-2 text-gray-900 font-mono">
+									<code>unescapeHtml(str)</code>
+								</h3>
+								<p class="mb-4">Unescapes HTML entities.</p>
+								<pre
+									class="bg-gray-50 p-4 rounded-lg border border-gray-100 text-sm font-mono overflow-x-auto text-gray-800 mt-4"><code>const unescaped = UtilityHelpers.unescapeHtml('&lt;div&gt;Hello&lt;/div&gt;');</code></pre>
+							</div>
+							<div
+								class="bg-white p-6 rounded-xl border border-gray-200 hover:border-gray-300 transition-colors">
+								<h3 class="text-lg font-semibold mb-2 text-gray-900 font-mono">
+									<code>randomString(length)</code>
+								</h3>
+								<p class="mb-4">Generates random alphanumeric string.</p>
+								<pre
+									class="bg-gray-50 p-4 rounded-lg border border-gray-100 text-sm font-mono overflow-x-auto text-gray-800 mt-4"><code>const random = UtilityHelpers.randomString(10);</code></pre>
+							</div>
+							<div
+								class="bg-white p-6 rounded-xl border border-gray-200 hover:border-gray-300 transition-colors">
+								<h3 class="text-lg font-semibold mb-2 text-gray-900 font-mono">
+									<code>numberToWords(num)</code>
+								</h3>
+								<p class="mb-4">Converts number to English words.</p>
+								<pre
+									class="bg-gray-50 p-4 rounded-lg border border-gray-100 text-sm font-mono overflow-x-auto text-gray-800 mt-4"><code>const words = UtilityHelpers.numberToWords(123);</code></pre>
+							</div>
+						</div>
+					</section>
+
+					<section id="objects" class="mb-12">
+						<h2 class="text-2xl font-bold mb-6 text-gray-900 tracking-tight">Object Utilities</h2>
+						<div class="space-y-8">
+							<div
+								class="bg-white p-6 rounded-xl border border-gray-200 hover:border-gray-300 transition-colors">
+								<h3 class="text-lg font-semibold mb-2 text-gray-900 font-mono">
+									<code>deepMerge(target, source)</code>
+								</h3>
+								<p class="mb-4">Deep merges two objects immutably.</p>
+								<pre
+									class="bg-gray-50 p-4 rounded-lg border border-gray-100 text-sm font-mono overflow-x-auto text-gray-800 mt-4"><code>const merged = UtilityHelpers.deepMerge(obj1, obj2);</code></pre>
+							</div>
+							<div
+								class="bg-white p-6 rounded-xl border border-gray-200 hover:border-gray-300 transition-colors">
+								<h3 class="text-lg font-semibold mb-2 text-gray-900 font-mono">
+									<code>getType(value)</code>
+								</h3>
+								<p class="mb-4">Returns type: 'array', 'object', or typeof.</p>
+								<pre
+									class="bg-gray-50 p-4 rounded-lg border border-gray-100 text-sm font-mono overflow-x-auto text-gray-800 mt-4"><code>const type = UtilityHelpers.getType([1, 2, 3]);</code></pre>
+							</div>
+							<div
+								class="bg-white p-6 rounded-xl border border-gray-200 hover:border-gray-300 transition-colors">
+								<h3 class="text-lg font-semibold mb-2 text-gray-900 font-mono">
+									<code>isObjectEmpty(obj)</code>
+								</h3>
+								<p class="mb-4">Checks if object is empty.</p>
+								<pre
+									class="bg-gray-50 p-4 rounded-lg border border-gray-100 text-sm font-mono overflow-x-auto text-gray-800 mt-4"><code>const empty = UtilityHelpers.isObjectEmpty({});</code></pre>
+							</div>
+						</div>
+					</section>
+
+					<section id="dates" class="mb-12">
+						<h2 class="text-2xl font-bold mb-6 text-gray-900 tracking-tight">Date & Time Utilities</h2>
+						<div class="space-y-8">
+							<div
+								class="bg-white p-6 rounded-xl border border-gray-200 hover:border-gray-300 transition-colors">
+								<h3 class="text-lg font-semibold mb-2 text-gray-900 font-mono">
+									<code>randomDateBetweenTwo(start, end)</code>
+								</h3>
+								<p class="mb-4">Generates random date between two dates.</p>
+								<pre
+									class="bg-gray-50 p-4 rounded-lg border border-gray-100 text-sm font-mono overflow-x-auto text-gray-800 mt-4"><code>const date = UtilityHelpers.randomDateBetweenTwo(new Date(2000, 0, 1), new Date());</code></pre>
+							</div>
+							<div
+								class="bg-white p-6 rounded-xl border border-gray-200 hover:border-gray-300 transition-colors">
+								<h3 class="text-lg font-semibold mb-2 text-gray-900 font-mono">
+									<code>timeStampID()</code>
+								</h3>
+								<p class="mb-4">Generates unique ID based on timestamp.</p>
+								<pre
+									class="bg-gray-50 p-4 rounded-lg border border-gray-100 text-sm font-mono overflow-x-auto text-gray-800 mt-4"><code>const id = UtilityHelpers.timeStampID();</code></pre>
+							</div>
+						</div>
+					</section>
+
+					<section id="utilities" class="mb-12">
+						<h2 class="text-2xl font-bold mb-6 text-gray-900 tracking-tight">General Utilities</h2>
+						<div class="space-y-8">
+							<div
+								class="bg-white p-6 rounded-xl border border-gray-200 hover:border-gray-300 transition-colors">
+								<h3 class="text-lg font-semibold mb-2 text-gray-900 font-mono">
+									<code>generateUUID()</code>
+								</h3>
+								<p class="mb-4">Generates a UUID v4.</p>
+								<pre
+									class="bg-gray-50 p-4 rounded-lg border border-gray-100 text-sm font-mono overflow-x-auto text-gray-800 mt-4"><code>const uuid = UtilityHelpers.generateUUID();</code></pre>
+							</div>
+							<div
+								class="bg-white p-6 rounded-xl border border-gray-200 hover:border-gray-300 transition-colors">
+								<h3 class="text-lg font-semibold mb-2 text-gray-900 font-mono">
+									<code>rgbToHex(r, g, b)</code>
+								</h3>
+								<p class="mb-4">Converts RGB to hex color.</p>
+								<pre
+									class="bg-gray-50 p-4 rounded-lg border border-gray-100 text-sm font-mono overflow-x-auto text-gray-800 mt-4"><code>const hex = UtilityHelpers.rgbToHex(255, 0, 0);</code></pre>
+							</div>
+							<div
+								class="bg-white p-6 rounded-xl border border-gray-200 hover:border-gray-300 transition-colors">
+								<h3 class="text-lg font-semibold mb-2 text-gray-900 font-mono">
+									<code>limitDecimalPlaces(num, places)</code>
+								</h3>
+								<p class="mb-4">Limits decimal places.</p>
+								<pre
+									class="bg-gray-50 p-4 rounded-lg border border-gray-100 text-sm font-mono overflow-x-auto text-gray-800 mt-4"><code>const limited = UtilityHelpers.limitDecimalPlaces(1.23456, 2);</code></pre>
+							</div>
+							<div
+								class="bg-white p-6 rounded-xl border border-gray-200 hover:border-gray-300 transition-colors">
+								<h3 class="text-lg font-semibold mb-2 text-gray-900 font-mono">
+									<code>generateRandomColor()</code>
+								</h3>
+								<p class="mb-4">Generates random hex color.</p>
+								<pre
+									class="bg-gray-50 p-4 rounded-lg border border-gray-100 text-sm font-mono overflow-x-auto text-gray-800 mt-4"><code>const color = UtilityHelpers.generateRandomColor();</code></pre>
+							</div>
+							<div
+								class="bg-white p-6 rounded-xl border border-gray-200 hover:border-gray-300 transition-colors">
+								<h3 class="text-lg font-semibold mb-2 text-gray-900 font-mono">
+									<code>getQueryParams(url)</code>
+								</h3>
+								<p class="mb-4">Parses URL query params into object.</p>
+								<pre
+									class="bg-gray-50 p-4 rounded-lg border border-gray-100 text-sm font-mono overflow-x-auto text-gray-800 mt-4"><code>const params = UtilityHelpers.getQueryParams('?a=1&b=2');</code></pre>
+							</div>
+							<div
+								class="bg-white p-6 rounded-xl border border-gray-200 hover:border-gray-300 transition-colors">
+								<h3 class="text-lg font-semibold mb-2 text-gray-900 font-mono">
+									<code>getURLParts(url)</code>
+								</h3>
+								<p class="mb-4">Breaks down URL into components.</p>
+								<pre
+									class="bg-gray-50 p-4 rounded-lg border border-gray-100 text-sm font-mono overflow-x-auto text-gray-800 mt-4"><code>const parts = UtilityHelpers.getURLParts('https://example.com/path?query=value');</code></pre>
+							</div>
+							<div
+								class="bg-white p-6 rounded-xl border border-gray-200 hover:border-gray-300 transition-colors">
+								<h3 class="text-lg font-semibold mb-2 text-gray-900 font-mono">
+									<code>shortenURL(url)</code>
+								</h3>
+								<p class="mb-4">Base64-url encodes a URL.</p>
+								<pre
+									class="bg-gray-50 p-4 rounded-lg border border-gray-100 text-sm font-mono overflow-x-auto text-gray-800 mt-4"><code>const short = UtilityHelpers.shortenURL('https://example.com');</code></pre>
+							</div>
+							<div
+								class="bg-white p-6 rounded-xl border border-gray-200 hover:border-gray-300 transition-colors">
+								<h3 class="text-lg font-semibold mb-2 text-gray-900 font-mono">
+									<code>expandURL(shortenedURL)</code>
+								</h3>
+								<p class="mb-4">Decodes Base64-url encoded URL.</p>
+								<pre
+									class="bg-gray-50 p-4 rounded-lg border border-gray-100 text-sm font-mono overflow-x-auto text-gray-800 mt-4"><code>const url = UtilityHelpers.expandURL(short);</code></pre>
+							</div>
+							<div
+								class="bg-white p-6 rounded-xl border border-gray-200 hover:border-gray-300 transition-colors">
+								<h3 class="text-lg font-semibold mb-2 text-gray-900 font-mono">
+									<code>levenshteinDistance(str1, str2)</code>
+								</h3>
+								<p class="mb-4">Calculates edit distance between strings.</p>
+								<pre
+									class="bg-gray-50 p-4 rounded-lg border border-gray-100 text-sm font-mono overflow-x-auto text-gray-800 mt-4"><code>const distance = UtilityHelpers.levenshteinDistance('kitten', 'sitting');</code></pre>
+							</div>
+						</div>
+					</section>
+
+					<section id="performance" class="mb-12">
+						<h2 class="text-2xl font-bold mb-6 text-gray-900 tracking-tight">Performance &amp; Optimization
+						</h2>
+						<div class="space-y-8">
+							<div
+								class="bg-white p-6 rounded-xl border border-gray-200 hover:border-gray-300 transition-colors">
+								<h3 class="text-lg font-semibold mb-2 text-gray-900 font-mono">
+									<code>debounce(fn, delay)</code>
+								</h3>
+								<p class="mb-4">Debounces function calls.</p>
+								<pre
+									class="bg-gray-50 p-4 rounded-lg border border-gray-100 text-sm font-mono overflow-x-auto text-gray-800 mt-4"><code>const debounced = UtilityHelpers.debounce(() => console.log('called'), 300);</code></pre>
+							</div>
+							<div
+								class="bg-white p-6 rounded-xl border border-gray-200 hover:border-gray-300 transition-colors">
+								<h3 class="text-lg font-semibold mb-2 text-gray-900 font-mono">
+									<code>throttle(fn, limit)</code>
+								</h3>
+								<p class="mb-4">Throttles function calls.</p>
+								<pre
+									class="bg-gray-50 p-4 rounded-lg border border-gray-100 text-sm font-mono overflow-x-auto text-gray-800 mt-4"><code>const throttled = UtilityHelpers.throttle(() => console.log('called'), 1000);</code></pre>
+							</div>
+							<div
+								class="bg-white p-6 rounded-xl border border-gray-200 hover:border-gray-300 transition-colors">
+								<h3 class="text-lg font-semibold mb-2 text-gray-900 font-mono"><code>memoize(fn)</code>
+								</h3>
+								<p class="mb-4">Memoizes function results.</p>
+								<pre
+									class="bg-gray-50 p-4 rounded-lg border border-gray-100 text-sm font-mono overflow-x-auto text-gray-800 mt-4"><code>const memoized = UtilityHelpers.memoize((x) => x * 2);</code></pre>
+							</div>
+							<div
+								class="bg-white p-6 rounded-xl border border-gray-200 hover:border-gray-300 transition-colors">
+								<h3 class="text-lg font-semibold mb-2 text-gray-900 font-mono"><code>wait(ms)</code>
+								</h3>
+								<p class="mb-4">Async delay.</p>
+								<pre class="bg-gray-100 p-4 rounded"><code>await UtilityHelpers.wait(1000);</code></pre>
+							</div>
+						</div>
+					</section>
+
+					<section id="validation" class="mb-12">
+						<h2 class="text-2xl font-bold mb-6 text-gray-900 tracking-tight">Validation &amp; Sanitization
+						</h2>
+						<div class="space-y-8">
+							<div
+								class="bg-white p-6 rounded-xl border border-gray-200 hover:border-gray-300 transition-colors">
+								<h3 class="text-lg font-semibold mb-2 text-gray-900 font-mono">
+									<code>validateAndSanitizeInput(inputElement, type, options)</code>
+								</h3>
+								<p class="mb-4">Validates and sanitizes form input.</p>
+								<pre
+									class="bg-gray-50 p-4 rounded-lg border border-gray-100 text-sm font-mono overflow-x-auto text-gray-800 mt-4"><code>const result = UtilityHelpers.validateAndSanitizeInput(input, 'email');</code></pre>
+							</div>
+						</div>
+					</section>
+
+					<section id="dom" class="mb-12">
+						<h2 class="text-2xl font-bold mb-6 text-gray-900 tracking-tight">DOM &amp; UI Utilities</h2>
+						<div class="space-y-8">
+							<div
+								class="bg-white p-6 rounded-xl border border-gray-200 hover:border-gray-300 transition-colors">
+								<h3 class="text-lg font-semibold mb-2 text-gray-900 font-mono">
+									<code>copyToClipboard(text)</code>
+								</h3>
+								<p class="mb-4">Copies text to clipboard.</p>
+								<pre
+									class="bg-gray-50 p-4 rounded-lg border border-gray-100 text-sm font-mono overflow-x-auto text-gray-800 mt-4"><code>await UtilityHelpers.copyToClipboard('Hello World');</code></pre>
+							</div>
+							<div
+								class="bg-white p-6 rounded-xl border border-gray-200 hover:border-gray-300 transition-colors">
+								<h3 class="text-lg font-semibold mb-2 text-gray-900 font-mono">
+									<code>smoothScrollTo(selector)</code>
+								</h3>
+								<p class="mb-4">Smooth scrolls to element.</p>
+								<pre
+									class="bg-gray-50 p-4 rounded-lg border border-gray-100 text-sm font-mono overflow-x-auto text-gray-800 mt-4"><code>UtilityHelpers.smoothScrollTo('#section');</code></pre>
+							</div>
+							<div
+								class="bg-white p-6 rounded-xl border border-gray-200 hover:border-gray-300 transition-colors">
+								<h3 class="text-lg font-semibold mb-2 text-gray-900 font-mono">
+									<code>toggleClassAfterDelay(element, className, delay)</code>
+								</h3>
+								<p class="mb-4">Toggles class after delay.</p>
+								<pre
+									class="bg-gray-50 p-4 rounded-lg border border-gray-100 text-sm font-mono overflow-x-auto text-gray-800 mt-4"><code>UtilityHelpers.toggleClassAfterDelay(el, 'active', 500);</code></pre>
+							</div>
+							<div
+								class="bg-white p-6 rounded-xl border border-gray-200 hover:border-gray-300 transition-colors">
+								<h3 class="text-lg font-semibold mb-2 text-gray-900 font-mono">
+									<code>detectUserIdleTime(callback, idleTime)</code>
+								</h3>
+								<p class="mb-4">Detects user idle time.</p>
+								<pre
+									class="bg-gray-50 p-4 rounded-lg border border-gray-100 text-sm font-mono overflow-x-auto text-gray-800 mt-4"><code>UtilityHelpers.detectUserIdleTime(() => console.log('idle'), 60000);</code></pre>
+							</div>
+							<div
+								class="bg-white p-6 rounded-xl border border-gray-200 hover:border-gray-300 transition-colors">
+								<h3 class="text-lg font-semibold mb-2 text-gray-900 font-mono">
+									<code>getFormData(formElement)</code>
+								</h3>
+								<p class="mb-4">Extracts form data as object.</p>
+								<pre
+									class="bg-gray-50 p-4 rounded-lg border border-gray-100 text-sm font-mono overflow-x-auto text-gray-800 mt-4"><code>const data = UtilityHelpers.getFormData(form);</code></pre>
+							</div>
+							<div
+								class="bg-white p-6 rounded-xl border border-gray-200 hover:border-gray-300 transition-colors">
+								<h3 class="text-lg font-semibold mb-2 text-gray-900 font-mono">
+									<code>downloadFile(blob, filename)</code></h3>
+								<p class="mb-4">Triggers file download.</p>
+								<pre
+									class="bg-gray-50 p-4 rounded-lg border border-gray-100 text-sm font-mono overflow-x-auto text-gray-800 mt-4"><code>UtilityHelpers.downloadFile(blob, 'file.txt');</code></pre>
+							</div>
+							<div
+								class="bg-white p-6 rounded-xl border border-gray-200 hover:border-gray-300 transition-colors">
+								<h3 class="text-lg font-semibold mb-2 text-gray-900 font-mono">
+									<code>toggleFullscreen(element)</code></h3>
+								<p class="mb-4">Toggles fullscreen mode.</p>
+								<pre
+									class="bg-gray-50 p-4 rounded-lg border border-gray-100 text-sm font-mono overflow-x-auto text-gray-800 mt-4"><code>UtilityHelpers.toggleFullscreen();</code></pre>
+							</div>
+							<div
+								class="bg-white p-6 rounded-xl border border-gray-200 hover:border-gray-300 transition-colors">
+								<h3 class="text-lg font-semibold mb-2 text-gray-900 font-mono">
+									<code>lazyLoadImages(selector)</code></h3>
+								<p class="mb-4">Lazy loads images on scroll.</p>
+								<pre
+									class="bg-gray-50 p-4 rounded-lg border border-gray-100 text-sm font-mono overflow-x-auto text-gray-800 mt-4"><code>UtilityHelpers.lazyLoadImages('img[data-src]');</code></pre>
+							</div>
+							<div
+								class="bg-white p-6 rounded-xl border border-gray-200 hover:border-gray-300 transition-colors">
+								<h3 class="text-lg font-semibold mb-2 text-gray-900 font-mono">
+									<code>getCSSVariable(variableName, element)</code>
+								</h3>
+								<p class="mb-4">Gets CSS variable value.</p>
+								<pre
+									class="bg-gray-50 p-4 rounded-lg border border-gray-100 text-sm font-mono overflow-x-auto text-gray-800 mt-4"><code>const value = UtilityHelpers.getCSSVariable('--color');</code></pre>
+							</div>
+							<div
+								class="bg-white p-6 rounded-xl border border-gray-200 hover:border-gray-300 transition-colors">
+								<h3 class="text-lg font-semibold mb-2 text-gray-900 font-mono">
+									<code>setCSSVariable(variableName, value, element)</code>
+								</h3>
+								<p class="mb-4">Sets CSS variable value.</p>
+								<pre
+									class="bg-gray-50 p-4 rounded-lg border border-gray-100 text-sm font-mono overflow-x-auto text-gray-800 mt-4"><code>UtilityHelpers.setCSSVariable('--color', 'red');</code></pre>
+							</div>
+							<div
+								class="bg-white p-6 rounded-xl border border-gray-200 hover:border-gray-300 transition-colors">
+								<h3 class="text-lg font-semibold mb-2 text-gray-900 font-mono">
+									<code>saveScrollPosition()</code></h3>
+								<p class="mb-4">Saves current scroll position.</p>
+								<pre
+									class="bg-gray-50 p-4 rounded-lg border border-gray-100 text-sm font-mono overflow-x-auto text-gray-800 mt-4"><code>UtilityHelpers.saveScrollPosition();</code></pre>
+							</div>
+							<div
+								class="bg-white p-6 rounded-xl border border-gray-200 hover:border-gray-300 transition-colors">
+								<h3 class="text-lg font-semibold mb-2 text-gray-900 font-mono">
+									<code>restoreScrollPosition()</code></h3>
+								<p class="mb-4">Restores saved scroll position.</p>
+								<pre
+									class="bg-gray-50 p-4 rounded-lg border border-gray-100 text-sm font-mono overflow-x-auto text-gray-800 mt-4"><code>UtilityHelpers.restoreScrollPosition();</code></pre>
+							</div>
+							<div
+								class="bg-white p-6 rounded-xl border border-gray-200 hover:border-gray-300 transition-colors">
+								<h3 class="text-lg font-semibold mb-2 text-gray-900 font-mono">
+									<code>textToSpeech(text)</code></h3>
+								<p class="mb-4">Speaks text using SpeechSynthesis.</p>
+								<pre
+									class="bg-gray-50 p-4 rounded-lg border border-gray-100 text-sm font-mono overflow-x-auto text-gray-800 mt-4"><code>UtilityHelpers.textToSpeech('Hello');</code></pre>
+							</div>
+							<div
+								class="bg-white p-6 rounded-xl border border-gray-200 hover:border-gray-300 transition-colors">
+								<h3 class="text-lg font-semibold mb-2 text-gray-900 font-mono">
+									<code>debouncedInput(inputElement, callback, delay)</code>
+								</h3>
+								<p class="mb-4">Debounces input events.</p>
+								<pre
+									class="bg-gray-50 p-4 rounded-lg border border-gray-100 text-sm font-mono overflow-x-auto text-gray-800 mt-4"><code>UtilityHelpers.debouncedInput(input, () => console.log('input'), 300);</code></pre>
+							</div>
+							<div
+								class="bg-white p-6 rounded-xl border border-gray-200 hover:border-gray-300 transition-colors">
+								<h3 class="text-lg font-semibold mb-2 text-gray-900 font-mono">
+									<code>runInParallel(tasks)</code></h3>
+								<p class="mb-4">Runs async tasks in parallel.</p>
+								<pre
+									class="bg-gray-50 p-4 rounded-lg border border-gray-100 text-sm font-mono overflow-x-auto text-gray-800 mt-4"><code>const results = await UtilityHelpers.runInParallel([task1, task2]);</code></pre>
+							</div>
+						</div>
+					</section>
+				</div>
+			</main>
+		</div>
+
+		<footer class="text-center mt-20 pb-10 border-t border-gray-100 pt-10 text-gray-400 text-sm">
+			<p>&copy; 2026 UtilityHelpers. Documentation design inspired by Pines UI.</p>
+		</footer>
+	</div>
+</body>
+
+</html>
