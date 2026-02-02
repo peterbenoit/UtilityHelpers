@@ -1055,10 +1055,25 @@ console.log(flow(1)); // Output: 3 ((1 * 2) + 1)</code></pre>
 										<h3 class="text-lg font-semibold mb-2 text-gray-900 font-mono">
 											<code>textToSpeech(text)</code>
 										</h3>
-										<p class="mb-4">Speaks text using SpeechSynthesis.</p>
+										<p class="mb-4">Speaks text using SpeechSynthesis with options.</p>
 										<pre
-											class="bg-gray-50 p-4 rounded-lg border border-gray-100 text-sm font-mono overflow-x-auto text-gray-800 mt-4"><code>UtilityHelpers.textToSpeech('Hello World');
-// Output: (speaks 'Hello World')</code></pre>
+											class="bg-gray-50 p-4 rounded-lg border border-gray-100 text-sm font-mono overflow-x-auto text-gray-800 mt-4"><code>UtilityHelpers.textToSpeech('Hello World', {
+    rate: 1.2,    // 0.1 to 10
+    pitch: 1,     // 0 to 2
+    volume: 1,    // 0 to 1
+    voice: 'Google US English' // Optional voice name
+});
+// Output: (speaks 'Hello World' with specified settings)</code></pre>
+									</div>
+									<div
+										class="bg-white p-6 rounded-xl border border-gray-200 hover:border-gray-300 transition-colors">
+										<h3 class="text-lg font-semibold mb-2 text-gray-900 font-mono">
+											<code>getVoices()</code>
+										</h3>
+										<p class="mb-4">Returns available speech synthesis voices.</p>
+										<pre
+											class="bg-gray-50 p-4 rounded-lg border border-gray-100 text-sm font-mono overflow-x-auto text-gray-800 mt-4"><code>const voices = UtilityHelpers.getVoices();
+// Output: [SpeechSynthesisVoice, SpeechSynthesisVoice, ...]</code></pre>
 									</div>
 									<div
 										class="bg-white p-6 rounded-xl border border-gray-200 hover:border-gray-300 transition-colors">

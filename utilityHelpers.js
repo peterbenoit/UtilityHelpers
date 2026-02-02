@@ -791,14 +791,32 @@ class UtilityHelpers {
 	}
 
 	// if window.speechSynthesis is available, speak the text
-	static textToSpeech(text) {
+	static textToSpeech(text, options = {}) {
 		if ('speechSynthesis' in window) {
 			const synth = window.speechSynthesis;
 			const utterance = new SpeechSynthesisUtterance(text);
+
+			if (options.rate) utterance.rate = options.rate; // 0.1 to 10
+			if (options.pitch) utterance.pitch = options.pitch; // 0 to 2
+			if (options.volume) utterance.volume = options.volume; // 0 to 1
+
+			if (options.voice) {
+				const voices = synth.getVoices();
+				const selectedVoice = voices.find(v => v.name === options.voice);
+				if (selectedVoice) utterance.voice = selectedVoice;
+			}
+
 			synth.speak(utterance);
 		} else {
 			console.error("Speech Synthesis not supported in this browser.");
 		}
+	}
+
+	static getVoices() {
+		if ('speechSynthesis' in window) {
+			return window.speechSynthesis.getVoices();
+		}
+		return [];
 	}
 
 	// Debounce an input event with a delay
