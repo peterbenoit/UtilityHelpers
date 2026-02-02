@@ -849,76 +849,80 @@ class UtilityHelpers {
 	}
 
 
-	// Validating "friendly" input. All real validation should be done in the backend.
+	// Validation: Input (Refactored)
 	static validateAndSanitizeInput(inputElement, type = 'text', options = {}) {
-		let sanitizedInput = inputElement.value.trim();
+		let value = inputElement.value.trim();
 
-		if (inputElement.required && !sanitizedInput) {
+		// 1. Basic HTML5 Validation
+		if (inputElement.required && !value) {
 			return { valid: false, error: 'This field is required.' };
 		}
 
 		if (!inputElement.checkValidity()) {
-			const validity = inputElement.validity;
-
-			if (validity.patternMismatch) {
-				return { valid: false, error: 'Invalid format.' };
-			}
-			if (validity.tooLong) {
-				return { valid: false, error: `Input exceeds maximum length of ${inputElement.maxLength}.` };
-			}
-			if (validity.rangeUnderflow) {
-				return { valid: false, error: `Value is below the minimum of ${inputElement.min}.` };
-			}
-			if (validity.rangeOverflow) {
-				return { valid: false, error: `Value exceeds the maximum of ${inputElement.max}.` };
-			}
-
-			return { valid: false, error: 'Invalid input.' };
+			return { valid: false, error: UtilityHelpers.getValidityMessage(inputElement) };
 		}
 
+		// 2. Type-Specific Validation & Sanitization
 		switch (type) {
 			case 'text':
-				sanitizedInput = sanitizedInput.replace(/[^a-zA-Z0-9\s]/g, '');
-				if (options.maxLength && sanitizedInput.length > options.maxLength) {
-					return { valid: false, error: `Text exceeds maximum length of ${options.maxLength}` };
-				}
-				break;
-
+				return UtilityHelpers.validateText(value, options);
 			case 'email':
-				sanitizedInput = sanitizedInput.toLowerCase();
-				const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-				if (!emailRegex.test(sanitizedInput)) {
-					return { valid: false, error: 'Invalid email format' };
-				}
-				break;
-
+				return UtilityHelpers.validateEmailInput(value);
 			case 'number':
-				sanitizedInput = sanitizedInput.replace(/[^\d]/g, '');
-				const numValue = parseFloat(sanitizedInput);
-				if (isNaN(numValue)) {
-					return { valid: false, error: 'Invalid number format' };
-				}
-				if (options.min !== undefined && numValue < options.min) {
-					return { valid: false, error: `Number is less than minimum value of ${options.min}` };
-				}
-				if (options.max !== undefined && numValue > options.max) {
-					return { valid: false, error: `Number exceeds maximum value of ${options.max}` };
-				}
-				sanitizedInput = numValue;
-				break;
-
+				return UtilityHelpers.validateNumberInput(value, options);
 			case 'textarea':
-				sanitizedInput = sanitizedInput.replace(/<[^>]+>/g, '');
-				if (options.maxLength && sanitizedInput.length > options.maxLength) {
-					return { valid: false, error: `Text exceeds maximum length of ${options.maxLength}` };
-				}
-				break;
-
+				return UtilityHelpers.validateTextarea(value, options);
 			default:
 				return { valid: false, error: 'Unsupported input type' };
 		}
+	}
 
-		return { valid: true, sanitized: sanitizedInput };
+	// Helper: Get HTML5 validation message
+	static getValidityMessage(input) {
+		if (input.validity.patternMismatch) return 'Invalid format.';
+		if (input.validity.tooLong) return `Input exceeds maximum length of ${input.maxLength}.`;
+		if (input.validity.rangeUnderflow) return `Value is below the minimum of ${input.min}.`;
+		if (input.validity.rangeOverflow) return `Value exceeds the maximum of ${input.max}.`;
+		return 'Invalid input.';
+	}
+
+	// Helper: Validate Text
+	static validateText(value, options) {
+		const sanitized = value.replace(/[^a-zA-Z0-9\s]/g, '');
+		if (options.maxLength && sanitized.length > options.maxLength) {
+			return { valid: false, error: `Text exceeds maximum length of ${options.maxLength}` };
+		}
+		return { valid: true, sanitized };
+	}
+
+	// Helper: Validate Email (Input)
+	static validateEmailInput(value) {
+		const lowerVal = value.toLowerCase();
+		if (!UtilityHelpers.isValidEmail(lowerVal)) {
+			return { valid: false, error: 'Invalid email format' };
+		}
+		return { valid: true, sanitized: lowerVal };
+	}
+
+	// Helper: Validate Number
+	static validateNumberInput(value, options) {
+		const sanitized = value.replace(/[^\d.-]/g, ''); // Allow decimal and negative
+		const num = parseFloat(sanitized);
+
+		if (isNaN(num)) return { valid: false, error: 'Invalid number format' };
+		if (options.min !== undefined && num < options.min) return { valid: false, error: `Number is less than minimum value of ${options.min}` };
+		if (options.max !== undefined && num > options.max) return { valid: false, error: `Number exceeds maximum value of ${options.max}` };
+
+		return { valid: true, sanitized: num };
+	}
+
+	// Helper: Validate Textarea
+	static validateTextarea(value, options) {
+		const sanitized = UtilityHelpers.stripHtml(value);
+		if (options.maxLength && sanitized.length > options.maxLength) {
+			return { valid: false, error: `Text exceeds maximum length of ${options.maxLength}` };
+		}
+		return { valid: true, sanitized };
 	}
 
 	// --- New Modern Helpers ---
