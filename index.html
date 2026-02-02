@@ -216,7 +216,18 @@
 											Optionally
 											calculates average color.</p>
 										<pre
-											class="bg-gray-50 p-4 rounded-lg border border-gray-100 text-sm font-mono overflow-x-auto text-gray-800 mt-4"><code>UtilityHelpers.getImageDetails('https://example.com/image.jpg', true).then(details => console.log(details));</code></pre>
+											class="bg-gray-50 p-4 rounded-lg border border-gray-100 text-sm font-mono overflow-x-auto text-gray-800 mt-4"><code>UtilityHelpers.getImageDetails('https://example.com/image.jpg', true).then(details => {
+    console.log(details);
+    // Output:
+    // {
+    //   width: 800,
+    //   height: 600,
+    //   aspectRatio: 1.33,
+    //   format: 'jpeg',
+    //   size: 10240,
+    //   averageColor: { r: 255, g: 255, b: 255 }
+    // }
+});</code></pre>
 									</div>
 									<div
 										class="bg-white p-6 rounded-xl border border-gray-200 hover:border-gray-300 transition-colors">
@@ -226,7 +237,8 @@
 										<p class="mb-4">Determines image orientation: landscape, portrait, or square.
 										</p>
 										<pre
-											class="bg-gray-50 p-4 rounded-lg border border-gray-100 text-sm font-mono overflow-x-auto text-gray-800 mt-4"><code>const orientation = UtilityHelpers.getImageOrientation(img);</code></pre>
+											class="bg-gray-50 p-4 rounded-lg border border-gray-100 text-sm font-mono overflow-x-auto text-gray-800 mt-4"><code>const orientation = UtilityHelpers.getImageOrientation(imgElement);
+// Output: 'landscape'</code></pre>
 									</div>
 									<div
 										class="bg-white p-6 rounded-xl border border-gray-200 hover:border-gray-300 transition-colors">
@@ -235,7 +247,8 @@
 										</h3>
 										<p class="mb-4">Formats bytes into human-readable format (e.g., KB, MB).</p>
 										<pre
-											class="bg-gray-50 p-4 rounded-lg border border-gray-100 text-sm font-mono overflow-x-auto text-gray-800 mt-4"><code>const size = UtilityHelpers.formatBytes(1024); // '1 KB'</code></pre>
+											class="bg-gray-50 p-4 rounded-lg border border-gray-100 text-sm font-mono overflow-x-auto text-gray-800 mt-4"><code>const size = UtilityHelpers.formatBytes(1500000);
+// Output: '1.43 MB'</code></pre>
 									</div>
 									<div
 										class="bg-white p-6 rounded-xl border border-gray-200 hover:border-gray-300 transition-colors">
@@ -244,7 +257,8 @@
 										</h3>
 										<p class="mb-4">Returns user-friendly format name from MIME type.</p>
 										<pre
-											class="bg-gray-50 p-4 rounded-lg border border-gray-100 text-sm font-mono overflow-x-auto text-gray-800 mt-4"><code>const format = UtilityHelpers.getImageFormat('image/jpeg'); // 'JPEG'</code></pre>
+											class="bg-gray-50 p-4 rounded-lg border border-gray-100 text-sm font-mono overflow-x-auto text-gray-800 mt-4"><code>const format = UtilityHelpers.getImageFormat('image/svg+xml');
+// Output: 'SVG'</code></pre>
 									</div>
 									<div
 										class="bg-white p-6 rounded-xl border border-gray-200 hover:border-gray-300 transition-colors">
@@ -253,7 +267,10 @@
 										</h3>
 										<p class="mb-4">Calculates average color of an image.</p>
 										<pre
-											class="bg-gray-50 p-4 rounded-lg border border-gray-100 text-sm font-mono overflow-x-auto text-gray-800 mt-4"><code>UtilityHelpers.getAverageImageColor('https://example.com/image.jpg').then(color => console.log(color));</code></pre>
+											class="bg-gray-50 p-4 rounded-lg border border-gray-100 text-sm font-mono overflow-x-auto text-gray-800 mt-4"><code>UtilityHelpers.getAverageImageColor('https://example.com/image.jpg').then(color => {
+    console.log(color);
+    // Output: { r: 100, g: 150, b: 200 }
+});</code></pre>
 									</div>
 									<div
 										class="bg-white p-6 rounded-xl border border-gray-200 hover:border-gray-300 transition-colors">
@@ -263,7 +280,9 @@
 										<p class="mb-4">Converts image to Base64 string with optional format and
 											quality.</p>
 										<pre
-											class="bg-gray-50 p-4 rounded-lg border border-gray-100 text-sm font-mono overflow-x-auto text-gray-800 mt-4"><code>UtilityHelpers.getImageBase64('https://example.com/image.jpg', { format: 'image/jpeg', quality: 0.8 }).then(base64 => console.log(base64));</code></pre>
+											class="bg-gray-50 p-4 rounded-lg border border-gray-100 text-sm font-mono overflow-x-auto text-gray-800 mt-4"><code>UtilityHelpers.getImageBase64('image.jpg').then(base64 => {
+    // Output: 'data:image/jpeg;base64,/9j/4AAQSkZJRg...'
+});</code></pre>
 									</div>
 									<div
 										class="bg-white p-6 rounded-xl border border-gray-200 hover:border-gray-300 transition-colors">
@@ -272,7 +291,8 @@
 										</h3>
 										<p class="mb-4">Calculates luminance of a color for contrast checks.</p>
 										<pre
-											class="bg-gray-50 p-4 rounded-lg border border-gray-100 text-sm font-mono overflow-x-auto text-gray-800 mt-4"><code>const luminance = UtilityHelpers.getLuminance('rgb(255,255,255)');</code></pre>
+											class="bg-gray-50 p-4 rounded-lg border border-gray-100 text-sm font-mono overflow-x-auto text-gray-800 mt-4"><code>const luminance = UtilityHelpers.getLuminance('rgb(255, 255, 255)');
+// Output: 1 (white is brightest)</code></pre>
 									</div>
 									<div
 										class="bg-white p-6 rounded-xl border border-gray-200 hover:border-gray-300 transition-colors">
@@ -281,7 +301,8 @@
 										</h3>
 										<p class="mb-4">Calculates contrast ratio between two lines.</p>
 										<pre
-											class="bg-gray-50 p-4 rounded-lg border border-gray-100 text-sm font-mono overflow-x-auto text-gray-800 mt-4"><code>const ratio = UtilityHelpers.getContrastRatio('rgb(0,0,0)', 'rgb(255,255,255)');</code></pre>
+											class="bg-gray-50 p-4 rounded-lg border border-gray-100 text-sm font-mono overflow-x-auto text-gray-800 mt-4"><code>const ratio = UtilityHelpers.getContrastRatio('rgb(0, 0, 0)', 'rgb(255, 255, 255)');
+// Output: 21 (maximum contrast)</code></pre>
 									</div>
 								</div>
 							</section>
@@ -296,7 +317,8 @@
 										</h3>
 										<p class="mb-4">Splits array into chunks of specific size.</p>
 										<pre
-											class="bg-gray-50 p-4 rounded-lg border border-gray-100 text-sm font-mono overflow-x-auto text-gray-800 mt-4"><code>const chunks = UtilityHelpers.chunk([1, 2, 3, 4], 2); // [[1, 2], [3, 4]]</code></pre>
+											class="bg-gray-50 p-4 rounded-lg border border-gray-100 text-sm font-mono overflow-x-auto text-gray-800 mt-4"><code>const chunks = UtilityHelpers.chunk([1, 2, 3, 4], 2);
+// Output: [[1, 2], [3, 4]]</code></pre>
 									</div>
 									<div
 										class="bg-white p-6 rounded-xl border border-gray-200 hover:border-gray-300 transition-colors">
@@ -305,7 +327,8 @@
 										</h3>
 										<p class="mb-4">Groups array items by key or function.</p>
 										<pre
-											class="bg-gray-50 p-4 rounded-lg border border-gray-100 text-sm font-mono overflow-x-auto text-gray-800 mt-4"><code>const grouped = UtilityHelpers.groupBy(users, 'role');</code></pre>
+											class="bg-gray-50 p-4 rounded-lg border border-gray-100 text-sm font-mono overflow-x-auto text-gray-800 mt-4"><code>const grouped = UtilityHelpers.groupBy(users, 'role');
+// Output: { admin: [{ id: 1, ... }], user: [{ id: 2, ... }] }</code></pre>
 									</div>
 									<div
 										class="bg-white p-6 rounded-xl border border-gray-200 hover:border-gray-300 transition-colors">
@@ -314,7 +337,8 @@
 										</h3>
 										<p class="mb-4">Randomly shuffles array elements.</p>
 										<pre
-											class="bg-gray-50 p-4 rounded-lg border border-gray-100 text-sm font-mono overflow-x-auto text-gray-800 mt-4"><code>const shuffled = UtilityHelpers.shuffleArray([1, 2, 3, 4]);</code></pre>
+											class="bg-gray-50 p-4 rounded-lg border border-gray-100 text-sm font-mono overflow-x-auto text-gray-800 mt-4"><code>const shuffled = UtilityHelpers.shuffleArray([1, 2, 3, 4]);
+// Output: [2, 4, 1, 3] (random order)</code></pre>
 									</div>
 									<div
 										class="bg-white p-6 rounded-xl border border-gray-200 hover:border-gray-300 transition-colors">
@@ -323,7 +347,8 @@
 										</h3>
 										<p class="mb-4">Flattens nested arrays into a single array.</p>
 										<pre
-											class="bg-gray-50 p-4 rounded-lg border border-gray-100 text-sm font-mono overflow-x-auto text-gray-800 mt-4"><code>const flat = UtilityHelpers.flattenArray([1, [2, 3], [4]]);</code></pre>
+											class="bg-gray-50 p-4 rounded-lg border border-gray-100 text-sm font-mono overflow-x-auto text-gray-800 mt-4"><code>const flat = UtilityHelpers.flattenArray([1, [2, 3], [4]]);
+// Output: [1, 2, 3, 4]</code></pre>
 									</div>
 									<div
 										class="bg-white p-6 rounded-xl border border-gray-200 hover:border-gray-300 transition-colors">
@@ -332,7 +357,8 @@
 										</h3>
 										<p class="mb-4">Sums all numeric values in an array.</p>
 										<pre
-											class="bg-gray-50 p-4 rounded-lg border border-gray-100 text-sm font-mono overflow-x-auto text-gray-800 mt-4"><code>const sum = UtilityHelpers.sumArray([1, 2, 3]);</code></pre>
+											class="bg-gray-50 p-4 rounded-lg border border-gray-100 text-sm font-mono overflow-x-auto text-gray-800 mt-4"><code>const sum = UtilityHelpers.sumArray([1, 2, 3]);
+// Output: 6</code></pre>
 									</div>
 									<div
 										class="bg-white p-6 rounded-xl border border-gray-200 hover:border-gray-300 transition-colors">
@@ -341,7 +367,8 @@
 										</h3>
 										<p class="mb-4">Counts unique elements in an array.</p>
 										<pre
-											class="bg-gray-50 p-4 rounded-lg border border-gray-100 text-sm font-mono overflow-x-auto text-gray-800 mt-4"><code>const count = UtilityHelpers.countUniqueElements([1, 2, 2, 3]);</code></pre>
+											class="bg-gray-50 p-4 rounded-lg border border-gray-100 text-sm font-mono overflow-x-auto text-gray-800 mt-4"><code>const count = UtilityHelpers.countUniqueElements([1, 2, 2, 3]);
+// Output: 3</code></pre>
 									</div>
 									<div
 										class="bg-white p-6 rounded-xl border border-gray-200 hover:border-gray-300 transition-colors">
@@ -350,7 +377,8 @@
 										</h3>
 										<p class="mb-4">Returns array of duplicate elements.</p>
 										<pre
-											class="bg-gray-50 p-4 rounded-lg border border-gray-100 text-sm font-mono overflow-x-auto text-gray-800 mt-4"><code>const duplicates = UtilityHelpers.findDuplicates([1, 2, 2, 3]);</code></pre>
+											class="bg-gray-50 p-4 rounded-lg border border-gray-100 text-sm font-mono overflow-x-auto text-gray-800 mt-4"><code>const duplicates = UtilityHelpers.findDuplicates([1, 2, 2, 3, 3, 4]);
+// Output: [2, 3]</code></pre>
 									</div>
 									<div
 										class="bg-white p-6 rounded-xl border border-gray-200 hover:border-gray-300 transition-colors">
@@ -359,7 +387,8 @@
 										</h3>
 										<p class="mb-4">Counts occurrences of a value in an array.</p>
 										<pre
-											class="bg-gray-50 p-4 rounded-lg border border-gray-100 text-sm font-mono overflow-x-auto text-gray-800 mt-4"><code>const count = UtilityHelpers.countOccurrences([1, 2, 2, 3], 2);</code></pre>
+											class="bg-gray-50 p-4 rounded-lg border border-gray-100 text-sm font-mono overflow-x-auto text-gray-800 mt-4"><code>const count = UtilityHelpers.countOccurrences([1, 2, 2, 3], 2);
+// Output: 2</code></pre>
 									</div>
 									<div
 										class="bg-white p-6 rounded-xl border border-gray-200 hover:border-gray-300 transition-colors">
@@ -368,7 +397,8 @@
 										</h3>
 										<p class="mb-4">Selects a random element from an array.</p>
 										<pre
-											class="bg-gray-50 p-4 rounded-lg border border-gray-100 text-sm font-mono overflow-x-auto text-gray-800 mt-4"><code>const random = UtilityHelpers.getRandomElement([1, 2, 3]);</code></pre>
+											class="bg-gray-50 p-4 rounded-lg border border-gray-100 text-sm font-mono overflow-x-auto text-gray-800 mt-4"><code>const random = UtilityHelpers.getRandomElement([1, 2, 3, 4, 5]);
+// Output: 3 (randomly selected)</code></pre>
 									</div>
 									<div
 										class="bg-white p-6 rounded-xl border border-gray-200 hover:border-gray-300 transition-colors">
@@ -377,7 +407,8 @@
 										</h3>
 										<p class="mb-4">Calculates median of numeric array.</p>
 										<pre
-											class="bg-gray-50 p-4 rounded-lg border border-gray-100 text-sm font-mono overflow-x-auto text-gray-800 mt-4"><code>const median = UtilityHelpers.getMedian([1, 2, 3, 4, 5]);</code></pre>
+											class="bg-gray-50 p-4 rounded-lg border border-gray-100 text-sm font-mono overflow-x-auto text-gray-800 mt-4"><code>const median = UtilityHelpers.getMedian([1, 3, 5, 7, 9]);
+// Output: 5</code></pre>
 									</div>
 									<div
 										class="bg-white p-6 rounded-xl border border-gray-200 hover:border-gray-300 transition-colors">
@@ -386,7 +417,8 @@
 										</h3>
 										<p class="mb-4">Creates array of numbers in range.</p>
 										<pre
-											class="bg-gray-50 p-4 rounded-lg border border-gray-100 text-sm font-mono overflow-x-auto text-gray-800 mt-4"><code>const range = UtilityHelpers.range(1, 10, 2);</code></pre>
+											class="bg-gray-50 p-4 rounded-lg border border-gray-100 text-sm font-mono overflow-x-auto text-gray-800 mt-4"><code>const range = UtilityHelpers.range(1, 10, 2);
+// Output: [1, 3, 5, 7, 9]</code></pre>
 									</div>
 								</div>
 							</section>
@@ -401,7 +433,8 @@
 										</h3>
 										<p class="mb-4">Capitalizes first letter of each word.</p>
 										<pre
-											class="bg-gray-50 p-4 rounded-lg border border-gray-100 text-sm font-mono overflow-x-auto text-gray-800 mt-4"><code>const capitalized = UtilityHelpers.capitalizeWords('hello world');</code></pre>
+											class="bg-gray-50 p-4 rounded-lg border border-gray-100 text-sm font-mono overflow-x-auto text-gray-800 mt-4"><code>const capitalized = UtilityHelpers.capitalizeWords('hello world');
+// Output: 'Hello World'</code></pre>
 									</div>
 									<div
 										class="bg-white p-6 rounded-xl border border-gray-200 hover:border-gray-300 transition-colors">
@@ -410,7 +443,8 @@
 										</h3>
 										<p class="mb-4">Pluralizes word based on count, handling irregulars.</p>
 										<pre
-											class="bg-gray-50 p-4 rounded-lg border border-gray-100 text-sm font-mono overflow-x-auto text-gray-800 mt-4"><code>const plural = UtilityHelpers.pluralize('child', 2);</code></pre>
+											class="bg-gray-50 p-4 rounded-lg border border-gray-100 text-sm font-mono overflow-x-auto text-gray-800 mt-4"><code>const plural = UtilityHelpers.pluralize('child', 2);
+// Output: 'children'</code></pre>
 									</div>
 									<div
 										class="bg-white p-6 rounded-xl border border-gray-200 hover:border-gray-300 transition-colors">
@@ -419,7 +453,8 @@
 										</h3>
 										<p class="mb-4">Escapes HTML special characters.</p>
 										<pre
-											class="bg-gray-50 p-4 rounded-lg border border-gray-100 text-sm font-mono overflow-x-auto text-gray-800 mt-4"><code>const escaped = UtilityHelpers.escapeHtml('<div>Hello</div>');</code></pre>
+											class="bg-gray-50 p-4 rounded-lg border border-gray-100 text-sm font-mono overflow-x-auto text-gray-800 mt-4"><code>const escaped = UtilityHelpers.escapeHtml('<div>Hello</div>');
+// Output: '&amp;lt;div&amp;gt;Hello&amp;lt;/div&amp;gt;'</code></pre>
 									</div>
 									<div
 										class="bg-white p-6 rounded-xl border border-gray-200 hover:border-gray-300 transition-colors">
@@ -428,7 +463,8 @@
 										</h3>
 										<p class="mb-4">Unescapes HTML entities.</p>
 										<pre
-											class="bg-gray-50 p-4 rounded-lg border border-gray-100 text-sm font-mono overflow-x-auto text-gray-800 mt-4"><code>const unescaped = UtilityHelpers.unescapeHtml('&lt;div&gt;Hello&lt;/div&gt;');</code></pre>
+											class="bg-gray-50 p-4 rounded-lg border border-gray-100 text-sm font-mono overflow-x-auto text-gray-800 mt-4"><code>const unescaped = UtilityHelpers.unescapeHtml('&lt;div&gt;Hello&lt;/div&gt;');
+// Output: '&lt;div&gt;Hello&lt;/div&gt;'</code></pre>
 									</div>
 									<div
 										class="bg-white p-6 rounded-xl border border-gray-200 hover:border-gray-300 transition-colors">
@@ -437,7 +473,8 @@
 										</h3>
 										<p class="mb-4">Generates random alphanumeric string.</p>
 										<pre
-											class="bg-gray-50 p-4 rounded-lg border border-gray-100 text-sm font-mono overflow-x-auto text-gray-800 mt-4"><code>const random = UtilityHelpers.randomString(10);</code></pre>
+											class="bg-gray-50 p-4 rounded-lg border border-gray-100 text-sm font-mono overflow-x-auto text-gray-800 mt-4"><code>const random = UtilityHelpers.randomString(10);
+// Output: '7F3g9kL2m1' (random)</code></pre>
 									</div>
 									<div
 										class="bg-white p-6 rounded-xl border border-gray-200 hover:border-gray-300 transition-colors">
@@ -446,7 +483,8 @@
 										</h3>
 										<p class="mb-4">Converts number to English words.</p>
 										<pre
-											class="bg-gray-50 p-4 rounded-lg border border-gray-100 text-sm font-mono overflow-x-auto text-gray-800 mt-4"><code>const words = UtilityHelpers.numberToWords(123);</code></pre>
+											class="bg-gray-50 p-4 rounded-lg border border-gray-100 text-sm font-mono overflow-x-auto text-gray-800 mt-4"><code>const words = UtilityHelpers.numberToWords(123);
+// Output: 'one hundred twenty-three'</code></pre>
 									</div>
 									<div
 										class="bg-white p-6 rounded-xl border border-gray-200 hover:border-gray-300 transition-colors">
@@ -455,7 +493,8 @@
 										</h3>
 										<p class="mb-4">Escapes special regex characters.</p>
 										<pre
-											class="bg-gray-50 p-4 rounded-lg border border-gray-100 text-sm font-mono overflow-x-auto text-gray-800 mt-4"><code>const safe = UtilityHelpers.escapeRegex('a.b'); // 'a\\.b'</code></pre>
+											class="bg-gray-50 p-4 rounded-lg border border-gray-100 text-sm font-mono overflow-x-auto text-gray-800 mt-4"><code>const safe = UtilityHelpers.escapeRegex('a.b');
+// Output: 'a\\.b'</code></pre>
 									</div>
 									<div
 										class="bg-white p-6 rounded-xl border border-gray-200 hover:border-gray-300 transition-colors">
@@ -464,7 +503,8 @@
 										</h3>
 										<p class="mb-4">Converts string to camelCase.</p>
 										<pre
-											class="bg-gray-50 p-4 rounded-lg border border-gray-100 text-sm font-mono overflow-x-auto text-gray-800 mt-4"><code>const str = UtilityHelpers.camelCase('hello-world'); // 'helloWorld'</code></pre>
+											class="bg-gray-50 p-4 rounded-lg border border-gray-100 text-sm font-mono overflow-x-auto text-gray-800 mt-4"><code>const str = UtilityHelpers.camelCase('hello-world');
+// Output: 'helloWorld'</code></pre>
 									</div>
 									<div
 										class="bg-white p-6 rounded-xl border border-gray-200 hover:border-gray-300 transition-colors">
@@ -473,7 +513,8 @@
 										</h3>
 										<p class="mb-4">Converts string to kebab-case.</p>
 										<pre
-											class="bg-gray-50 p-4 rounded-lg border border-gray-100 text-sm font-mono overflow-x-auto text-gray-800 mt-4"><code>const str = UtilityHelpers.kebabCase('helloWorld'); // 'hello-world'</code></pre>
+											class="bg-gray-50 p-4 rounded-lg border border-gray-100 text-sm font-mono overflow-x-auto text-gray-800 mt-4"><code>const str = UtilityHelpers.kebabCase('helloWorld');
+// Output: 'hello-world'</code></pre>
 									</div>
 									<div
 										class="bg-white p-6 rounded-xl border border-gray-200 hover:border-gray-300 transition-colors">
@@ -482,7 +523,8 @@
 										</h3>
 										<p class="mb-4">Converts string to snake_case.</p>
 										<pre
-											class="bg-gray-50 p-4 rounded-lg border border-gray-100 text-sm font-mono overflow-x-auto text-gray-800 mt-4"><code>const str = UtilityHelpers.snakeCase('helloWorld'); // 'hello_world'</code></pre>
+											class="bg-gray-50 p-4 rounded-lg border border-gray-100 text-sm font-mono overflow-x-auto text-gray-800 mt-4"><code>const str = UtilityHelpers.snakeCase('helloWorld');
+// Output: 'hello_world'</code></pre>
 									</div>
 									<div
 										class="bg-white p-6 rounded-xl border border-gray-200 hover:border-gray-300 transition-colors">
@@ -491,7 +533,8 @@
 										</h3>
 										<p class="mb-4">Truncates string with ellipsis.</p>
 										<pre
-											class="bg-gray-50 p-4 rounded-lg border border-gray-100 text-sm font-mono overflow-x-auto text-gray-800 mt-4"><code>const short = UtilityHelpers.truncate('long string', 5); // 'long ...'</code></pre>
+											class="bg-gray-50 p-4 rounded-lg border border-gray-100 text-sm font-mono overflow-x-auto text-gray-800 mt-4"><code>const short = UtilityHelpers.truncate('This is a very long string', 10);
+// Output: 'This is a ...'</code></pre>
 									</div>
 									<div
 										class="bg-white p-6 rounded-xl border border-gray-200 hover:border-gray-300 transition-colors">
@@ -500,7 +543,8 @@
 										</h3>
 										<p class="mb-4">Removes HTML tags from string.</p>
 										<pre
-											class="bg-gray-50 p-4 rounded-lg border border-gray-100 text-sm font-mono overflow-x-auto text-gray-800 mt-4"><code>const text = UtilityHelpers.stripHtml('&lt;p&gt;Hello&lt;/p&gt;'); // 'Hello'</code></pre>
+											class="bg-gray-50 p-4 rounded-lg border border-gray-100 text-sm font-mono overflow-x-auto text-gray-800 mt-4"><code>const text = UtilityHelpers.stripHtml('&lt;p&gt;Hello&lt;/p&gt;');
+// Output: 'Hello'</code></pre>
 									</div>
 								</div>
 							</section>
@@ -515,7 +559,8 @@
 										</h3>
 										<p class="mb-4">Creates object with only selected keys.</p>
 										<pre
-											class="bg-gray-50 p-4 rounded-lg border border-gray-100 text-sm font-mono overflow-x-auto text-gray-800 mt-4"><code>const picked = UtilityHelpers.pick({a: 1, b: 2}, ['a']); // {a: 1}</code></pre>
+											class="bg-gray-50 p-4 rounded-lg border border-gray-100 text-sm font-mono overflow-x-auto text-gray-800 mt-4"><code>const picked = UtilityHelpers.pick({a: 1, b: 2, c: 3}, ['a', 'c']);
+// Output: { a: 1, c: 3 }</code></pre>
 									</div>
 									<div
 										class="bg-white p-6 rounded-xl border border-gray-200 hover:border-gray-300 transition-colors">
@@ -524,7 +569,8 @@
 										</h3>
 										<p class="mb-4">Creates object without selected keys.</p>
 										<pre
-											class="bg-gray-50 p-4 rounded-lg border border-gray-100 text-sm font-mono overflow-x-auto text-gray-800 mt-4"><code>const omitted = UtilityHelpers.omit({a: 1, b: 2}, ['b']); // {a: 1}</code></pre>
+											class="bg-gray-50 p-4 rounded-lg border border-gray-100 text-sm font-mono overflow-x-auto text-gray-800 mt-4"><code>const omitted = UtilityHelpers.omit({a: 1, b: 2, c: 3}, ['b']);
+// Output: { a: 1, c: 3 }</code></pre>
 									</div>
 									<div
 										class="bg-white p-6 rounded-xl border border-gray-200 hover:border-gray-300 transition-colors">
@@ -533,7 +579,8 @@
 										</h3>
 										<p class="mb-4">Performs deep equality check.</p>
 										<pre
-											class="bg-gray-50 p-4 rounded-lg border border-gray-100 text-sm font-mono overflow-x-auto text-gray-800 mt-4"><code>const equal = UtilityHelpers.isEqual({a: 1}, {a: 1}); // true</code></pre>
+											class="bg-gray-50 p-4 rounded-lg border border-gray-100 text-sm font-mono overflow-x-auto text-gray-800 mt-4"><code>const equal = UtilityHelpers.isEqual({a: 1, b: {c: 2}}, {a: 1, b: {c: 2}});
+// Output: true</code></pre>
 									</div>
 									<div
 										class="bg-white p-6 rounded-xl border border-gray-200 hover:border-gray-300 transition-colors">
@@ -542,7 +589,8 @@
 										</h3>
 										<p class="mb-4">Deep merges two objects immutably.</p>
 										<pre
-											class="bg-gray-50 p-4 rounded-lg border border-gray-100 text-sm font-mono overflow-x-auto text-gray-800 mt-4"><code>const merged = UtilityHelpers.deepMerge(obj1, obj2);</code></pre>
+											class="bg-gray-50 p-4 rounded-lg border border-gray-100 text-sm font-mono overflow-x-auto text-gray-800 mt-4"><code>const merged = UtilityHelpers.deepMerge({a: 1}, {b: 2});
+// Output: { a: 1, b: 2 }</code></pre>
 									</div>
 									<div
 										class="bg-white p-6 rounded-xl border border-gray-200 hover:border-gray-300 transition-colors">
@@ -551,7 +599,8 @@
 										</h3>
 										<p class="mb-4">Returns type: 'array', 'object', or typeof.</p>
 										<pre
-											class="bg-gray-50 p-4 rounded-lg border border-gray-100 text-sm font-mono overflow-x-auto text-gray-800 mt-4"><code>const type = UtilityHelpers.getType([1, 2, 3]);</code></pre>
+											class="bg-gray-50 p-4 rounded-lg border border-gray-100 text-sm font-mono overflow-x-auto text-gray-800 mt-4"><code>const type = UtilityHelpers.getType([1, 2, 3]);
+// Output: 'array'</code></pre>
 									</div>
 									<div
 										class="bg-white p-6 rounded-xl border border-gray-200 hover:border-gray-300 transition-colors">
@@ -560,7 +609,8 @@
 										</h3>
 										<p class="mb-4">Checks if object is empty.</p>
 										<pre
-											class="bg-gray-50 p-4 rounded-lg border border-gray-100 text-sm font-mono overflow-x-auto text-gray-800 mt-4"><code>const empty = UtilityHelpers.isObjectEmpty({});</code></pre>
+											class="bg-gray-50 p-4 rounded-lg border border-gray-100 text-sm font-mono overflow-x-auto text-gray-800 mt-4"><code>const empty = UtilityHelpers.isObjectEmpty({});
+// Output: true</code></pre>
 									</div>
 								</div>
 							</section>
@@ -576,7 +626,8 @@
 										</h3>
 										<p class="mb-4">Generates random date between two dates.</p>
 										<pre
-											class="bg-gray-50 p-4 rounded-lg border border-gray-100 text-sm font-mono overflow-x-auto text-gray-800 mt-4"><code>const date = UtilityHelpers.randomDateBetweenTwo(new Date(2000, 0, 1), new Date());</code></pre>
+											class="bg-gray-50 p-4 rounded-lg border border-gray-100 text-sm font-mono overflow-x-auto text-gray-800 mt-4"><code>const date = UtilityHelpers.randomDateBetweenTwo(new Date(2020, 0, 1), new Date());
+// Output: Fri Nov 12 2021... (random date)</code></pre>
 									</div>
 									<div
 										class="bg-white p-6 rounded-xl border border-gray-200 hover:border-gray-300 transition-colors">
@@ -585,7 +636,8 @@
 										</h3>
 										<p class="mb-4">Generates unique ID based on timestamp.</p>
 										<pre
-											class="bg-gray-50 p-4 rounded-lg border border-gray-100 text-sm font-mono overflow-x-auto text-gray-800 mt-4"><code>const id = UtilityHelpers.timeStampID();</code></pre>
+											class="bg-gray-50 p-4 rounded-lg border border-gray-100 text-sm font-mono overflow-x-auto text-gray-800 mt-4"><code>const id = UtilityHelpers.timeStampID();
+// Output: '1678901234567' (timestamp-based ID)</code></pre>
 									</div>
 								</div>
 							</section>
@@ -600,7 +652,8 @@
 										</h3>
 										<p class="mb-4">Generates a UUID v4.</p>
 										<pre
-											class="bg-gray-50 p-4 rounded-lg border border-gray-100 text-sm font-mono overflow-x-auto text-gray-800 mt-4"><code>const uuid = UtilityHelpers.generateUUID();</code></pre>
+											class="bg-gray-50 p-4 rounded-lg border border-gray-100 text-sm font-mono overflow-x-auto text-gray-800 mt-4"><code>const uuid = UtilityHelpers.generateUUID();
+// Output: 'f47ac10b-58cc-4372-a567-0e02b2c3d479' (valid UUID)</code></pre>
 									</div>
 									<div
 										class="bg-white p-6 rounded-xl border border-gray-200 hover:border-gray-300 transition-colors">
@@ -609,7 +662,8 @@
 										</h3>
 										<p class="mb-4">Converts RGB to hex color.</p>
 										<pre
-											class="bg-gray-50 p-4 rounded-lg border border-gray-100 text-sm font-mono overflow-x-auto text-gray-800 mt-4"><code>const hex = UtilityHelpers.rgbToHex(255, 0, 0);</code></pre>
+											class="bg-gray-50 p-4 rounded-lg border border-gray-100 text-sm font-mono overflow-x-auto text-gray-800 mt-4"><code>const hex = UtilityHelpers.rgbToHex(255, 0, 0);
+// Output: '#ff0000'</code></pre>
 									</div>
 									<div
 										class="bg-white p-6 rounded-xl border border-gray-200 hover:border-gray-300 transition-colors">
@@ -618,7 +672,8 @@
 										</h3>
 										<p class="mb-4">Limits decimal places.</p>
 										<pre
-											class="bg-gray-50 p-4 rounded-lg border border-gray-100 text-sm font-mono overflow-x-auto text-gray-800 mt-4"><code>const limited = UtilityHelpers.limitDecimalPlaces(1.23456, 2);</code></pre>
+											class="bg-gray-50 p-4 rounded-lg border border-gray-100 text-sm font-mono overflow-x-auto text-gray-800 mt-4"><code>const limited = UtilityHelpers.limitDecimalPlaces(1.23456, 2);
+// Output: 1.23</code></pre>
 									</div>
 									<div
 										class="bg-white p-6 rounded-xl border border-gray-200 hover:border-gray-300 transition-colors">
@@ -627,7 +682,8 @@
 										</h3>
 										<p class="mb-4">Generates random hex color.</p>
 										<pre
-											class="bg-gray-50 p-4 rounded-lg border border-gray-100 text-sm font-mono overflow-x-auto text-gray-800 mt-4"><code>const color = UtilityHelpers.generateRandomColor();</code></pre>
+											class="bg-gray-50 p-4 rounded-lg border border-gray-100 text-sm font-mono overflow-x-auto text-gray-800 mt-4"><code>const color = UtilityHelpers.generateRandomColor();
+// Output: '#a3b2c1' (random hex)</code></pre>
 									</div>
 									<div
 										class="bg-white p-6 rounded-xl border border-gray-200 hover:border-gray-300 transition-colors">
@@ -636,7 +692,8 @@
 										</h3>
 										<p class="mb-4">Parses URL query params into object.</p>
 										<pre
-											class="bg-gray-50 p-4 rounded-lg border border-gray-100 text-sm font-mono overflow-x-auto text-gray-800 mt-4"><code>const params = UtilityHelpers.getQueryParams('?a=1&b=2');</code></pre>
+											class="bg-gray-50 p-4 rounded-lg border border-gray-100 text-sm font-mono overflow-x-auto text-gray-800 mt-4"><code>const params = UtilityHelpers.getQueryParams('?a=1&b=2');
+// Output: { a: '1', b: '2' }</code></pre>
 									</div>
 									<div
 										class="bg-white p-6 rounded-xl border border-gray-200 hover:border-gray-300 transition-colors">
@@ -645,7 +702,8 @@
 										</h3>
 										<p class="mb-4">Breaks down URL into components.</p>
 										<pre
-											class="bg-gray-50 p-4 rounded-lg border border-gray-100 text-sm font-mono overflow-x-auto text-gray-800 mt-4"><code>const parts = UtilityHelpers.getURLParts('https://example.com/path?query=value');</code></pre>
+											class="bg-gray-50 p-4 rounded-lg border border-gray-100 text-sm font-mono overflow-x-auto text-gray-800 mt-4"><code>const parts = UtilityHelpers.getURLParts('https://example.com/path?query=value');
+// Output: { protocol: 'https:', host: 'example.com', pathname: '/path', search: '?query=value', ... }</code></pre>
 									</div>
 									<div
 										class="bg-white p-6 rounded-xl border border-gray-200 hover:border-gray-300 transition-colors">
@@ -654,7 +712,8 @@
 										</h3>
 										<p class="mb-4">Base64-url encodes a URL.</p>
 										<pre
-											class="bg-gray-50 p-4 rounded-lg border border-gray-100 text-sm font-mono overflow-x-auto text-gray-800 mt-4"><code>const short = UtilityHelpers.shortenURL('https://example.com');</code></pre>
+											class="bg-gray-50 p-4 rounded-lg border border-gray-100 text-sm font-mono overflow-x-auto text-gray-800 mt-4"><code>const short = UtilityHelpers.shortenURL('https://example.com');
+// Output: 'aHR0cHM6Ly9leGFtcGxlLmNvbQ' (Base64-url encoded)</code></pre>
 									</div>
 									<div
 										class="bg-white p-6 rounded-xl border border-gray-200 hover:border-gray-300 transition-colors">
@@ -663,7 +722,8 @@
 										</h3>
 										<p class="mb-4">Decodes Base64-url encoded URL.</p>
 										<pre
-											class="bg-gray-50 p-4 rounded-lg border border-gray-100 text-sm font-mono overflow-x-auto text-gray-800 mt-4"><code>const url = UtilityHelpers.expandURL(short);</code></pre>
+											class="bg-gray-50 p-4 rounded-lg border border-gray-100 text-sm font-mono overflow-x-auto text-gray-800 mt-4"><code>const url = UtilityHelpers.expandURL('aHR0cHM6Ly9leGFtcGxlLmNvbQ');
+// Output: 'https://example.com'</code></pre>
 									</div>
 									<div
 										class="bg-white p-6 rounded-xl border border-gray-200 hover:border-gray-300 transition-colors">
@@ -672,7 +732,8 @@
 										</h3>
 										<p class="mb-4">Calculates edit distance between strings.</p>
 										<pre
-											class="bg-gray-50 p-4 rounded-lg border border-gray-100 text-sm font-mono overflow-x-auto text-gray-800 mt-4"><code>const distance = UtilityHelpers.levenshteinDistance('kitten', 'sitting');</code></pre>
+											class="bg-gray-50 p-4 rounded-lg border border-gray-100 text-sm font-mono overflow-x-auto text-gray-800 mt-4"><code>const distance = UtilityHelpers.levenshteinDistance('kitten', 'sitting');
+// Output: 3</code></pre>
 									</div>
 									<div
 										class="bg-white p-6 rounded-xl border border-gray-200 hover:border-gray-300 transition-colors">
@@ -681,7 +742,8 @@
 										</h3>
 										<p class="mb-4">Clamps a value between min and max.</p>
 										<pre
-											class="bg-gray-50 p-4 rounded-lg border border-gray-100 text-sm font-mono overflow-x-auto text-gray-800 mt-4"><code>const clamped = UtilityHelpers.clamp(10, 0, 5); // 5</code></pre>
+											class="bg-gray-50 p-4 rounded-lg border border-gray-100 text-sm font-mono overflow-x-auto text-gray-800 mt-4"><code>const clamped = UtilityHelpers.clamp(10, 0, 5);
+// Output: 5</code></pre>
 									</div>
 									<div
 										class="bg-white p-6 rounded-xl border border-gray-200 hover:border-gray-300 transition-colors">
@@ -690,7 +752,8 @@
 										</h3>
 										<p class="mb-4">Safely parses JSON with fallback.</p>
 										<pre
-											class="bg-gray-50 p-4 rounded-lg border border-gray-100 text-sm font-mono overflow-x-auto text-gray-800 mt-4"><code>const data = UtilityHelpers.parseJSON('bad json', {});</code></pre>
+											class="bg-gray-50 p-4 rounded-lg border border-gray-100 text-sm font-mono overflow-x-auto text-gray-800 mt-4"><code>const data = UtilityHelpers.parseJSON('bad json', {});
+// Output: {} (fallback used)</code></pre>
 									</div>
 									<div
 										class="bg-white p-6 rounded-xl border border-gray-200 hover:border-gray-300 transition-colors">
@@ -699,7 +762,8 @@
 										</h3>
 										<p class="mb-4">Formats number with locale info.</p>
 										<pre
-											class="bg-gray-50 p-4 rounded-lg border border-gray-100 text-sm font-mono overflow-x-auto text-gray-800 mt-4"><code>const fmt = UtilityHelpers.formatNumber(1234.56); // '1,234.56'</code></pre>
+											class="bg-gray-50 p-4 rounded-lg border border-gray-100 text-sm font-mono overflow-x-auto text-gray-800 mt-4"><code>const fmt = UtilityHelpers.formatNumber(1234.56);
+// Output: '1,234.56' (depends on locale)</code></pre>
 									</div>
 									<div
 										class="bg-white p-6 rounded-xl border border-gray-200 hover:border-gray-300 transition-colors">
@@ -708,7 +772,8 @@
 										</h3>
 										<p class="mb-4">Formats currency value.</p>
 										<pre
-											class="bg-gray-50 p-4 rounded-lg border border-gray-100 text-sm font-mono overflow-x-auto text-gray-800 mt-4"><code>const price = UtilityHelpers.formatCurrency(10.5); // '$10.50'</code></pre>
+											class="bg-gray-50 p-4 rounded-lg border border-gray-100 text-sm font-mono overflow-x-auto text-gray-800 mt-4"><code>const price = UtilityHelpers.formatCurrency(10.5);
+// Output: '$10.50' (depends on locale)</code></pre>
 									</div>
 									<div
 										class="bg-white p-6 rounded-xl border border-gray-200 hover:border-gray-300 transition-colors">
@@ -717,7 +782,8 @@
 										</h3>
 										<p class="mb-4">Extracts file extension.</p>
 										<pre
-											class="bg-gray-50 p-4 rounded-lg border border-gray-100 text-sm font-mono overflow-x-auto text-gray-800 mt-4"><code>const ext = UtilityHelpers.getFileExtension('image.png'); // 'png'</code></pre>
+											class="bg-gray-50 p-4 rounded-lg border border-gray-100 text-sm font-mono overflow-x-auto text-gray-800 mt-4"><code>const ext = UtilityHelpers.getFileExtension('image.png');
+// Output: 'png'</code></pre>
 									</div>
 								</div>
 							</section>
@@ -734,7 +800,8 @@
 										</h3>
 										<p class="mb-4">Debounces function calls.</p>
 										<pre
-											class="bg-gray-50 p-4 rounded-lg border border-gray-100 text-sm font-mono overflow-x-auto text-gray-800 mt-4"><code>const debounced = UtilityHelpers.debounce(() => console.log('called'), 300);</code></pre>
+											class="bg-gray-50 p-4 rounded-lg border border-gray-100 text-sm font-mono overflow-x-auto text-gray-800 mt-4"><code>const debounced = UtilityHelpers.debounce(() => console.log('called'), 300);
+// Output: 'called' (after 300ms of inactivity)</code></pre>
 									</div>
 									<div
 										class="bg-white p-6 rounded-xl border border-gray-200 hover:border-gray-300 transition-colors">
@@ -743,7 +810,8 @@
 										</h3>
 										<p class="mb-4">Throttles function calls.</p>
 										<pre
-											class="bg-gray-50 p-4 rounded-lg border border-gray-100 text-sm font-mono overflow-x-auto text-gray-800 mt-4"><code>const throttled = UtilityHelpers.throttle(() => console.log('called'), 1000);</code></pre>
+											class="bg-gray-50 p-4 rounded-lg border border-gray-100 text-sm font-mono overflow-x-auto text-gray-800 mt-4"><code>const throttled = UtilityHelpers.throttle(() => console.log('called'), 1000);
+// Output: 'called' (at most once every 1000ms)</code></pre>
 									</div>
 									<div
 										class="bg-white p-6 rounded-xl border border-gray-200 hover:border-gray-300 transition-colors">
@@ -752,7 +820,9 @@
 										</h3>
 										<p class="mb-4">Memoizes function results.</p>
 										<pre
-											class="bg-gray-50 p-4 rounded-lg border border-gray-100 text-sm font-mono overflow-x-auto text-gray-800 mt-4"><code>const memoized = UtilityHelpers.memoize((x) => x * 2);</code></pre>
+											class="bg-gray-50 p-4 rounded-lg border border-gray-100 text-sm font-mono overflow-x-auto text-gray-800 mt-4"><code>const memoized = UtilityHelpers.memoize((x) => x * 2);
+console.log(memoized(2)); // Output: 4 (calculated)
+console.log(memoized(2)); // Output: 4 (cached)</code></pre>
 									</div>
 									<div
 										class="bg-white p-6 rounded-xl border border-gray-200 hover:border-gray-300 transition-colors">
@@ -760,8 +830,8 @@
 											<code>wait(ms)</code>
 										</h3>
 										<p class="mb-4">Async delay.</p>
-										<pre
-											class="bg-gray-100 p-4 rounded"><code>await UtilityHelpers.wait(1000);</code></pre>
+										<pre class="bg-gray-100 p-4 rounded"><code>await UtilityHelpers.wait(1000);
+// Output: (waits for 1000ms)</code></pre>
 									</div>
 									<div
 										class="bg-white p-6 rounded-xl border border-gray-200 hover:border-gray-300 transition-colors">
@@ -770,7 +840,8 @@
 										</h3>
 										<p class="mb-4">Alias for wait.</p>
 										<pre
-											class="bg-gray-50 p-4 rounded-lg border border-gray-100 text-sm font-mono overflow-x-auto text-gray-800 mt-4"><code>await UtilityHelpers.sleep(1000);</code></pre>
+											class="bg-gray-50 p-4 rounded-lg border border-gray-100 text-sm font-mono overflow-x-auto text-gray-800 mt-4"><code>await UtilityHelpers.sleep(1000);
+// Output: (waits for 1000ms)</code></pre>
 									</div>
 									<div
 										class="bg-white p-6 rounded-xl border border-gray-200 hover:border-gray-300 transition-colors">
@@ -779,7 +850,8 @@
 										</h3>
 										<p class="mb-4">Retries async function with backoff.</p>
 										<pre
-											class="bg-gray-50 p-4 rounded-lg border border-gray-100 text-sm font-mono overflow-x-auto text-gray-800 mt-4"><code>await UtilityHelpers.retry(fetchData, 3, 1000);</code></pre>
+											class="bg-gray-50 p-4 rounded-lg border border-gray-100 text-sm font-mono overflow-x-auto text-gray-800 mt-4"><code>await UtilityHelpers.retry(fetchData, 3, 1000);
+// Output: (result of fetchData after successful attempt)</code></pre>
 									</div>
 									<div
 										class="bg-white p-6 rounded-xl border border-gray-200 hover:border-gray-300 transition-colors">
@@ -788,7 +860,9 @@
 										</h3>
 										<p class="mb-4">Ensures function runs only once.</p>
 										<pre
-											class="bg-gray-50 p-4 rounded-lg border border-gray-100 text-sm font-mono overflow-x-auto text-gray-800 mt-4"><code>const init = UtilityHelpers.once(() => console.log('Init'));</code></pre>
+											class="bg-gray-50 p-4 rounded-lg border border-gray-100 text-sm font-mono overflow-x-auto text-gray-800 mt-4"><code>const init = UtilityHelpers.once(() => console.log('Init'));
+init(); // Output: 'Init'
+init(); // Output: (nothing)</code></pre>
 									</div>
 									<div
 										class="bg-white p-6 rounded-xl border border-gray-200 hover:border-gray-300 transition-colors">
@@ -797,7 +871,8 @@
 										</h3>
 										<p class="mb-4">Pipes functions left-to-right.</p>
 										<pre
-											class="bg-gray-50 p-4 rounded-lg border border-gray-100 text-sm font-mono overflow-x-auto text-gray-800 mt-4"><code>const flow = UtilityHelpers.pipe(x => x + 1, x => x * 2);</code></pre>
+											class="bg-gray-50 p-4 rounded-lg border border-gray-100 text-sm font-mono overflow-x-auto text-gray-800 mt-4"><code>const flow = UtilityHelpers.pipe(x => x + 1, x => x * 2);
+console.log(flow(1)); // Output: 4 ((1 + 1) * 2)</code></pre>
 									</div>
 									<div
 										class="bg-white p-6 rounded-xl border border-gray-200 hover:border-gray-300 transition-colors">
@@ -806,7 +881,8 @@
 										</h3>
 										<p class="mb-4">Composes functions right-to-left.</p>
 										<pre
-											class="bg-gray-50 p-4 rounded-lg border border-gray-100 text-sm font-mono overflow-x-auto text-gray-800 mt-4"><code>const flow = UtilityHelpers.compose(x => x * 2, x => x + 1);</code></pre>
+											class="bg-gray-50 p-4 rounded-lg border border-gray-100 text-sm font-mono overflow-x-auto text-gray-800 mt-4"><code>const flow = UtilityHelpers.compose(x => x + 1, x => x * 2);
+console.log(flow(1)); // Output: 3 ((1 * 2) + 1)</code></pre>
 									</div>
 								</div>
 							</section>
@@ -823,7 +899,8 @@
 										</h3>
 										<p class="mb-4">Validates email format.</p>
 										<pre
-											class="bg-gray-50 p-4 rounded-lg border border-gray-100 text-sm font-mono overflow-x-auto text-gray-800 mt-4"><code>const valid = UtilityHelpers.isValidEmail('test@example.com');</code></pre>
+											class="bg-gray-50 p-4 rounded-lg border border-gray-100 text-sm font-mono overflow-x-auto text-gray-800 mt-4"><code>const valid = UtilityHelpers.isValidEmail('test@example.com');
+// Output: true</code></pre>
 									</div>
 									<div
 										class="bg-white p-6 rounded-xl border border-gray-200 hover:border-gray-300 transition-colors">
@@ -832,7 +909,8 @@
 										</h3>
 										<p class="mb-4">Validates URL format.</p>
 										<pre
-											class="bg-gray-50 p-4 rounded-lg border border-gray-100 text-sm font-mono overflow-x-auto text-gray-800 mt-4"><code>const valid = UtilityHelpers.isValidURL('https://example.com');</code></pre>
+											class="bg-gray-50 p-4 rounded-lg border border-gray-100 text-sm font-mono overflow-x-auto text-gray-800 mt-4"><code>const valid = UtilityHelpers.isValidURL('https://example.com');
+// Output: true</code></pre>
 									</div>
 									<div
 										class="bg-white p-6 rounded-xl border border-gray-200 hover:border-gray-300 transition-colors">
@@ -841,7 +919,8 @@
 										</h3>
 										<p class="mb-4">Validates and sanitizes form input.</p>
 										<pre
-											class="bg-gray-50 p-4 rounded-lg border border-gray-100 text-sm font-mono overflow-x-auto text-gray-800 mt-4"><code>const result = UtilityHelpers.validateAndSanitizeInput(input, 'email');</code></pre>
+											class="bg-gray-50 p-4 rounded-lg border border-gray-100 text-sm font-mono overflow-x-auto text-gray-800 mt-4"><code>const result = UtilityHelpers.validateAndSanitizeInput(emailInput, 'email');
+// Output: { valid: true, sanitized: 'test@example.com' }</code></pre>
 									</div>
 								</div>
 							</section>
@@ -857,7 +936,8 @@
 										</h3>
 										<p class="mb-4">Copies text to clipboard.</p>
 										<pre
-											class="bg-gray-50 p-4 rounded-lg border border-gray-100 text-sm font-mono overflow-x-auto text-gray-800 mt-4"><code>await UtilityHelpers.copyToClipboard('Hello World');</code></pre>
+											class="bg-gray-50 p-4 rounded-lg border border-gray-100 text-sm font-mono overflow-x-auto text-gray-800 mt-4"><code>UtilityHelpers.copyToClipboard('Hello');
+// Output: (text 'Hello' copied to clipboard)</code></pre>
 									</div>
 									<div
 										class="bg-white p-6 rounded-xl border border-gray-200 hover:border-gray-300 transition-colors">
@@ -866,7 +946,8 @@
 										</h3>
 										<p class="mb-4">Smooth scrolls to element.</p>
 										<pre
-											class="bg-gray-50 p-4 rounded-lg border border-gray-100 text-sm font-mono overflow-x-auto text-gray-800 mt-4"><code>UtilityHelpers.smoothScrollTo('#section');</code></pre>
+											class="bg-gray-50 p-4 rounded-lg border border-gray-100 text-sm font-mono overflow-x-auto text-gray-800 mt-4"><code>UtilityHelpers.smoothScrollTo('#top');
+// Output: (page scrolls to element with id 'top')</code></pre>
 									</div>
 									<div
 										class="bg-white p-6 rounded-xl border border-gray-200 hover:border-gray-300 transition-colors">
@@ -875,7 +956,8 @@
 										</h3>
 										<p class="mb-4">Toggles class after delay.</p>
 										<pre
-											class="bg-gray-50 p-4 rounded-lg border border-gray-100 text-sm font-mono overflow-x-auto text-gray-800 mt-4"><code>UtilityHelpers.toggleClassAfterDelay(el, 'active', 500);</code></pre>
+											class="bg-gray-50 p-4 rounded-lg border border-gray-100 text-sm font-mono overflow-x-auto text-gray-800 mt-4"><code>UtilityHelpers.toggleClassAfterDelay(el, 'active', 1000);
+// Output: (class 'active' added/removed after 1000ms)</code></pre>
 									</div>
 									<div
 										class="bg-white p-6 rounded-xl border border-gray-200 hover:border-gray-300 transition-colors">
@@ -884,7 +966,8 @@
 										</h3>
 										<p class="mb-4">Detects user idle time.</p>
 										<pre
-											class="bg-gray-50 p-4 rounded-lg border border-gray-100 text-sm font-mono overflow-x-auto text-gray-800 mt-4"><code>UtilityHelpers.detectUserIdleTime(() => console.log('idle'), 60000);</code></pre>
+											class="bg-gray-50 p-4 rounded-lg border border-gray-100 text-sm font-mono overflow-x-auto text-gray-800 mt-4"><code>UtilityHelpers.detectUserIdleTime(5000, () => console.log('Idle'));
+// Output: 'Idle' (after 5 seconds of no activity)</code></pre>
 									</div>
 									<div
 										class="bg-white p-6 rounded-xl border border-gray-200 hover:border-gray-300 transition-colors">
@@ -893,7 +976,8 @@
 										</h3>
 										<p class="mb-4">Extracts form data as object.</p>
 										<pre
-											class="bg-gray-50 p-4 rounded-lg border border-gray-100 text-sm font-mono overflow-x-auto text-gray-800 mt-4"><code>const data = UtilityHelpers.getFormData(form);</code></pre>
+											class="bg-gray-50 p-4 rounded-lg border border-gray-100 text-sm font-mono overflow-x-auto text-gray-800 mt-4"><code>const data = UtilityHelpers.getFormData(formElement);
+// Output: { name: 'John', email: 'john@example.com' }</code></pre>
 									</div>
 									<div
 										class="bg-white p-6 rounded-xl border border-gray-200 hover:border-gray-300 transition-colors">
@@ -902,7 +986,8 @@
 										</h3>
 										<p class="mb-4">Triggers file download.</p>
 										<pre
-											class="bg-gray-50 p-4 rounded-lg border border-gray-100 text-sm font-mono overflow-x-auto text-gray-800 mt-4"><code>UtilityHelpers.downloadFile(blob, 'file.txt');</code></pre>
+											class="bg-gray-50 p-4 rounded-lg border border-gray-100 text-sm font-mono overflow-x-auto text-gray-800 mt-4"><code>UtilityHelpers.downloadFile('content', 'file.txt', 'text/plain');
+// Output: (triggers browser download of 'file.txt')</code></pre>
 									</div>
 									<div
 										class="bg-white p-6 rounded-xl border border-gray-200 hover:border-gray-300 transition-colors">
@@ -911,7 +996,8 @@
 										</h3>
 										<p class="mb-4">Toggles fullscreen mode.</p>
 										<pre
-											class="bg-gray-50 p-4 rounded-lg border border-gray-100 text-sm font-mono overflow-x-auto text-gray-800 mt-4"><code>UtilityHelpers.toggleFullscreen();</code></pre>
+											class="bg-gray-50 p-4 rounded-lg border border-gray-100 text-sm font-mono overflow-x-auto text-gray-800 mt-4"><code>UtilityHelpers.toggleFullscreen(document.documentElement);
+// Output: (toggles fullscreen mode)</code></pre>
 									</div>
 									<div
 										class="bg-white p-6 rounded-xl border border-gray-200 hover:border-gray-300 transition-colors">
@@ -920,7 +1006,8 @@
 										</h3>
 										<p class="mb-4">Lazy loads images on scroll.</p>
 										<pre
-											class="bg-gray-50 p-4 rounded-lg border border-gray-100 text-sm font-mono overflow-x-auto text-gray-800 mt-4"><code>UtilityHelpers.lazyLoadImages('img[data-src]');</code></pre>
+											class="bg-gray-50 p-4 rounded-lg border border-gray-100 text-sm font-mono overflow-x-auto text-gray-800 mt-4"><code>UtilityHelpers.lazyLoadImages('.lazy');
+// Output: (sets up intersection observer for '.lazy' images)</code></pre>
 									</div>
 									<div
 										class="bg-white p-6 rounded-xl border border-gray-200 hover:border-gray-300 transition-colors">
@@ -929,7 +1016,8 @@
 										</h3>
 										<p class="mb-4">Gets CSS variable value.</p>
 										<pre
-											class="bg-gray-50 p-4 rounded-lg border border-gray-100 text-sm font-mono overflow-x-auto text-gray-800 mt-4"><code>const value = UtilityHelpers.getCSSVariable('--color');</code></pre>
+											class="bg-gray-50 p-4 rounded-lg border border-gray-100 text-sm font-mono overflow-x-auto text-gray-800 mt-4"><code>const color = UtilityHelpers.getCSSVariable('--primary-color');
+// Output: '#3b82f6' (value of custom property)</code></pre>
 									</div>
 									<div
 										class="bg-white p-6 rounded-xl border border-gray-200 hover:border-gray-300 transition-colors">
@@ -938,7 +1026,8 @@
 										</h3>
 										<p class="mb-4">Sets CSS variable value.</p>
 										<pre
-											class="bg-gray-50 p-4 rounded-lg border border-gray-100 text-sm font-mono overflow-x-auto text-gray-800 mt-4"><code>UtilityHelpers.setCSSVariable('--color', 'red');</code></pre>
+											class="bg-gray-50 p-4 rounded-lg border border-gray-100 text-sm font-mono overflow-x-auto text-gray-800 mt-4"><code>UtilityHelpers.setCSSVariable('--primary-color', '#ff0000');
+// Output: (updates --primary-color to red)</code></pre>
 									</div>
 									<div
 										class="bg-white p-6 rounded-xl border border-gray-200 hover:border-gray-300 transition-colors">
@@ -947,7 +1036,8 @@
 										</h3>
 										<p class="mb-4">Saves current scroll position.</p>
 										<pre
-											class="bg-gray-50 p-4 rounded-lg border border-gray-100 text-sm font-mono overflow-x-auto text-gray-800 mt-4"><code>UtilityHelpers.saveScrollPosition();</code></pre>
+											class="bg-gray-50 p-4 rounded-lg border border-gray-100 text-sm font-mono overflow-x-auto text-gray-800 mt-4"><code>UtilityHelpers.saveScrollPosition();
+// Output: (saves current scrollY to localStorage)</code></pre>
 									</div>
 									<div
 										class="bg-white p-6 rounded-xl border border-gray-200 hover:border-gray-300 transition-colors">
@@ -956,7 +1046,8 @@
 										</h3>
 										<p class="mb-4">Restores saved scroll position.</p>
 										<pre
-											class="bg-gray-50 p-4 rounded-lg border border-gray-100 text-sm font-mono overflow-x-auto text-gray-800 mt-4"><code>UtilityHelpers.restoreScrollPosition();</code></pre>
+											class="bg-gray-50 p-4 rounded-lg border border-gray-100 text-sm font-mono overflow-x-auto text-gray-800 mt-4"><code>UtilityHelpers.restoreScrollPosition();
+// Output: (restores scrollY from localStorage)</code></pre>
 									</div>
 									<div
 										class="bg-white p-6 rounded-xl border border-gray-200 hover:border-gray-300 transition-colors">
@@ -965,7 +1056,8 @@
 										</h3>
 										<p class="mb-4">Speaks text using SpeechSynthesis.</p>
 										<pre
-											class="bg-gray-50 p-4 rounded-lg border border-gray-100 text-sm font-mono overflow-x-auto text-gray-800 mt-4"><code>UtilityHelpers.textToSpeech('Hello');</code></pre>
+											class="bg-gray-50 p-4 rounded-lg border border-gray-100 text-sm font-mono overflow-x-auto text-gray-800 mt-4"><code>UtilityHelpers.textToSpeech('Hello World');
+// Output: (speaks 'Hello World')</code></pre>
 									</div>
 									<div
 										class="bg-white p-6 rounded-xl border border-gray-200 hover:border-gray-300 transition-colors">
@@ -974,7 +1066,8 @@
 										</h3>
 										<p class="mb-4">Debounces input events.</p>
 										<pre
-											class="bg-gray-50 p-4 rounded-lg border border-gray-100 text-sm font-mono overflow-x-auto text-gray-800 mt-4"><code>UtilityHelpers.debouncedInput(input, () => console.log('input'), 300);</code></pre>
+											class="bg-gray-50 p-4 rounded-lg border border-gray-100 text-sm font-mono overflow-x-auto text-gray-800 mt-4"><code>UtilityHelpers.debouncedInput(input, () => console.log('input'), 300);
+// Output: 'input' (after 300ms of no typing)</code></pre>
 									</div>
 									<div
 										class="bg-white p-6 rounded-xl border border-gray-200 hover:border-gray-300 transition-colors">
@@ -983,7 +1076,8 @@
 										</h3>
 										<p class="mb-4">Runs async tasks in parallel.</p>
 										<pre
-											class="bg-gray-50 p-4 rounded-lg border border-gray-100 text-sm font-mono overflow-x-auto text-gray-800 mt-4"><code>const results = await UtilityHelpers.runInParallel([task1, task2]);</code></pre>
+											class="bg-gray-50 p-4 rounded-lg border border-gray-100 text-sm font-mono overflow-x-auto text-gray-800 mt-4"><code>const results = await UtilityHelpers.runInParallel([task1, task2]);
+// Output: [result1, result2]</code></pre>
 									</div>
 								</div>
 							</section>
