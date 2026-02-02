@@ -224,6 +224,13 @@ class UtilityHelpers {
 			woman: "women",
 			tooth: "teeth",
 			foot: "feet",
+			knife: "knives",
+			leaf: "leaves",
+			life: "lives",
+			loaf: "loaves",
+			shelf: "shelves",
+			wolf: "wolves",
+			wife: "wives",
 			cactus: "cacti",
 			focus: "foci",
 			fungus: "fungi",
@@ -238,9 +245,9 @@ class UtilityHelpers {
 			phenomenon: "phenomena",
 			criterion: "criteria",
 			bacterium: "bacteria",
-			octopus: 'octopuses',
-			'cul-de-sac': 'culs-de-sac',
-			lasagna: 'lasagne'
+			octopus: "octopuses",
+			"cul-de-sac": "culs-de-sac",
+			lasagna: "lasagne"
 		};
 
 		const uncountableWords = [
@@ -283,13 +290,26 @@ class UtilityHelpers {
 			return word;
 		}
 
+		const lowerWord = word.toLowerCase();
+
 		// Check for irregular plurals, changes form
-		if (irregularPlurals[word]) {
-			return count === 1 ? word : irregularPlurals[word];
+		if (irregularPlurals[lowerWord]) {
+			const plural = irregularPlurals[lowerWord];
+			return count === 1 ? word : plural;
 		}
 
 		// Default pluralization for regular words (e.g., adding 's' or 'es')
-		return count === 1 ? word : word + (word.endsWith("s") ? "es" : "s");
+		if (count === 1) return word;
+
+		const endsWith = (suffix) => lowerWord.endsWith(suffix);
+		if (/(s|sh|ch|x|z)$/.test(lowerWord)) return word + "es";
+		if (endsWith("y") && !/[aeiou]y$/.test(lowerWord)) {
+			return word.slice(0, -1) + "ies";
+		}
+		if (endsWith("f")) return word.slice(0, -1) + "ves";
+		if (endsWith("fe")) return word.slice(0, -2) + "ves";
+
+		return word + "s";
 	}
 
 	// Generate a random date between two given dates.
