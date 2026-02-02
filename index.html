@@ -453,7 +453,7 @@
 										</h3>
 										<p class="mb-4">Escapes HTML special characters.</p>
 										<pre
-											class="bg-gray-50 p-4 rounded-lg border border-gray-100 text-sm font-mono overflow-x-auto text-gray-800 mt-4"><code>const escaped = UtilityHelpers.escapeHtml('<div>Hello</div>');
+											class="bg-gray-50 p-4 rounded-lg border border-gray-100 text-sm font-mono overflow-x-auto text-gray-800 mt-4"><code>const escaped = UtilityHelpers.escapeHtml('&lt;div&gt;Hello&lt;/div&gt;');
 // Output: '&amp;lt;div&amp;gt;Hello&amp;lt;/div&amp;gt;'</code></pre>
 									</div>
 									<div
@@ -463,8 +463,8 @@
 										</h3>
 										<p class="mb-4">Unescapes HTML entities.</p>
 										<pre
-											class="bg-gray-50 p-4 rounded-lg border border-gray-100 text-sm font-mono overflow-x-auto text-gray-800 mt-4"><code>const unescaped = UtilityHelpers.unescapeHtml('&lt;div&gt;Hello&lt;/div&gt;');
-// Output: '&lt;div&gt;Hello&lt;/div&gt;'</code></pre>
+											class="bg-gray-50 p-4 rounded-lg border border-gray-100 text-sm font-mono overflow-x-auto text-gray-800 mt-4"><code>const unescaped = UtilityHelpers.unescapeHtml('&amp;lt;div&amp;gt;Hello&amp;lt;/div&amp;gt;');
+// Output: '&lt;div class="text-gray-900"&gt;Hello&lt;/div&gt;'</code></pre>
 									</div>
 									<div
 										class="bg-white p-6 rounded-xl border border-gray-200 hover:border-gray-300 transition-colors">
