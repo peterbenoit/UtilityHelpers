@@ -330,13 +330,26 @@ class UtilityHelpers {
 
 	static getQueryParams(url) {
 		const params = {};
-		const queryString = url.split("?")[1];
-		if (queryString) {
-			queryString.split("&").forEach((param) => {
-				const [key, value] = param.split("=");
-				params[decodeURIComponent(key)] = decodeURIComponent(value);
-			});
+		const queryString = url.includes("?") ? url.split("?")[1] : url;
+		const cleaned = queryString.replace(/^[?#]/, "");
+		if (!cleaned) return params;
+
+		const searchParams = new URLSearchParams(cleaned);
+		for (const [rawKey, value] of searchParams.entries()) {
+			const isArrayKey = rawKey.endsWith("[]");
+			const key = isArrayKey ? rawKey.slice(0, -2) : rawKey;
+
+			if (isArrayKey) {
+				if (!Array.isArray(params[key])) params[key] = [];
+				params[key].push(value);
+			} else if (key in params) {
+				if (!Array.isArray(params[key])) params[key] = [params[key]];
+				params[key].push(value);
+			} else {
+				params[key] = value;
+			}
 		}
+
 		return params;
 	}
 
