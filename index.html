@@ -1,0 +1,350 @@
+https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css
+https://peterbenoit.com/js/badge.js
+
+
+<div class="container mx-auto px-8 py-16">
+	<h1 class="text-4xl font-bold mb-8">
+		UtilityHelpers Documentation
+	</h1>
+	<p class="mb-4">The <code>UtilityHelpers</code> class is a collection of utility functions designed to simplify
+		common tasks in JavaScript development. It serves as a versatile toolkit for handling various operations that
+		developers frequently encounter, providing solutions for tasks related to images, arrays, strings, dates, object
+		manipulation, and more. The class reduces the need to repeatedly write boilerplate code by offering ready-made,
+		reusable methods.
+	</p>
+	<p class="mb-4">For instance, it includes methods to get image details (<code>getImageDetails</code>) and calculate
+		the average color of an image, which can be useful in media-heavy applications. There are also array
+		manipulation methods like <code>shuffleArray</code>, <code>flattenArray</code>, and
+		<code>countUniqueElements</code>, which assist with data transformation and analysis.
+	</p>
+	<p class="mb-4">String operations like <code>capitalizeWords</code>, <code>pluralize</code>, and
+		<code>escapeHtml</code> help developers format and sanitize text inputs more effectively. Additionally, the
+		class offers solutions for working with dates and times, including <code>randomDateBetweenTwo</code> and
+		<code>timeStampID</code>, which simplify generating timestamps and random dates within ranges.
+	</p>
+	<p class="mb-4">Another key feature of <code>UtilityHelpers</code> is its support for performance optimization
+		through methods like <code>debounce</code> and <code>throttle</code>, which control the frequency of function
+		execution. Moreover, methods like <code>deepMerge</code> allow for complex object merging, while
+		<code>numberToWords</code> converts numeric values to readable text—handy for applications that display data in
+		a more human-friendly way.
+	</p>
+	<p class="mb-4">In short, <code>UtilityHelpers</code> provides a centralized and efficient way to manage a wide
+		variety of tasks. It enhances productivity by streamlining repetitive coding challenges, allowing developers to
+		focus on core application logic without reinventing common utility functions.
+	</p>
+	<section class="mb-8 mt-8">
+		<h2 class="text-2xl font-semibold mb-4">
+			`capitalizeWords(text)`
+		</h2>
+		<p>
+			Capitalizes the first letter of each word in a string.
+		</p>
+		<pre
+			class="bg-gray-100 p-4 mt-4"><code>const capitalized = UtilityHelpers.capitalizeWords('hello, world!');   </code></pre>
+	</section>
+	<section class="mb-8">
+		<h2 class="text-2xl font-semibold mb-4">
+			`getImageDetails(imageSrc, calculateAverageColor)`
+		</h2>
+		<p>
+			Fetches basic image details (like width, height, size, and format) from the provided image source URL.
+			Optionally calculates the average color of the image.
+		</p>
+		<pre
+			class="bg-gray-100 p-4 mt-4"><code>UtilityHelpers.getImageDetails('https://example.com/image.jpg', true)<br />  .then(details => console.log(details));</code></pre>
+	</section>
+	<section class="mb-8 mt-8">
+		<h2 class="text-2xl font-semibold mb-4">
+			`getImageOrientation(image)`
+		</h2>
+		<p>
+			Determines the orientation (landscape, portrait, square) of an image based on its dimensions.
+		</p>
+		<pre
+			class="bg-gray-100 p-4 mt-4"><code>const orientation = UtilityHelpers.getImageOrientation(image);</code></pre>
+	</section>
+	<section class="mb-8">
+		<h2 class="text-2xl font-semibold mb-4">
+			`formatBytes(bytes, decimals)`
+		</h2>
+		<p>
+			Formats a size in bytes into a human-readable string.
+		</p>
+		<pre class="bg-gray-100 p-4 mt-4"><code>const formattedSize = UtilityHelpers.formatBytes(1024);</code></pre>
+	</section>
+	<section class="mb-8">
+		<h2 class="text-2xl font-semibold mb-4">
+			`getAverageImageColor(imageSrc)`
+		</h2>
+		<p>
+			Calculates the average color of an image from its URL.
+		</p>
+		<pre
+			class="bg-gray-100 p-4 mt-4"><code>UtilityHelpers.getAverageImageColor('https://example.com/image.jpg')<br />  .then(color => console.log(color));</code></pre>
+	</section>
+	<section class="mb-8">
+		<h2 class="text-2xl font-semibold mb-4">
+			`generateUUID()`
+		</h2>
+		<p>
+			Generates a random UUID.
+		</p>
+		<pre class="bg-gray-100 p-4 mt-4"><code>const uuid = UtilityHelpers.generateUUID();</code></pre>
+	</section>
+	<section class="mb-8">
+		<h2 class="text-2xl font-semibold mb-4">
+			`shuffleArray(array)`
+		</h2>
+		<p>
+			Randomly shuffles the elements in an array.
+		</p>
+		<pre class="bg-gray-100 p-4 mt-4"><code>const shuffled = UtilityHelpers.shuffleArray([1, 2, 3, 4]);</code></pre>
+	</section>
+	<section class="mb-8">
+		<h2 class="text-2xl font-semibold mb-4">
+			`flattenArray(arr)`
+		</h2>
+		<p>
+			Flattens a nested array into a single array.
+		</p>
+		<pre
+			class="bg-gray-100 p-4 mt-4"><code>const flatArray = UtilityHelpers.flattenArray([1, [2, 3], [4]]);</code></pre>
+	</section>
+	<section class="mb-8">
+		<h2 class="text-2xl font-semibold mb-4">
+			`sumArray(arr)`
+		</h2>
+		<p>
+			Returns the sum of all values in an array.
+		</p>
+		<pre class="bg-gray-100 p-4 mt-4"><code>const sum = UtilityHelpers.sumArray([1, 2, 3]);</code></pre>
+	</section>
+	<section class="mb-8">
+		<h2 class="text-2xl font-semibold mb-4">
+			`deepMerge(target, source)`
+		</h2>
+		<p>
+			Performs a deep merge of two objects.
+		</p>
+		<pre class="bg-gray-100 p-4 mt-4"><code>const merged = UtilityHelpers.deepMerge(obj1, obj2);</code></pre>
+	</section>
+	<section class="mb-8">
+		<h2 class="text-2xl font-semibold mb-4">
+			`pluralize(word, count)`
+		</h2>
+		<p>
+			Attempts to pluralize the given word, accounting for irregular plurals.
+		</p>
+		<pre class="bg-gray-100 p-4 mt-4"><code>const plural = UtilityHelpers.pluralize('child', 2);</code></pre>
+	</section>
+	<section class="mb-8">
+		<h2 class="text-2xl font-semibold mb-4">
+			`debounce(fn, delay)`
+		</h2>
+		<p>
+			Debounces a function, ensuring it only fires after a specified delay.
+		</p>
+		<pre
+			class="bg-gray-100 p-4 mt-4"><code>const debouncedFn = UtilityHelpers.debounce(() => console.log('debounced!'), 300);</code></pre>
+	</section>
+	<section class="mb-8">
+		<h2 class="text-2xl font-semibold mb-4">
+			`textToSpeech(text)`
+		</h2>
+		<p>
+			Converts text to speech if the browser supports the SpeechSynthesis API.
+		</p>
+		<pre class="bg-gray-100 p-4 mt-4"><code>UtilityHelpers.textToSpeech('Hello, World!');</code></pre>
+		<section class="mb-8">
+			<h2 class="text-2xl font-semibold mb-4">
+				`countUniqueElements(arr)`
+			</h2>
+			<p>
+				Counts the number of unique elements in an array.
+			</p>
+			<pre
+				class="bg-gray-100 p-4 mt-4"><code>const uniqueCount = UtilityHelpers.countUniqueElements([1, 2, 2, 3, 4]);</code></pre>
+		</section>
+		<section class="mb-8">
+			<h2 class="text-2xl font-semibold mb-4">
+				`getType(value)`
+			</h2>
+			<p>
+				Identifies if the value is an array, object, or another type.
+			</p>
+			<pre class="bg-gray-100 p-4 mt-4"><code>const type = UtilityHelpers.getType([1, 2, 3]);</code></pre>
+		</section>
+		<section class="mb-8">
+			<h2 class="text-2xl font-semibold mb-4">
+				`findDuplicates(arr)`
+			</h2>
+			<p>
+				Identifies all duplicate elements in an array.
+			</p>
+			<pre
+				class="bg-gray-100 p-4 mt-4"><code>const duplicates = UtilityHelpers.findDuplicates([1, 2, 2, 3, 4]);</code></pre>
+		</section>
+		<section class="mb-8">
+			<h2 class="text-2xl font-semibold mb-4">
+				`randomDateBetweenTwo(start, end)`
+			</h2>
+			<p>
+				Generates a random date between two given dates.
+			</p>
+			<pre
+				class="bg-gray-100 p-4 mt-4"><code>const randomDate = UtilityHelpers.randomDateBetweenTwo(new Date(2000, 0, 1), new Date(2020, 11, 31));</code></pre>
+		</section>
+		<section class="mb-8">
+			<h2 class="text-2xl font-semibold mb-4">
+				`countOccurrences(arr, val)`
+			</h2>
+			<p>
+				Counts how many times a specific value appears in an array.
+			</p>
+			<pre
+				class="bg-gray-100 p-4 mt-4"><code>const occurrences = UtilityHelpers.countOccurrences([1, 2, 3, 2, 2, 4], 2);</code></pre>
+		</section>
+		<section class="mb-8">
+			<h2 class="text-2xl font-semibold mb-4">
+				`getRandomElement(arr)`
+			</h2>
+			<p>
+				Selects a random element from an array.
+			</p>
+			<pre
+				class="bg-gray-100 p-4 mt-4"><code>const randomElement = UtilityHelpers.getRandomElement([1, 2, 3, 4]);</code></pre>
+		</section>
+		<section class="mb-8">
+			<h2 class="text-2xl font-semibold mb-4">
+				`getMedian(arr)`
+			</h2>
+			<p>
+				Calculates the median value of an array.
+			</p>
+			<pre
+				class="bg-gray-100 p-4 mt-4"><code>const median = UtilityHelpers.getMedian([1, 2, 3, 4, 5]);</code></pre>
+		</section>
+		<section class="mb-8">
+			<h2 class="text-2xl font-semibold mb-4">
+				`range(start, end, step)`
+			</h2>
+			<p>
+				Creates an array containing a range of numbers between two values.
+			</p>
+			<pre class="bg-gray-100 p-4 mt-4"><code>const rangeArray = UtilityHelpers.range(1, 10, 2);</code></pre>
+		</section>
+		<section class="mb-8">
+			<h2 class="text-2xl font-semibold mb-4">
+				`getQueryParams(url)`
+			</h2>
+			<p>
+				Extracts query parameters from a URL and returns them as an object.
+			</p>
+			<pre
+				class="bg-gray-100 p-4 mt-4"><code>const params = UtilityHelpers.getQueryParams('https://example.com?name=John&age=30');</code></pre>
+		</section>
+		<section class="mb-8">
+			<h2 class="text-2xl font-semibold mb-4">
+				`isObjectEmpty(obj)`
+			</h2>
+			<p>
+				Checks if an object is empty.
+			</p>
+			<pre class="bg-gray-100 p-4 mt-4"><code>const isEmpty = UtilityHelpers.isObjectEmpty({});</code></pre>
+		</section>
+		<section class="mb-8">
+			<h2 class="text-2xl font-semibold mb-4">
+				`wait(ms)`
+			</h2>
+			<p>
+				Returns a promise that resolves after a specified delay.
+			</p>
+			<pre class="bg-gray-100 p-4 mt-4"><code>await UtilityHelpers.wait(1000);</code></pre>
+		</section>
+		<section class="mb-8">
+			<h2 class="text-2xl font-semibold mb-4">
+				`capitalizeWords(str)`
+			</h2>
+			<p>
+				Capitalizes the first letter of each word in a string.
+			</p>
+			<pre
+				class="bg-gray-100 p-4 mt-4"><code>const capitalized = UtilityHelpers.capitalizeWords('hello world');</code></pre>
+		</section>
+		<section class="mb-8">
+			<h2 class="text-2xl font-semibold mb-4">
+				`rgbToHex(r, g, b)`
+			</h2>
+			<p>
+				Converts an RGB color value to a hexadecimal string.
+			</p>
+			<pre class="bg-gray-100 p-4 mt-4"><code>const hex = UtilityHelpers.rgbToHex(120, 150, 200);</code></pre>
+		</section>
+		<section class="mb-8">
+			<h2 class="text-2xl font-semibold mb-4">
+				`limitDecimalPlaces(num, places)`
+			</h2>
+			<p>
+				Limits a number to a specific number of decimal places.
+			</p>
+			<pre
+				class="bg-gray-100 p-4 mt-4"><code>const limited = UtilityHelpers.limitDecimalPlaces(123.456789, 2);</code></pre>
+		</section>
+		<section class="mb-8">
+			<h2 class="text-2xl font-semibold mb-4">
+				`timeStampID()`
+			</h2>
+			<p>
+				Generates a unique ID based on the current timestamp.
+			</p>
+			<pre class="bg-gray-100 p-4 mt-4"><code>const id = UtilityHelpers.timeStampID();</code></pre>
+		</section>
+		<section class="mb-8">
+			<h2 class="text-2xl font-semibold mb-4">
+				`escapeHtml(str)`
+			</h2>
+			<p>
+				Escapes special HTML characters in a string.
+			</p>
+			<pre
+				class="bg-gray-100 p-4 mt-4"><code>const escaped = UtilityHelpers.escapeHtml('<div>Hello</div>');</code></pre>
+		</section>
+		<section class="mb-8">
+			<h2 class="text-2xl font-semibold mb-4">
+				`unescapeHtml(str)`
+			</h2>
+			<p>
+				Converts escaped HTML characters back to their original form.
+			</p>
+			<pre
+				class="bg-gray-100 p-4 mt-4"><code>const unescaped = UtilityHelpers.unescapeHtml('&lt;div&gt;Hello&lt;/div&gt;');</code></pre>
+		</section>
+		<section class="mb-8">
+			<h2 class="text-2xl font-semibold mb-4">
+				`randomString(length)`
+			</h2>
+			<p>
+				Generates a random alphanumeric string of the specified length.
+			</p>
+			<pre class="bg-gray-100 p-4 mt-4"><code>const randomStr = UtilityHelpers.randomString(10);</code></pre>
+		</section>
+		<section class="mb-8">
+			<h2 class="text-2xl font-semibold mb-4">
+				`numberToWords(num)`
+			</h2>
+			<p>
+				Converts a numerical value into its English word equivalent.
+			</p>
+			<pre class="bg-gray-100 p-4 mt-4"><code>const words = UtilityHelpers.numberToWords(12345);</code></pre>
+		</section>
+		<section class="mb-8">
+			<h2 class="text-2xl font-semibold mb-4">
+				`isNumber(value)`
+			</h2>
+			<p>
+				Checks if a value is a number.
+			</p>
+			<pre class="bg-gray-100 p-4 mt-4"><code>const isNumber = UtilityHelpers.isNumber(123);</code></pre>
+		</section>
+	</section>
+</div>
