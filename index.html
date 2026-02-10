@@ -967,7 +967,7 @@ console.log(flow(1)); // Output: 3 ((1 * 2) + 1)</code></pre>
 										</h3>
 										<p class="mb-4">Detects user idle time.</p>
 										<pre
-											class="bg-gray-50 p-4 rounded-lg border border-gray-100 text-sm font-mono overflow-x-auto text-gray-800 mt-4"><code>UtilityHelpers.detectUserIdleTime(5000, () => console.log('Idle'));
+											class="bg-gray-50 p-4 rounded-lg border border-gray-100 text-sm font-mono overflow-x-auto text-gray-800 mt-4"><code>UtilityHelpers.detectUserIdleTime(() => console.log('Idle'), 5000);
 // Output: 'Idle' (after 5 seconds of no activity)</code></pre>
 									</div>
 									<div
@@ -1105,6 +1105,176 @@ console.log(flow(1)); // Output: 3 ((1 * 2) + 1)</code></pre>
 			<p>&copy; 2026 UtilityHelpers.</p>
 		</footer>
 	</div>
+	<!-- Terminal Widget -->
+	<div id="interactive-terminal"
+		class="fixed bottom-0 left-0 right-0 bg-gray-900 border-t border-gray-700 shadow-2xl z-50 transition-all duration-300 h-64 flex flex-col font-mono hidden">
+		<div class="flex items-center justify-between px-4 py-2 bg-gray-800 border-b border-gray-700 shrink-0">
+			<div class="flex items-center gap-2">
+				<span class="text-sm font-semibold text-gray-200">Terminal</span>
+				<span class="text-xs text-gray-500">UtilityHelpers v1.0</span>
+			</div>
+			<div class="flex gap-2">
+				<button id="term-minimize"
+					class="text-xs text-gray-400 hover:text-white px-2 py-1 rounded hover:bg-gray-700">Minimize</button>
+				<button id="term-close"
+					class="text-xs text-gray-400 hover:text-white px-2 py-1 rounded hover:bg-gray-700">Close</button>
+			</div>
+		</div>
+		<div id="term-content" class="flex-1 flex overflow-hidden">
+			<div class="w-1/2 flex flex-col border-r border-gray-700 relative">
+				<textarea id="term-input" spellcheck="false"
+					class="flex-1 w-full bg-[#0d1117] text-gray-300 text-sm font-mono p-4 resize-none focus:outline-none placeholder-gray-600"
+					placeholder="// Select a utility to test..."></textarea>
+				<div class="absolute bottom-4 right-4 flex gap-2">
+					<button id="term-clear"
+						class="px-3 py-1.5 text-xs font-medium text-gray-300 bg-gray-800 hover:bg-gray-700 border border-gray-600 rounded transition-colors">Clear</button>
+					<button id="term-run"
+						class="px-4 py-1.5 text-xs font-bold text-white bg-indigo-600 hover:bg-indigo-500 rounded shadow-lg transition-colors flex items-center gap-1">
+						<svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+							<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+								d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z">
+							</path>
+							<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+								d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+						</svg>
+						Run
+					</button>
+				</div>
+			</div>
+			<div class="w-1/2 flex flex-col bg-[#0d1117]">
+				<div
+					class="px-4 py-1 bg-[#161b22] border-b border-gray-800 text-xs text-gray-500 uppercase tracking-wider font-semibold">
+					Output</div>
+				<pre id="term-output"
+					class="flex-1 p-4 overflow-auto text-sm font-mono text-green-400 bg-[#0d1117] whitespace-pre-wrap"></pre>
+			</div>
+		</div>
+	</div>
+
+	<script>
+		document.addEventListener('DOMContentLoaded', () => {
+			document.body.style.paddingBottom = '20rem'; // Ensure content isn't hidden
+
+			// Terminal DOM Elements
+			const term = document.getElementById('interactive-terminal');
+			const termContent = document.getElementById('term-content');
+			const termInput = document.getElementById('term-input');
+			const termOutput = document.getElementById('term-output');
+			const btnRun = document.getElementById('term-run');
+			const btnClear = document.getElementById('term-clear');
+			const btnMinimize = document.getElementById('term-minimize');
+			const btnClose = document.getElementById('term-close');
+
+			// Helper to show terminal
+			const showTerminal = (code = '') => {
+				term.classList.remove('hidden');
+				if (code) termInput.value = code;
+				// Ensure restored state
+				term.style.height = '16rem';
+				termContent.classList.remove('hidden');
+				btnMinimize.textContent = 'Minimize';
+			};
+
+			// Add "Try it" buttons to all code blocks
+			document.querySelectorAll('pre code').forEach(block => {
+				const pre = block.parentElement;
+				if (pre.nextElementSibling?.classList.contains('try-btn-container')) return;
+
+				const container = document.createElement('div');
+				container.className = 'try-btn-container mt-2 flex justify-end';
+
+				const btn = document.createElement('button');
+				btn.className = 'inline-flex items-center gap-1.5 px-3 py-1.5 border border-gray-200 shadow-sm text-xs font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 hover:text-indigo-600 hover:border-indigo-200 transition-all focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500';
+				btn.innerHTML = `<svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"></path></svg> Test Code`;
+
+				btn.addEventListener('click', () => {
+					showTerminal(block.textContent);
+					termInput.focus();
+				});
+
+				container.appendChild(btn);
+				pre.parentNode.insertBefore(container, pre.nextElementSibling);
+			});
+
+			// Run Logic
+			btnRun.addEventListener('click', async () => {
+				const code = termInput.value;
+				if (!code.trim()) return;
+
+				termOutput.textContent = '';
+				const logs = [];
+				const originalLog = console.log;
+
+				console.log = (...args) => {
+					logs.push(args.map(a => {
+						try {
+							return typeof a === 'object' ? JSON.stringify(a, null, 2) : String(a);
+						} catch (e) {
+							return String(a);
+						}
+					}).join(' '));
+					originalLog.apply(console, args);
+				};
+
+				try {
+					let result;
+					if (code.includes('await ')) {
+						const wrappedCode = `(async () => { ${code} })()`;
+						result = await eval(wrappedCode);
+					} else {
+						result = eval(code);
+					}
+
+					if (result instanceof Promise) {
+						result = await result;
+					}
+
+					let outputTxt = '';
+					if (logs.length) {
+						outputTxt += logs.map(l => `> ${l}`).join('\n') + '\n';
+					}
+
+					if (result !== undefined) {
+						outputTxt += `< ${typeof result === 'object' ? JSON.stringify(result, null, 2) : result}`;
+					} else if (logs.length === 0) {
+						outputTxt += '✔ Executed successfully (no output)';
+					}
+
+					termOutput.textContent = outputTxt;
+				} catch (err) {
+					termOutput.textContent = `✖ Error: ${err.message}`;
+				} finally {
+					console.log = originalLog;
+				}
+			});
+
+			// Clear
+			btnClear.addEventListener('click', () => {
+				termInput.value = '';
+				termOutput.textContent = '';
+			});
+
+			// Minimize/Restore
+			let isMinimized = false;
+			btnMinimize.addEventListener('click', () => {
+				if (!isMinimized) {
+					term.style.height = '2.5rem';
+					termContent.classList.add('hidden');
+					btnMinimize.textContent = 'Restore';
+				} else {
+					term.style.height = '16rem';
+					termContent.classList.remove('hidden');
+					btnMinimize.textContent = 'Minimize';
+				}
+				isMinimized = !isMinimized;
+			});
+
+			// Close
+			btnClose.addEventListener('click', () => {
+				term.classList.add('hidden');
+			});
+		});
+	</script>
 </body>
 
 </html>
