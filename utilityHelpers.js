@@ -1,50 +1,45 @@
 class UtilityHelpers {
 	// Get basic image details (width, height, size, etc.)
+	// Fetches the resource once as a blob, derives dimensions from that — no double request.
 	static getImageDetails(imageSrc, calculateAverageColor = false) {
-		return new Promise((resolve, reject) => {
-			const img = new Image();
-			img.onload = () => {
-				fetch(imageSrc)
-					.then((response) => {
-						if (!response.ok) {
-							throw new Error("Network response was not ok");
-						}
-						return response.blob();
-					})
-					.then((blob) => {
-						const aspectRatio = (img.width / img.height).toFixed(2);
+		return fetch(imageSrc)
+			.then((response) => {
+				if (!response.ok) throw new Error("Network response was not ok");
+				return response.blob();
+			})
+			.then((blob) => {
+				const objectURL = URL.createObjectURL(blob);
+				return new Promise((resolve, reject) => {
+					const img = new Image();
+					img.onload = () => {
+						URL.revokeObjectURL(objectURL);
 						const imageDetails = {
 							width: img.width,
 							height: img.height,
 							size: UtilityHelpers.formatBytes(blob.size),
 							mimeType: blob.type,
-							aspectRatio: aspectRatio,
+							aspectRatio: (img.width / img.height).toFixed(2),
 							orientation: UtilityHelpers.getImageOrientation(img),
 							format: UtilityHelpers.getImageFormat(blob.type)
 						};
-
 						if (calculateAverageColor) {
 							UtilityHelpers.getAverageImageColor(imageSrc)
 								.then((averageColor) => {
 									imageDetails.averageColor = averageColor;
 									resolve(imageDetails);
 								})
-								.catch((error) => {
-									reject(error);
-								});
+								.catch(reject);
 						} else {
 							resolve(imageDetails);
 						}
-					})
-					.catch((error) => {
-						reject(error);
-					});
-			};
-			img.onerror = (error) => {
-				reject(error);
-			};
-			img.src = imageSrc;
-		});
+					};
+					img.onerror = () => {
+						URL.revokeObjectURL(objectURL);
+						reject(new Error("Failed to load image"));
+					};
+					img.src = objectURL;
+				});
+			});
 	}
 
 	// Determine image orientation: landscape, portrait, or square
@@ -79,6 +74,14 @@ class UtilityHelpers {
 				return "GIF";
 			case "image/webp":
 				return "WEBP";
+			case "image/svg+xml":
+				return "SVG";
+			case "image/avif":
+				return "AVIF";
+			case "image/bmp":
+				return "BMP";
+			case "image/tiff":
+				return "TIFF";
 			default:
 				return "Unknown format";
 		}
@@ -130,11 +133,12 @@ class UtilityHelpers {
 	}
 
 	static shuffleArray(array) {
-		for (let i = array.length - 1; i > 0; i--) {
+		const result = [...array];
+		for (let i = result.length - 1; i > 0; i--) {
 			const j = Math.floor(Math.random() * (i + 1));
-			[array[i], array[j]] = [array[j], array[i]];
+			[result[i], result[j]] = [result[j], result[i]];
 		}
-		return array;
+		return result;
 	}
 
 	static flattenArray(arr) {
@@ -454,6 +458,7 @@ class UtilityHelpers {
 	// within reason.
 	static numberToWords(num) {
 		if (num === 0) return "zero";
+		if (num < 0) return "negative " + UtilityHelpers.numberToWords(-num);
 
 		const a = [
 			"",
@@ -670,19 +675,23 @@ class UtilityHelpers {
 	}
 
 	// Detect how long the user has been idle (no mouse, keyboard, or touch input). This could be used for automatic logout, notifications, etc.
+	// Returns a cleanup function to cancel the idle detection and remove all listeners.
 	static detectUserIdleTime(callback, idleTime = 60000) {
 		let timeout;
+		const events = ["mousemove", "keydown", "touchstart"];
 
 		const resetTimer = () => {
 			clearTimeout(timeout);
-			timeout = setTimeout(callback, idleTime); // Trigger callback after user is idle
+			timeout = setTimeout(callback, idleTime);
 		};
 
-		["mousemove", "keydown", "touchstart"].forEach((event) => {
-			window.addEventListener(event, resetTimer);
-		});
-
+		events.forEach((event) => window.addEventListener(event, resetTimer));
 		resetTimer();
+
+		return function cancel() {
+			clearTimeout(timeout);
+			events.forEach((event) => window.removeEventListener(event, resetTimer));
+		};
 	}
 
 	// Extract all form data and return it as a JavaScript object.
@@ -694,15 +703,17 @@ class UtilityHelpers {
 		}, {});
 	}
 
-	// Generate and trigger a file download from a blob, which is helpful when dealing with generated data like CSVs or PDFs.
-	static downloadFile(blob, filename) {
+	// Generate and trigger a file download. Accepts a Blob, or a string with a mimeType.
+	static downloadFile(content, filename, mimeType = 'text/plain') {
+		const blob = content instanceof Blob ? content : new Blob([content], { type: mimeType });
+		const url = URL.createObjectURL(blob);
 		const link = document.createElement("a");
-		link.href = URL.createObjectURL(blob);
+		link.href = url;
 		link.download = filename;
 		document.body.appendChild(link);
 		link.click();
 		document.body.removeChild(link);
-		URL.revokeObjectURL(link.href);
+		URL.revokeObjectURL(url);
 	}
 
 	// Go fullscreen with the document or a specific element
@@ -904,9 +915,9 @@ class UtilityHelpers {
 		return 'Invalid input.';
 	}
 
-	// Helper: Validate Text
+	// Helper: Validate Text (allows letters, numbers, spaces and common punctuation)
 	static validateText(value, options) {
-		const sanitized = value.replace(/[^a-zA-Z0-9\s]/g, '');
+		const sanitized = value.replace(/[^a-zA-Z0-9\s.,!?'"\-()@#]/g, '');
 		if (options.maxLength && sanitized.length > options.maxLength) {
 			return { valid: false, error: `Text exceeds maximum length of ${options.maxLength}` };
 		}
@@ -991,7 +1002,7 @@ class UtilityHelpers {
 		if (a === b) return true;
 		if (a instanceof Date && b instanceof Date) return a.getTime() === b.getTime();
 		if (!a || !b || (typeof a !== 'object' && typeof b !== 'object')) return a === b;
-		if (a.prototype !== b.prototype) return false;
+		if (Object.getPrototypeOf(a) !== Object.getPrototypeOf(b)) return false;
 
 		const keys = Object.keys(a);
 		if (keys.length !== Object.keys(b).length) return false;
@@ -1044,9 +1055,9 @@ class UtilityHelpers {
 
 	// String: Convert to camelCase
 	static camelCase(str) {
-		return str.replace(/(?:^\w|[A-Z]|\b\w)/g, (word, index) => {
-			return index === 0 ? word.toLowerCase() : word.toUpperCase();
-		}).replace(/\s+/g, '').replace(/[-_]/g, '');
+		return str
+			.replace(/[-_\s]+(.)/g, (_, c) => c.toUpperCase())
+			.replace(/^(.)/, (c) => c.toLowerCase());
 	}
 
 	// String: Convert to kebab-case
@@ -1116,29 +1127,4 @@ class UtilityHelpers {
 	}
 }
 
-UtilityHelpers.getImageDetails(
-	"https://assets.codepen.io/252820/nathan-dumlao--unsplash.jpg"
-)
-	.then((details) => console.log("Image details:", details))
-	.catch((error) => console.error(error));
 
-// include getAverageImageColor in the calculations
-UtilityHelpers.getImageDetails(
-	"https://assets.codepen.io/252820/nathan-dumlao--unsplash.jpg",
-	true
-)
-	.then((details) => console.log("Image details with average color:", details))
-	.catch((error) => console.error(error));
-
-UtilityHelpers.getAverageImageColor(
-	"https://assets.codepen.io/252820/nathan-dumlao--unsplash.jpg"
-)
-	.then((color) => console.log("Average color:", UtilityHelpers.rgbToHex(color)))
-	.catch((error) => console.error(error));
-
-const img = new Image();
-img.src = "https://assets.codepen.io/252820/nathan-dumlao--unsplash.jpg";
-img.onload = () => {
-	const orientation = UtilityHelpers.getImageOrientation(img);
-	console.log("Image orientation:", orientation);
-};
