@@ -1201,6 +1201,21 @@ console.log(flow(1)); // Output: 3 ((1 * 2) + 1)</code></pre>
 				const code = termInput.value;
 				if (!code.trim()) return;
 
+				// If the last meaningful line is a variable declaration, append the var name
+				// so eval() returns its value instead of undefined.
+				const prepareCode = (src) => {
+					const lines = src.split('\n');
+					for (let i = lines.length - 1; i >= 0; i--) {
+						const trimmed = lines[i].trim();
+						if (!trimmed || trimmed.startsWith('//')) continue;
+						const varMatch = trimmed.match(/^(?:const|let|var)\s+(\w+)\s*=/);
+						if (varMatch) return src + '\n' + varMatch[1];
+						break;
+					}
+					return src;
+				};
+				const transformedCode = prepareCode(code);
+
 				termOutput.textContent = '';
 				const logs = [];
 				const originalLog = console.log;
@@ -1218,11 +1233,11 @@ console.log(flow(1)); // Output: 3 ((1 * 2) + 1)</code></pre>
 
 				try {
 					let result;
-					if (code.includes('await ')) {
-						const wrappedCode = `(async () => { ${code} })()`;
+					if (transformedCode.includes('await ')) {
+						const wrappedCode = `(async () => { ${transformedCode} })()`;
 						result = await eval(wrappedCode);
 					} else {
-						result = eval(code);
+						result = eval(transformedCode);
 					}
 
 					if (result instanceof Promise) {
