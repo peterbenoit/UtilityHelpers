@@ -1,0 +1,39 @@
+{
+	"name": "@peterbenoit/utility-helpers",
+	"version": "1.0.0",
+	"description": "A comprehensive collection of JavaScript utility functions for image processing, array manipulation, string operations, and more.",
+	"main": "utilityHelpers.js",
+	"exports": {
+		".": "./utilityHelpers.js"
+	},
+	"jsdelivr": "utilityHelpers.js",
+	"unpkg": "utilityHelpers.js",
+	"files": [
+		"utilityHelpers.js"
+	],
+	"scripts": {
+		"test": "node tests/sanity.js",
+		"pack:dry": "npm pack --dry-run",
+		"prepublishOnly": "npm test && npm run pack:dry"
+	},
+	"keywords": [
+		"utility",
+		"helpers",
+		"javascript",
+		"strings",
+		"arrays",
+		"images",
+		"dom",
+		"validation"
+	],
+	"author": "Peter Benoit",
+	"license": "MIT",
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/peterbenoit/UtilityHelpers.git"
+	},
+	"homepage": "https://github.com/peterbenoit/UtilityHelpers#readme",
+	"bugs": {
+		"url": "https://github.com/peterbenoit/UtilityHelpers/issues"
+	}
+}

@@ -1,0 +1,7 @@
+# Only utilityHelpers.js is needed at runtime.
+# Exclude docs, tests, and dev files from the npm package.
+index.html
+tests.html
+CDN.md
+tests/
+.gitignore

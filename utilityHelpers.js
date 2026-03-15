@@ -1127,4 +1127,9 @@ class UtilityHelpers {
 	}
 }
 
+// CommonJS / Node.js compatibility
+if (typeof module !== 'undefined' && module.exports) {
+	module.exports = UtilityHelpers;
+}
+
 

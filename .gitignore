@@ -1,3 +1,6 @@
 /*.md
+!README.md
 .vscode
 c*.md
+node_modules/
+*.tgz
