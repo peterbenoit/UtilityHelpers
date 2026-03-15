@@ -1,0 +1,845 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>UtilityHelpers — Test Suite</title>
+	<script src="https://cdn.tailwindcss.com"></script>
+	<script src="utilityHelpers.js"></script>
+	<link rel="stylesheet" href="https://rsms.me/inter/inter.css">
+	<style>
+		body {
+			font-family: 'Inter', sans-serif;
+		}
+	</style>
+</head>
+
+<body class="bg-gray-50 text-gray-800 antialiased">
+	<div class="max-w-4xl mx-auto px-4 py-10">
+		<div class="mb-8 flex items-center justify-between">
+			<div>
+				<h1 class="text-2xl font-bold text-gray-900 tracking-tight">UtilityHelpers Test Suite</h1>
+				<p class="text-sm text-gray-500 mt-1">Running tests in browser context</p>
+			</div>
+			<a href="index.html" class="text-sm text-indigo-600 hover:underline">← Back to docs</a>
+		</div>
+
+		<div id="summary"
+			class="mb-6 px-4 py-3 bg-white border border-gray-200 rounded-xl text-sm text-gray-500 font-mono">
+			Running…
+		</div>
+
+		<div id="results" class="space-y-4"></div>
+	</div>
+
+	<script>
+		// ─── Minimal Test Runner ────────────────────────────────────────────────────
+		const suites = [];
+		let _currentSuite = null;
+
+		function describe(name, fn) {
+			_currentSuite = { name, tests: [] };
+			suites.push(_currentSuite);
+			fn();
+			_currentSuite = null;
+		}
+
+		function it(name, fn) {
+			if (_currentSuite) _currentSuite.tests.push({ name, fn });
+		}
+
+		function expect(actual) {
+			const fail = (msg) => { throw new Error(msg); };
+			return {
+				toBe(expected) {
+					if (actual !== expected) fail(`Expected ${JSON.stringify(expected)}, got ${JSON.stringify(actual)}`);
+				},
+				toEqual(expected) {
+					const a = JSON.stringify(actual), b = JSON.stringify(expected);
+					if (a !== b) fail(`Expected ${b}, got ${a}`);
+				},
+				toBeCloseTo(expected, precision = 5) {
+					if (Math.abs(actual - expected) >= Math.pow(10, -precision) / 2)
+						fail(`Expected ≈${expected}, got ${actual}`);
+				},
+				toBeTruthy() {
+					if (!actual) fail(`Expected truthy, got ${JSON.stringify(actual)}`);
+				},
+				toBeFalsy() {
+					if (actual) fail(`Expected falsy, got ${JSON.stringify(actual)}`);
+				},
+				toContain(item) {
+					const ok = Array.isArray(actual) ? actual.includes(item) : String(actual).includes(String(item));
+					if (!ok) fail(`Expected ${JSON.stringify(actual)} to contain ${JSON.stringify(item)}`);
+				},
+				not: {
+					toContain(item) {
+						const ok = Array.isArray(actual) ? actual.includes(item) : String(actual).includes(String(item));
+						if (ok) fail(`Expected ${JSON.stringify(actual)} NOT to contain ${JSON.stringify(item)}`);
+					}
+				},
+				toMatch(pattern) {
+					if (!pattern.test(String(actual))) fail(`Expected "${actual}" to match ${pattern}`);
+				},
+				toHaveLength(n) {
+					if (actual.length !== n) fail(`Expected length ${n}, got ${actual.length}`);
+				},
+				toBeGreaterThan(n) {
+					if (actual <= n) fail(`Expected ${actual} > ${n}`);
+				},
+				toBeGreaterThanOrEqual(n) {
+					if (actual < n) fail(`Expected ${actual} >= ${n}`);
+				},
+				toBeLessThanOrEqual(n) {
+					if (actual > n) fail(`Expected ${actual} <= ${n}`);
+				},
+			};
+		}
+
+		async function runAll() {
+			const allResults = [];
+			let totalPass = 0, totalFail = 0;
+
+			for (const suite of suites) {
+				const results = [];
+				for (const test of suite.tests) {
+					try {
+						const r = test.fn();
+						if (r instanceof Promise) await r;
+						results.push({ name: test.name, passed: true });
+						totalPass++;
+					} catch (e) {
+						results.push({ name: test.name, passed: false, error: e.message });
+						totalFail++;
+					}
+				}
+				allResults.push({ suite: suite.name, results });
+			}
+
+			render(allResults, totalPass, totalFail);
+		}
+
+		function render(allResults, pass, fail) {
+			const total = pass + fail;
+			const allPassed = fail === 0;
+
+			document.getElementById('summary').innerHTML = `
+				<span class="font-bold text-gray-900">${total} tests</span> &mdash;
+				<span class="text-green-600 font-semibold">${pass} passed</span>,
+				<span class="${fail > 0 ? 'text-red-600 font-semibold' : 'text-gray-400'}">${fail} failed</span>
+				<span class="ml-3 inline-flex items-center px-2 py-0.5 rounded text-xs font-medium ${allPassed ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700'}">
+					${allPassed ? '✓ All passing' : '✗ Failures detected'}
+				</span>
+			`;
+
+			document.getElementById('results').innerHTML = allResults.map(({ suite, results }) => {
+				const suitePassed = results.filter(r => r.passed).length;
+				const suiteTotal = results.length;
+				const allPass = suitePassed === suiteTotal;
+				return `
+					<div class="bg-white border ${allPass ? 'border-gray-200' : 'border-red-200'} rounded-xl overflow-hidden">
+						<div class="px-4 py-3 ${allPass ? 'bg-gray-50' : 'bg-red-50'} border-b ${allPass ? 'border-gray-200' : 'border-red-200'} flex items-center justify-between">
+							<span class="font-semibold text-gray-800 text-sm">${suite}</span>
+							<span class="text-xs font-mono ${allPass ? 'text-gray-500' : 'text-red-600'}">${suitePassed}/${suiteTotal}</span>
+						</div>
+						<ul class="divide-y divide-gray-100">
+							${results.map(r => `
+								<li class="px-4 py-2 flex items-start gap-2.5 text-sm ${r.passed ? '' : 'bg-red-50/60'}">
+									<span class="${r.passed ? 'text-green-500' : 'text-red-500'} mt-0.5 shrink-0 font-bold">${r.passed ? '✓' : '✗'}</span>
+									<div class="min-w-0">
+										<span class="${r.passed ? 'text-gray-700' : 'text-red-700 font-medium'}">${r.name}</span>
+										${r.error ? `<div class="text-xs text-red-500 mt-0.5 font-mono break-words">${r.error}</div>` : ''}
+									</div>
+								</li>
+							`).join('')}
+						</ul>
+					</div>
+				`;
+			}).join('');
+		}
+
+		// ─── Test Definitions ───────────────────────────────────────────────────────
+
+		describe('Image Utilities', () => {
+			it('getImageFormat: jpeg', () => {
+				expect(UtilityHelpers.getImageFormat('image/jpeg')).toBe('JPEG');
+			});
+			it('getImageFormat: png', () => {
+				expect(UtilityHelpers.getImageFormat('image/png')).toBe('PNG');
+			});
+			it('getImageFormat: gif', () => {
+				expect(UtilityHelpers.getImageFormat('image/gif')).toBe('GIF');
+			});
+			it('getImageFormat: webp', () => {
+				expect(UtilityHelpers.getImageFormat('image/webp')).toBe('WEBP');
+			});
+			it('getImageFormat: svg+xml', () => {
+				expect(UtilityHelpers.getImageFormat('image/svg+xml')).toBe('SVG');
+			});
+			it('getImageFormat: avif', () => {
+				expect(UtilityHelpers.getImageFormat('image/avif')).toBe('AVIF');
+			});
+			it('getImageFormat: bmp', () => {
+				expect(UtilityHelpers.getImageFormat('image/bmp')).toBe('BMP');
+			});
+			it('getImageFormat: unknown falls back gracefully', () => {
+				expect(UtilityHelpers.getImageFormat('image/heic')).toBe('Unknown format');
+			});
+
+			it('formatBytes: 0 bytes', () => {
+				expect(UtilityHelpers.formatBytes(0)).toBe('0 Bytes');
+			});
+			it('formatBytes: 1024 → 1 KB', () => {
+				expect(UtilityHelpers.formatBytes(1024)).toBe('1 KB');
+			});
+			it('formatBytes: 1048576 → 1 MB', () => {
+				expect(UtilityHelpers.formatBytes(1048576)).toBe('1 MB');
+			});
+			it('formatBytes: respects decimals param', () => {
+				expect(UtilityHelpers.formatBytes(1500, 3)).toBe('1.465 KB');
+			});
+
+			it('getImageOrientation: landscape', () => {
+				expect(UtilityHelpers.getImageOrientation({ width: 1920, height: 1080 })).toBe('landscape');
+			});
+			it('getImageOrientation: portrait', () => {
+				expect(UtilityHelpers.getImageOrientation({ width: 1080, height: 1920 })).toBe('portrait');
+			});
+			it('getImageOrientation: square', () => {
+				expect(UtilityHelpers.getImageOrientation({ width: 500, height: 500 })).toBe('square');
+			});
+
+			it('getLuminance: white = 1', () => {
+				expect(UtilityHelpers.getLuminance('rgb(255, 255, 255)')).toBeCloseTo(1, 5);
+			});
+			it('getLuminance: black = 0', () => {
+				expect(UtilityHelpers.getLuminance('rgb(0, 0, 0)')).toBeCloseTo(0, 5);
+			});
+			it('getContrastRatio: black/white = 21', () => {
+				expect(UtilityHelpers.getContrastRatio('rgb(0,0,0)', 'rgb(255,255,255)')).toBeCloseTo(21, 0);
+			});
+			it('getContrastRatio: identical colors = 1', () => {
+				expect(UtilityHelpers.getContrastRatio('rgb(128,128,128)', 'rgb(128,128,128)')).toBeCloseTo(1, 5);
+			});
+		});
+
+		describe('Array Utilities', () => {
+			it('chunk: even split', () => {
+				expect(UtilityHelpers.chunk([1, 2, 3, 4], 2)).toEqual([[1, 2], [3, 4]]);
+			});
+			it('chunk: remainder in last group', () => {
+				expect(UtilityHelpers.chunk([1, 2, 3, 4, 5], 2)).toEqual([[1, 2], [3, 4], [5]]);
+			});
+			it('chunk: empty array', () => {
+				expect(UtilityHelpers.chunk([], 2)).toEqual([]);
+			});
+
+			it('shuffleArray: does not mutate original', () => {
+				const arr = [1, 2, 3, 4, 5];
+				const copy = [...arr];
+				UtilityHelpers.shuffleArray(arr);
+				expect(arr).toEqual(copy);
+			});
+			it('shuffleArray: returned array contains same elements', () => {
+				const shuffled = UtilityHelpers.shuffleArray([1, 2, 3, 4, 5]);
+				expect([...shuffled].sort((a, b) => a - b)).toEqual([1, 2, 3, 4, 5]);
+			});
+
+			it('flattenArray: one level', () => {
+				expect(UtilityHelpers.flattenArray([1, [2, 3], [4]])).toEqual([1, 2, 3, 4]);
+			});
+			it('flattenArray: deeply nested', () => {
+				expect(UtilityHelpers.flattenArray([1, [2, [3, [4]]]])).toEqual([1, 2, 3, 4]);
+			});
+
+			it('sumArray: basic', () => {
+				expect(UtilityHelpers.sumArray([1, 2, 3])).toBe(6);
+			});
+			it('sumArray: empty array = 0', () => {
+				expect(UtilityHelpers.sumArray([])).toBe(0);
+			});
+
+			it('countUniqueElements: basic', () => {
+				expect(UtilityHelpers.countUniqueElements([1, 2, 2, 3])).toBe(3);
+			});
+			it('countUniqueElements: all unique', () => {
+				expect(UtilityHelpers.countUniqueElements([1, 2, 3])).toBe(3);
+			});
+
+			it('findDuplicates: finds duplicates', () => {
+				expect(UtilityHelpers.findDuplicates([1, 2, 2, 3, 3, 4])).toEqual([2, 3]);
+			});
+			it('findDuplicates: no duplicates → empty array', () => {
+				expect(UtilityHelpers.findDuplicates([1, 2, 3])).toEqual([]);
+			});
+
+			it('countOccurrences: present value', () => {
+				expect(UtilityHelpers.countOccurrences([1, 2, 2, 3], 2)).toBe(2);
+			});
+			it('countOccurrences: absent value → 0', () => {
+				expect(UtilityHelpers.countOccurrences([1, 2, 3], 9)).toBe(0);
+			});
+
+			it('getRandomElement: returns element from array', () => {
+				const arr = [10, 20, 30, 40, 50];
+				expect(arr).toContain(UtilityHelpers.getRandomElement(arr));
+			});
+
+			it('getMedian: odd-length array', () => {
+				expect(UtilityHelpers.getMedian([1, 3, 5, 7, 9])).toBe(5);
+			});
+			it('getMedian: even-length array', () => {
+				expect(UtilityHelpers.getMedian([1, 2, 3, 4])).toBe(2.5);
+			});
+			it('getMedian: unsorted input', () => {
+				expect(UtilityHelpers.getMedian([9, 1, 5])).toBe(5);
+			});
+
+			it('range: default step', () => {
+				expect(UtilityHelpers.range(1, 5)).toEqual([1, 2, 3, 4, 5]);
+			});
+			it('range: custom step', () => {
+				expect(UtilityHelpers.range(1, 10, 2)).toEqual([1, 3, 5, 7, 9]);
+			});
+
+			it('groupBy: string key', () => {
+				const arr = [{ type: 'a' }, { type: 'b' }, { type: 'a' }];
+				const result = UtilityHelpers.groupBy(arr, 'type');
+				expect(result.a.length).toBe(2);
+				expect(result.b.length).toBe(1);
+			});
+			it('groupBy: function key', () => {
+				const result = UtilityHelpers.groupBy([1, 2, 3, 4], n => n % 2 === 0 ? 'even' : 'odd');
+				expect(result.even).toEqual([2, 4]);
+				expect(result.odd).toEqual([1, 3]);
+			});
+		});
+
+		describe('String Utilities', () => {
+			it('capitalizeWords: basic', () => {
+				expect(UtilityHelpers.capitalizeWords('hello world')).toBe('Hello World');
+			});
+			it('capitalizeWords: already capitalized', () => {
+				expect(UtilityHelpers.capitalizeWords('Hello World')).toBe('Hello World');
+			});
+
+			it('pluralize: regular word, count > 1', () => {
+				expect(UtilityHelpers.pluralize('cat', 2)).toBe('cats');
+			});
+			it('pluralize: singular count stays singular', () => {
+				expect(UtilityHelpers.pluralize('cat', 1)).toBe('cat');
+			});
+			it('pluralize: irregular word', () => {
+				expect(UtilityHelpers.pluralize('child', 2)).toBe('children');
+			});
+			it('pluralize: uncountable word unchanged', () => {
+				expect(UtilityHelpers.pluralize('physics', 2)).toBe('physics');
+			});
+			it('pluralize: -y → -ies', () => {
+				expect(UtilityHelpers.pluralize('baby', 2)).toBe('babies');
+			});
+			it('pluralize: -sh → -shes', () => {
+				expect(UtilityHelpers.pluralize('brush', 2)).toBe('brushes');
+			});
+
+			it('escapeHtml: escapes angle brackets and ampersand', () => {
+				expect(UtilityHelpers.escapeHtml('<div>&</div>')).toBe('&lt;div&gt;&amp;&lt;/div&gt;');
+			});
+			it('escapeHtml: escapes quotes', () => {
+				expect(UtilityHelpers.escapeHtml('"hello"')).toBe('&quot;hello&quot;');
+			});
+			it('unescapeHtml: reverses escapeHtml', () => {
+				const str = '<Hello & "World">';
+				expect(UtilityHelpers.unescapeHtml(UtilityHelpers.escapeHtml(str))).toBe(str);
+			});
+
+			it('randomString: correct length', () => {
+				expect(UtilityHelpers.randomString(10)).toHaveLength(10);
+			});
+			it('randomString: alphanumeric only', () => {
+				expect(UtilityHelpers.randomString(50)).toMatch(/^[A-Za-z0-9]+$/);
+			});
+
+			it('numberToWords: zero', () => {
+				expect(UtilityHelpers.numberToWords(0)).toBe('zero');
+			});
+			it('numberToWords: simple number', () => {
+				expect(UtilityHelpers.numberToWords(123)).toBe('one hundred twenty-three');
+			});
+			it('numberToWords: negative number', () => {
+				expect(UtilityHelpers.numberToWords(-5)).toBe('negative five');
+			});
+			it('numberToWords: thousands', () => {
+				expect(UtilityHelpers.numberToWords(1000)).toBe('one thousand');
+			});
+			it('numberToWords: millions', () => {
+				expect(UtilityHelpers.numberToWords(1000000)).toBe('one million');
+			});
+
+			it('escapeRegex: escapes dot and asterisk', () => {
+				expect(UtilityHelpers.escapeRegex('a.b*c')).toBe('a\\.b\\*c');
+			});
+			it('escapeRegex: escaped string works in RegExp', () => {
+				const safe = UtilityHelpers.escapeRegex('a.b');
+				expect(new RegExp('^' + safe + '$').test('a.b')).toBeTruthy();
+				expect(new RegExp('^' + safe + '$').test('axb')).toBeFalsy();
+			});
+
+			it('camelCase: kebab-case input', () => {
+				expect(UtilityHelpers.camelCase('hello-world')).toBe('helloWorld');
+			});
+			it('camelCase: snake_case input', () => {
+				expect(UtilityHelpers.camelCase('hello_world')).toBe('helloWorld');
+			});
+			it('camelCase: space-separated input', () => {
+				expect(UtilityHelpers.camelCase('hello world')).toBe('helloWorld');
+			});
+
+			it('kebabCase: camelCase input', () => {
+				expect(UtilityHelpers.kebabCase('helloWorld')).toBe('hello-world');
+			});
+			it('kebabCase: multi-word', () => {
+				expect(UtilityHelpers.kebabCase('HelloWorldTest')).toBe('hello-world-test');
+			});
+
+			it('snakeCase: camelCase input', () => {
+				expect(UtilityHelpers.snakeCase('helloWorld')).toBe('hello_world');
+			});
+
+			it('truncate: long string gets ellipsis', () => {
+				expect(UtilityHelpers.truncate('This is a very long string', 10)).toBe('This is a ...');
+			});
+			it('truncate: short string unchanged', () => {
+				expect(UtilityHelpers.truncate('Short', 10)).toBe('Short');
+			});
+			it('truncate: exactly at limit unchanged', () => {
+				expect(UtilityHelpers.truncate('1234567890', 10)).toBe('1234567890');
+			});
+
+			it('stripHtml: removes all tags', () => {
+				expect(UtilityHelpers.stripHtml('<p>Hello <b>world</b></p>')).toBe('Hello world');
+			});
+			it('stripHtml: no tags → unchanged', () => {
+				expect(UtilityHelpers.stripHtml('plain text')).toBe('plain text');
+			});
+		});
+
+		describe('Object Utilities', () => {
+			it('pick: selects specified keys', () => {
+				expect(UtilityHelpers.pick({ a: 1, b: 2, c: 3 }, ['a', 'c'])).toEqual({ a: 1, c: 3 });
+			});
+			it('pick: ignores missing keys', () => {
+				expect(UtilityHelpers.pick({ a: 1 }, ['a', 'z'])).toEqual({ a: 1 });
+			});
+
+			it('omit: removes specified keys', () => {
+				expect(UtilityHelpers.omit({ a: 1, b: 2, c: 3 }, ['b'])).toEqual({ a: 1, c: 3 });
+			});
+			it('omit: omitting nothing returns clone', () => {
+				expect(UtilityHelpers.omit({ a: 1 }, [])).toEqual({ a: 1 });
+			});
+
+			it('isEqual: equal plain objects', () => {
+				expect(UtilityHelpers.isEqual({ a: 1, b: { c: 2 } }, { a: 1, b: { c: 2 } })).toBe(true);
+			});
+			it('isEqual: different values', () => {
+				expect(UtilityHelpers.isEqual({ a: 1 }, { a: 2 })).toBe(false);
+			});
+			it('isEqual: different key count', () => {
+				expect(UtilityHelpers.isEqual({ a: 1 }, { a: 1, b: 2 })).toBe(false);
+			});
+			it('isEqual: primitives', () => {
+				expect(UtilityHelpers.isEqual(5, 5)).toBe(true);
+				expect(UtilityHelpers.isEqual(5, 6)).toBe(false);
+			});
+			it('isEqual: dates', () => {
+				expect(UtilityHelpers.isEqual(new Date('2024-01-01'), new Date('2024-01-01'))).toBe(true);
+				expect(UtilityHelpers.isEqual(new Date('2024-01-01'), new Date('2025-01-01'))).toBe(false);
+			});
+
+			it('deepMerge: flat objects', () => {
+				expect(UtilityHelpers.deepMerge({ a: 1 }, { b: 2 })).toEqual({ a: 1, b: 2 });
+			});
+			it('deepMerge: nested objects', () => {
+				expect(UtilityHelpers.deepMerge({ a: { x: 1 } }, { a: { y: 2 } })).toEqual({ a: { x: 1, y: 2 } });
+			});
+			it('deepMerge: source overrides target scalar', () => {
+				expect(UtilityHelpers.deepMerge({ a: 1 }, { a: 2 })).toEqual({ a: 2 });
+			});
+
+			it('getType: array', () => {
+				expect(UtilityHelpers.getType([1, 2, 3])).toBe('array');
+			});
+			it('getType: object', () => {
+				expect(UtilityHelpers.getType({ a: 1 })).toBe('object');
+			});
+			it('getType: string', () => {
+				expect(UtilityHelpers.getType('hello')).toBe('string');
+			});
+			it('getType: number', () => {
+				expect(UtilityHelpers.getType(42)).toBe('number');
+			});
+			it('getType: null is object', () => {
+				expect(UtilityHelpers.getType(null)).toBe('object');
+			});
+
+			it('isObjectEmpty: empty object', () => {
+				expect(UtilityHelpers.isObjectEmpty({})).toBe(true);
+			});
+			it('isObjectEmpty: non-empty object', () => {
+				expect(UtilityHelpers.isObjectEmpty({ a: 1 })).toBe(false);
+			});
+		});
+
+		describe('Date & Time', () => {
+			it('randomDateBetweenTwo: result within range', () => {
+				const start = new Date('2020-01-01');
+				const end = new Date('2025-01-01');
+				const result = UtilityHelpers.randomDateBetweenTwo(start, end);
+				expect(result.getTime()).toBeGreaterThanOrEqual(start.getTime());
+				expect(result.getTime()).toBeLessThanOrEqual(end.getTime());
+			});
+
+			it('timeStampID: returns a non-empty string', () => {
+				const id = UtilityHelpers.timeStampID();
+				expect(typeof id).toBe('string');
+				expect(id.length).toBeGreaterThan(0);
+			});
+			it('timeStampID: generates unique IDs', () => {
+				const ids = new Set(Array.from({ length: 100 }, () => UtilityHelpers.timeStampID()));
+				expect(ids.size).toBe(100);
+			});
+		});
+
+		describe('General Utilities', () => {
+			it('generateUUID: valid v4 UUID format', () => {
+				expect(UtilityHelpers.generateUUID()).toMatch(
+					/^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i
+				);
+			});
+			it('generateUUID: unique values', () => {
+				const ids = new Set(Array.from({ length: 50 }, () => UtilityHelpers.generateUUID()));
+				expect(ids.size).toBe(50);
+			});
+
+			it('rgbToHex: individual r,g,b args', () => {
+				expect(UtilityHelpers.rgbToHex(255, 0, 0)).toBe('#ff0000');
+			});
+			it('rgbToHex: rgb string input', () => {
+				expect(UtilityHelpers.rgbToHex('rgb(120, 150, 200)')).toBe('#7896c8');
+			});
+			it('rgbToHex: black', () => {
+				expect(UtilityHelpers.rgbToHex(0, 0, 0)).toBe('#000000');
+			});
+
+			it('limitDecimalPlaces: truncates correctly', () => {
+				expect(UtilityHelpers.limitDecimalPlaces(1.23456, 2)).toBe(1.23);
+			});
+			it('limitDecimalPlaces: zero decimals', () => {
+				expect(UtilityHelpers.limitDecimalPlaces(1.9, 0)).toBe(2);
+			});
+
+			it('generateRandomColor: valid hex format', () => {
+				expect(UtilityHelpers.generateRandomColor()).toMatch(/^#[0-9a-f]{6}$/i);
+			});
+
+			it('getQueryParams: basic key=value pairs', () => {
+				expect(UtilityHelpers.getQueryParams('?a=1&b=2')).toEqual({ a: '1', b: '2' });
+			});
+			it('getQueryParams: array params ([])', () => {
+				const p = UtilityHelpers.getQueryParams('?tag[]=js&tag[]=css');
+				expect(p.tag).toEqual(['js', 'css']);
+			});
+			it('getQueryParams: empty string → empty object', () => {
+				expect(UtilityHelpers.getQueryParams('')).toEqual({});
+			});
+
+			it('shortenURL + expandURL: round-trips correctly', () => {
+				const url = 'https://example.com/path?q=hello world';
+				expect(UtilityHelpers.expandURL(UtilityHelpers.shortenURL(url))).toBe(url);
+			});
+
+			it('levenshteinDistance: kitten → sitting = 3', () => {
+				expect(UtilityHelpers.levenshteinDistance('kitten', 'sitting')).toBe(3);
+			});
+			it('levenshteinDistance: identical strings = 0', () => {
+				expect(UtilityHelpers.levenshteinDistance('abc', 'abc')).toBe(0);
+			});
+			it('levenshteinDistance: one empty string = other length', () => {
+				expect(UtilityHelpers.levenshteinDistance('', 'abc')).toBe(3);
+			});
+
+			it('clamp: above max', () => {
+				expect(UtilityHelpers.clamp(10, 0, 5)).toBe(5);
+			});
+			it('clamp: below min', () => {
+				expect(UtilityHelpers.clamp(-1, 0, 5)).toBe(0);
+			});
+			it('clamp: within range unchanged', () => {
+				expect(UtilityHelpers.clamp(3, 0, 5)).toBe(3);
+			});
+
+			it('parseJSON: valid JSON', () => {
+				expect(UtilityHelpers.parseJSON('{"a":1}')).toEqual({ a: 1 });
+			});
+			it('parseJSON: invalid JSON returns fallback', () => {
+				expect(UtilityHelpers.parseJSON('bad json', {})).toEqual({});
+			});
+			it('parseJSON: null fallback by default', () => {
+				expect(UtilityHelpers.parseJSON('!')).toBe(null);
+			});
+
+			it('formatNumber: en-US locale', () => {
+				expect(UtilityHelpers.formatNumber(1234.56, 'en-US')).toBe('1,234.56');
+			});
+
+			it('formatCurrency: USD', () => {
+				expect(UtilityHelpers.formatCurrency(10.5, 'USD', 'en-US')).toBe('$10.50');
+			});
+
+			it('getFileExtension: png', () => {
+				expect(UtilityHelpers.getFileExtension('image.png')).toBe('png');
+			});
+			it('getFileExtension: no extension → empty string', () => {
+				expect(UtilityHelpers.getFileExtension('README')).toBe('');
+			});
+			it('getFileExtension: dotfile → empty string', () => {
+				expect(UtilityHelpers.getFileExtension('.gitignore')).toBe('');
+			});
+		});
+
+		describe('Performance & Optimization', () => {
+			it('memoize: caches result (fn called once for same args)', () => {
+				let calls = 0;
+				const fn = UtilityHelpers.memoize((x) => { calls++; return x * 2; });
+				fn(5); fn(5); fn(5);
+				expect(calls).toBe(1);
+				expect(fn(5)).toBe(10);
+			});
+			it('memoize: different args computed separately', () => {
+				const fn = UtilityHelpers.memoize((x) => x * 2);
+				expect(fn(3)).toBe(6);
+				expect(fn(4)).toBe(8);
+			});
+
+			it('once: fn only runs once', () => {
+				let count = 0;
+				const fn = UtilityHelpers.once(() => ++count);
+				fn(); fn(); fn();
+				expect(count).toBe(1);
+			});
+			it('once: returns first result on subsequent calls', () => {
+				const fn = UtilityHelpers.once(() => 42);
+				fn();
+				expect(fn()).toBe(42);
+			});
+
+			it('pipe: composes left-to-right', () => {
+				const flow = UtilityHelpers.pipe(x => x + 1, x => x * 2);
+				expect(flow(1)).toBe(4); // (1+1)*2
+			});
+			it('pipe: single function', () => {
+				const flow = UtilityHelpers.pipe(x => x + 10);
+				expect(flow(5)).toBe(15);
+			});
+
+			it('compose: composes right-to-left', () => {
+				const flow = UtilityHelpers.compose(x => x + 1, x => x * 2);
+				expect(flow(1)).toBe(3); // (1*2)+1
+			});
+
+			it('wait: resolves after delay', async () => {
+				const start = Date.now();
+				await UtilityHelpers.wait(100);
+				expect(Date.now() - start).toBeGreaterThanOrEqual(90);
+			});
+
+			it('sleep: alias for wait', async () => {
+				const start = Date.now();
+				await UtilityHelpers.sleep(100);
+				expect(Date.now() - start).toBeGreaterThanOrEqual(90);
+			});
+
+			it('debounce: defers execution until quiet period', async () => {
+				let count = 0;
+				const fn = UtilityHelpers.debounce(() => count++, 100);
+				fn(); fn(); fn();
+				expect(count).toBe(0);
+				await UtilityHelpers.wait(150);
+				expect(count).toBe(1);
+			});
+			it('debounce: resets timer on each call', async () => {
+				let count = 0;
+				const fn = UtilityHelpers.debounce(() => count++, 100);
+				fn();
+				await UtilityHelpers.wait(50);
+				fn(); // reset
+				await UtilityHelpers.wait(150);
+				expect(count).toBe(1);
+			});
+
+			it('throttle: runs immediately on first call', () => {
+				let count = 0;
+				const fn = UtilityHelpers.throttle(() => count++, 500);
+				fn();
+				expect(count).toBe(1);
+			});
+			it('throttle: subsequent calls within limit are deferred', async () => {
+				let count = 0;
+				const fn = UtilityHelpers.throttle(() => count++, 200);
+				fn(); fn(); fn();
+				expect(count).toBe(1);
+				await UtilityHelpers.wait(250);
+				expect(count).toBe(2);
+			});
+
+			it('retry: resolves after eventual success', async () => {
+				let attempts = 0;
+				const fn = () => new Promise((resolve, reject) => {
+					attempts++;
+					if (attempts < 3) reject(new Error('not yet'));
+					else resolve('ok');
+				});
+				const result = await UtilityHelpers.retry(fn, 3, 10);
+				expect(result).toBe('ok');
+				expect(attempts).toBe(3);
+			});
+			it('retry: throws after exhausting attempts', async () => {
+				let threw = false;
+				try {
+					await UtilityHelpers.retry(() => Promise.reject(new Error('nope')), 2, 10);
+				} catch (e) {
+					threw = true;
+				}
+				expect(threw).toBe(true);
+			});
+		});
+
+		describe('Validation & Sanitization', () => {
+			it('isValidEmail: valid address', () => {
+				expect(UtilityHelpers.isValidEmail('test@example.com')).toBe(true);
+			});
+			it('isValidEmail: missing @', () => {
+				expect(UtilityHelpers.isValidEmail('notanemail')).toBe(false);
+			});
+			it('isValidEmail: missing domain', () => {
+				expect(UtilityHelpers.isValidEmail('test@')).toBe(false);
+			});
+			it('isValidEmail: missing TLD', () => {
+				expect(UtilityHelpers.isValidEmail('test@example')).toBe(false);
+			});
+
+			it('isValidURL: valid https URL', () => {
+				expect(UtilityHelpers.isValidURL('https://example.com')).toBe(true);
+			});
+			it('isValidURL: valid http URL', () => {
+				expect(UtilityHelpers.isValidURL('http://example.com/path?q=1')).toBe(true);
+			});
+			it('isValidURL: plain string', () => {
+				expect(UtilityHelpers.isValidURL('not a url')).toBe(false);
+			});
+
+			it('validateText: strips disallowed chars like angle brackets', () => {
+				const result = UtilityHelpers.validateText('hello <script>', {});
+				expect(result.valid).toBe(true);
+				expect(result.sanitized).not.toContain('<');
+			});
+			it('validateText: preserves common punctuation', () => {
+				const result = UtilityHelpers.validateText("It's fine, right?", {});
+				expect(result.valid).toBe(true);
+				expect(result.sanitized).toContain("'");
+			});
+			it('validateText: enforces maxLength', () => {
+				expect(UtilityHelpers.validateText('hello world', { maxLength: 5 }).valid).toBe(false);
+			});
+
+			it('validateEmailInput: lowercases and accepts valid email', () => {
+				const result = UtilityHelpers.validateEmailInput('Test@Example.COM');
+				expect(result.valid).toBe(true);
+				expect(result.sanitized).toBe('test@example.com');
+			});
+			it('validateEmailInput: rejects invalid email', () => {
+				expect(UtilityHelpers.validateEmailInput('bad').valid).toBe(false);
+			});
+
+			it('validateNumberInput: valid number string', () => {
+				const result = UtilityHelpers.validateNumberInput('42', {});
+				expect(result.valid).toBe(true);
+				expect(result.sanitized).toBe(42);
+			});
+			it('validateNumberInput: enforces min', () => {
+				expect(UtilityHelpers.validateNumberInput('1', { min: 5 }).valid).toBe(false);
+			});
+			it('validateNumberInput: enforces max', () => {
+				expect(UtilityHelpers.validateNumberInput('10', { max: 5 }).valid).toBe(false);
+			});
+			it('validateNumberInput: non-numeric string', () => {
+				expect(UtilityHelpers.validateNumberInput('abc', {}).valid).toBe(false);
+			});
+		});
+
+		describe('DOM & UI Utilities', () => {
+			it('getCSSVariable: reads a set variable', () => {
+				document.documentElement.style.setProperty('--test-color', '#abc123');
+				expect(UtilityHelpers.getCSSVariable('--test-color').trim()).toBe('#abc123');
+			});
+
+			it('setCSSVariable: sets a variable readable by getComputedStyle', () => {
+				UtilityHelpers.setCSSVariable('--test-bg', 'blue');
+				expect(getComputedStyle(document.documentElement).getPropertyValue('--test-bg').trim()).toBe('blue');
+			});
+
+			it('getURLParts: parses protocol, hostname, pathname', () => {
+				const parts = UtilityHelpers.getURLParts('https://example.com/path?q=1');
+				expect(parts.protocol).toBe('https:');
+				expect(parts.hostname).toBe('example.com');
+				expect(parts.pathname).toBe('/path');
+			});
+
+			it('saveScrollPosition: writes scrollY to localStorage', () => {
+				UtilityHelpers.saveScrollPosition();
+				expect(localStorage.getItem('scrollPos')).toBe(String(window.scrollY));
+			});
+			it('restoreScrollPosition: reads from localStorage', () => {
+				localStorage.setItem('scrollPos', '0');
+				UtilityHelpers.restoreScrollPosition();
+				expect(window.scrollY).toBe(0);
+			});
+
+			it('copyToClipboard: returns a Promise', () => {
+				const result = UtilityHelpers.copyToClipboard('test');
+				expect(result instanceof Promise).toBe(true);
+			});
+
+			it('detectUserIdleTime: returns a cancel function', () => {
+				const cancel = UtilityHelpers.detectUserIdleTime(() => { }, 60000);
+				expect(typeof cancel).toBe('function');
+				cancel();
+			});
+
+			it('runInParallel: resolves all tasks in order', async () => {
+				const results = await UtilityHelpers.runInParallel([
+					Promise.resolve(1),
+					Promise.resolve(2),
+					Promise.resolve(3)
+				]);
+				expect(results).toEqual([1, 2, 3]);
+			});
+			it('runInParallel: rejects if any task rejects', async () => {
+				let threw = false;
+				try {
+					await UtilityHelpers.runInParallel([Promise.resolve(1), Promise.reject(new Error('fail'))]);
+				} catch (e) {
+					threw = true;
+				}
+				expect(threw).toBe(true);
+			});
+		});
+
+		// ─── Run ────────────────────────────────────────────────────────────────────
+		runAll();
+	</script>
+</body>
+
+</html>
