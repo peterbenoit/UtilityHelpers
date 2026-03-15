@@ -87,9 +87,7 @@
 						<h3 class="px-2 text-xs font-semibold text-gray-400 uppercase tracking-wider mb-2">Getting
 							Started</h3>
 						<ul id="doc-nav" class="space-y-1">
-							<li><a href="#install"
-									class="doc-link block px-2 py-1.5 text-sm font-medium text-gray-600 hover:text-gray-900 hover:bg-gray-50 rounded-md">CDN
-									&amp; npm</a></li>
+
 							<li><a href="#images"
 									class="doc-link block px-2 py-1.5 text-sm font-medium text-gray-600 hover:text-gray-900 hover:bg-gray-50 rounded-md">Image
 									Utilities</a></li>
@@ -117,6 +115,9 @@
 							<li><a href="#dom"
 									class="doc-link block px-2 py-1.5 text-sm font-medium text-gray-600 hover:text-gray-900 hover:bg-gray-50 rounded-md">DOM
 									& UI</a></li>
+							<li><a href="#install"
+									class="doc-link block px-2 py-1.5 text-sm font-medium text-gray-600 hover:text-gray-900 hover:bg-gray-50 rounded-md">CDN
+									&amp; npm</a></li>
 						</ul>
 					</nav>
 				</div>
@@ -134,42 +135,6 @@
 								Includes robust methods for image processing, array manipulation, string operations, and
 								more.
 							</p>
-							<div class="mt-6 space-y-4">
-								<div>
-									<p class="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-2">CDN</p>
-									<div class="space-y-2">
-										<div class="flex items-center gap-2">
-											<span class="text-xs text-gray-400 w-16 shrink-0">jsDelivr</span>
-											<code
-												class="flex-1 bg-gray-50 border border-gray-200 rounded-md px-3 py-1.5 text-xs font-mono text-gray-700 overflow-x-auto whitespace-nowrap">&lt;script src="https://cdn.jsdelivr.net/npm/@peterbenoit/utility-helpers@1.0.0/utilityHelpers.js"&gt;&lt;/script&gt;</code>
-											<button
-												onclick="navigator.clipboard.writeText('&lt;script src=&quot;https://cdn.jsdelivr.net/npm/@peterbenoit/utility-helpers@1.0.0/utilityHelpers.js&quot;&gt;&lt;/script&gt;')"
-												class="shrink-0 text-xs text-gray-400 hover:text-gray-700 px-2 py-1 rounded border border-gray-200 hover:bg-gray-50 transition-colors"
-												title="Copy">Copy</button>
-										</div>
-										<div class="flex items-center gap-2">
-											<span class="text-xs text-gray-400 w-16 shrink-0">unpkg</span>
-											<code
-												class="flex-1 bg-gray-50 border border-gray-200 rounded-md px-3 py-1.5 text-xs font-mono text-gray-700 overflow-x-auto whitespace-nowrap">&lt;script src="https://unpkg.com/@peterbenoit/utility-helpers@1.0.0/utilityHelpers.js"&gt;&lt;/script&gt;</code>
-											<button
-												onclick="navigator.clipboard.writeText('&lt;script src=&quot;https://unpkg.com/@peterbenoit/utility-helpers@1.0.0/utilityHelpers.js&quot;&gt;&lt;/script&gt;')"
-												class="shrink-0 text-xs text-gray-400 hover:text-gray-700 px-2 py-1 rounded border border-gray-200 hover:bg-gray-50 transition-colors"
-												title="Copy">Copy</button>
-										</div>
-									</div>
-								</div>
-								<div>
-									<p class="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-2">npm</p>
-									<div class="flex items-center gap-2">
-										<code
-											class="flex-1 bg-gray-50 border border-gray-200 rounded-md px-3 py-1.5 text-xs font-mono text-gray-700">npm install @peterbenoit/utility-helpers</code>
-										<button
-											onclick="navigator.clipboard.writeText('npm install @peterbenoit/utility-helpers')"
-											class="shrink-0 text-xs text-gray-400 hover:text-gray-700 px-2 py-1 rounded border border-gray-200 hover:bg-gray-50 transition-colors"
-											title="Copy">Copy</button>
-									</div>
-								</div>
-							</div>
 						</div>
 					</div>
 					<div class="md:hidden mt-4">
@@ -185,9 +150,6 @@
 							class="mt-2 hidden bg-white border border-gray-100 rounded-lg shadow-lg p-4 absolute z-50 w-[calc(100%-2rem)]">
 							<nav aria-label="Mobile documentation nav">
 								<ul class="space-y-1 text-sm">
-									<li><a href="#install"
-											class="block px-3 py-2 rounded-md hover:bg-gray-50 text-gray-700 font-medium">CDN
-											&amp; npm</a></li>
 									<li><a href="#images"
 											class="block px-3 py-2 rounded-md hover:bg-gray-50 text-gray-700 font-medium">Image
 											Utilities</a></li>
@@ -215,6 +177,9 @@
 									<li><a href="#dom"
 											class="block px-3 py-2 rounded-md hover:bg-gray-50 text-gray-700 font-medium">DOM
 											& UI</a></li>
+									<li><a href="#install"
+											class="block px-3 py-2 rounded-md hover:bg-gray-50 text-gray-700 font-medium">CDN
+											&amp; npm</a></li>
 								</ul>
 							</nav>
 						</div>
@@ -254,58 +219,8 @@
 							});
 						</script>
 						<div class="max-w-7xl mx-auto">
-							<section id="install" class="mb-12">
-								<h2 class="text-2xl font-bold mb-6 text-gray-900 tracking-tight">CDN &amp; npm</h2>
-								<div class="space-y-6">
-									<div class="bg-white p-6 rounded-xl border border-gray-200">
-										<h3 class="text-base font-semibold text-gray-900 mb-1">jsDelivr <span
-												class="text-xs font-normal text-gray-400 ml-1">recommended</span></h3>
-										<p class="text-sm text-gray-500 mb-3">Pin to a specific version for production,
-											or use the latest tag during development.</p>
-										<pre
-											class="bg-gray-50 p-4 rounded-lg border border-gray-100 text-sm font-mono overflow-x-auto text-gray-800"><code>&lt;!-- Pinned --&gt;
-&lt;script src="https://cdn.jsdelivr.net/npm/@peterbenoit/utility-helpers@1.0.0/utilityHelpers.js"&gt;&lt;/script&gt;
-
-&lt;!-- Latest --&gt;
-&lt;script src="https://cdn.jsdelivr.net/npm/@peterbenoit/utility-helpers/utilityHelpers.js"&gt;&lt;/script&gt;</code></pre>
-									</div>
-									<div class="bg-white p-6 rounded-xl border border-gray-200">
-										<h3 class="text-base font-semibold text-gray-900 mb-1">unpkg</h3>
-										<p class="text-sm text-gray-500 mb-3">Alternative CDN, same package.</p>
-										<pre
-											class="bg-gray-50 p-4 rounded-lg border border-gray-100 text-sm font-mono overflow-x-auto text-gray-800"><code>&lt;!-- Pinned --&gt;
-&lt;script src="https://unpkg.com/@peterbenoit/utility-helpers@1.0.0/utilityHelpers.js"&gt;&lt;/script&gt;
-
-&lt;!-- Latest --&gt;
-&lt;script src="https://unpkg.com/@peterbenoit/utility-helpers/utilityHelpers.js"&gt;&lt;/script&gt;</code></pre>
-									</div>
-									<div class="bg-white p-6 rounded-xl border border-gray-200">
-										<h3 class="text-base font-semibold text-gray-900 mb-1">npm</h3>
-										<p class="text-sm text-gray-500 mb-3">Install for Node.js or bundler-based
-											projects.</p>
-										<pre
-											class="bg-gray-50 p-4 rounded-lg border border-gray-100 text-sm font-mono overflow-x-auto text-gray-800"><code>npm install @peterbenoit/utility-helpers</code></pre>
-										<pre
-											class="bg-gray-50 p-4 rounded-lg border border-gray-100 text-sm font-mono overflow-x-auto text-gray-800 mt-3"><code>const UtilityHelpers = require('@peterbenoit/utility-helpers');
-
-const uuid = UtilityHelpers.generateUUID();
-const chunks = UtilityHelpers.chunk([1, 2, 3, 4], 2);</code></pre>
-									</div>
-									<div class="bg-white p-6 rounded-xl border border-gray-200">
-										<h3 class="text-base font-semibold text-gray-900 mb-1">Browser global</h3>
-										<p class="text-sm text-gray-500 mb-3">After loading via CDN, <code
-												class="font-mono text-xs bg-gray-100 px-1 py-0.5 rounded">UtilityHelpers</code>
-											is available as a global class.</p>
-										<pre
-											class="bg-gray-50 p-4 rounded-lg border border-gray-100 text-sm font-mono overflow-x-auto text-gray-800"><code>const uuid = UtilityHelpers.generateUUID();
-const hex = UtilityHelpers.rgbToHex(255, 0, 0); // '#ff0000'
-const words = UtilityHelpers.numberToWords(42);  // 'forty-two'</code></pre>
-									</div>
-								</div>
-							</section>
-
 							<section id="images" class="mb-12">
-								<h2 class="text-2xl font-bold mb-6 text-gray-900 tracking-tight">Image Utilities</h2>
+								<h2 class="text-2xl font-bold my-6 text-gray-900 tracking-tight">Image Utilities</h2>
 								<div class="space-y-8">
 									<div
 										class="bg-white p-6 rounded-xl border border-gray-200 hover:border-gray-300 transition-colors">
@@ -1194,6 +1109,47 @@ console.log(flow(1)); // Output: 3 ((1 * 2) + 1)</code></pre>
 										<pre
 											class="bg-gray-50 p-4 rounded-lg border border-gray-100 text-sm font-mono overflow-x-auto text-gray-800 mt-4"><code>const results = await UtilityHelpers.runInParallel([task1, task2]);
 // Output: [result1, result2]</code></pre>
+									</div>
+								</div>
+							</section>
+							<section id="install" class="mb-12">
+								<h2 class="text-2xl font-bold mb-6 text-gray-900 tracking-tight">CDN &amp; npm</h2>
+								<div class="mt-6 space-y-4">
+									<div>
+										<p class="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-2">CDN
+										</p>
+										<div class="space-y-2">
+											<div class="flex items-center gap-2">
+												<span class="text-xs text-gray-400 w-16 shrink-0">jsDelivr</span>
+												<code
+													class="flex-1 bg-gray-50 border border-gray-200 rounded-md px-3 py-1.5 text-xs font-mono text-gray-700 overflow-x-auto whitespace-nowrap">&lt;script src="https://cdn.jsdelivr.net/npm/@peterbenoit/utility-helpers@1.0.0/utilityHelpers.js"&gt;&lt;/script&gt;</code>
+												<button
+													onclick="navigator.clipboard.writeText('&lt;script src=&quot;https://cdn.jsdelivr.net/npm/@peterbenoit/utility-helpers@1.0.0/utilityHelpers.js&quot;&gt;&lt;/script&gt;')"
+													class="shrink-0 text-xs text-gray-400 hover:text-gray-700 px-2 py-1 rounded border border-gray-200 hover:bg-gray-50 transition-colors"
+													title="Copy">Copy</button>
+											</div>
+											<div class="flex items-center gap-2">
+												<span class="text-xs text-gray-400 w-16 shrink-0">unpkg</span>
+												<code
+													class="flex-1 bg-gray-50 border border-gray-200 rounded-md px-3 py-1.5 text-xs font-mono text-gray-700 overflow-x-auto whitespace-nowrap">&lt;script src="https://unpkg.com/@peterbenoit/utility-helpers@1.0.0/utilityHelpers.js"&gt;&lt;/script&gt;</code>
+												<button
+													onclick="navigator.clipboard.writeText('&lt;script src=&quot;https://unpkg.com/@peterbenoit/utility-helpers@1.0.0/utilityHelpers.js&quot;&gt;&lt;/script&gt;')"
+													class="shrink-0 text-xs text-gray-400 hover:text-gray-700 px-2 py-1 rounded border border-gray-200 hover:bg-gray-50 transition-colors"
+													title="Copy">Copy</button>
+											</div>
+										</div>
+									</div>
+									<div>
+										<p class="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-2">npm
+										</p>
+										<div class="flex items-center gap-2">
+											<code
+												class="flex-1 bg-gray-50 border border-gray-200 rounded-md px-3 py-1.5 text-xs font-mono text-gray-700">npm install @peterbenoit/utility-helpers</code>
+											<button
+												onclick="navigator.clipboard.writeText('npm install @peterbenoit/utility-helpers')"
+												class="shrink-0 text-xs text-gray-400 hover:text-gray-700 px-2 py-1 rounded border border-gray-200 hover:bg-gray-50 transition-colors"
+												title="Copy">Copy</button>
+										</div>
 									</div>
 								</div>
 							</section>
