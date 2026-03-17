@@ -174,4 +174,9 @@ git push && git push --tags
 
 ## License
 
-MIT © Peter Benoit
+This project is licensed under the MIT License.
+
+---
+Created by [Peter Benoit](https://peterbenoit.com)
+
+
