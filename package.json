@@ -1,6 +1,6 @@
 {
 	"name": "@peterbenoit/utility-helpers",
-	"version": "1.0.0",
+	"version": "1.0.1",
 	"description": "A comprehensive collection of JavaScript utility functions for image processing, array manipulation, string operations, and more.",
 	"main": "utilityHelpers.js",
 	"exports": {
